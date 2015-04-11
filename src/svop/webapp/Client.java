@@ -15,7 +15,7 @@ public class Client {
         //register WebService interface
         factory.setServiceClass(IHelloWorld.class);
         //set webservice publish address to factory.
-        factory.setAddress("http://localhost:9000/HelloWorld");
+        factory.setAddress("http://localhost:8080/HelloWorld");
         IHelloWorld iHelloWorld = (IHelloWorld) factory.create();
         System.out.println("invoke webservice...");
         System.out.println("message context is:" + iHelloWorld.sayHi("Josen"));

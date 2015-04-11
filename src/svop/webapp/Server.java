@@ -1,6 +1,6 @@
+package svop.webapp;
+
 import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
-import svop.webapp.HelloWorldImpl;
-import svop.webapp.IHelloWorld;
 
 public class Server {
     private Server() {
@@ -10,7 +10,7 @@ public class Server {
         //register WebService interface
         factory.setServiceClass(IHelloWorld.class);
         //publish the interface
-        factory.setAddress("http://localhost:9000/HelloWorld");
+        factory.setAddress("http://0:8080/HelloWorld");
         factory.setServiceBean(helloWorld);
         //create WebService instance
         factory.create();
@@ -19,9 +19,9 @@ public class Server {
     public static void main(String[] args) throws InterruptedException {
         //now start the webservice server
         new Server();
-        System.out.println("Server ready...");
-        Thread.sleep(1000 * 60);
-        System.out.println("Server exit...");
+        System.out.println("svop.webapp.Server ready...");
+        Thread.sleep(1000 * 3000);
+        System.out.println("svop.webapp.Server exit...");
         System.exit(0);
     }
 }

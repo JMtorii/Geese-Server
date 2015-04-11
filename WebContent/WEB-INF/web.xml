@@ -5,7 +5,7 @@
 <web-app>
 	<servlet>
 	   <servlet-name>SvopServer</servlet-name>
-	   <display-name>Svop Server</display-name>
+	   <display-name>Svop svop.webapp.Server</display-name>
 	   <servlet-class>
 	      org.apache.cxf.transport.servlet.CXFServlet
 	   </servlet-class>
