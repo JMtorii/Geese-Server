@@ -1,19 +1,33 @@
 package svop.webapp;
 
+import org.apache.cxf.binding.BindingFactoryManager;
+import org.apache.cxf.jaxrs.JAXRSBindingFactory;
+import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
+import org.apache.cxf.jaxrs.lifecycle.SingletonResourceProvider;
 import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
 
 public class Server {
     private Server() {
-        IHelloWorld helloWorld = new HelloWorldImpl();
+        JAXRSServerFactoryBean sf = new JAXRSServerFactoryBean();
+        sf.setResourceClasses(SvopImpl.class);
+        sf.setResourceProvider(SvopImpl.class, new SingletonResourceProvider(new SvopImpl()));
+        sf.setAddress("http://0:8080");
+        BindingFactoryManager manager = sf.getBus().getExtension(BindingFactoryManager.class);
+        JAXRSBindingFactory factory = new JAXRSBindingFactory();
+        factory.setBus(sf.getBus());
+        manager.registerBindingFactory(JAXRSBindingFactory.JAXRS_BINDING_ID, factory);
+        sf.create();
+
+        /*IHelloWorld helloWorld = new SvopImpl();
         //create WebService service factory
         JaxWsServerFactoryBean factory = new JaxWsServerFactoryBean();
         //register WebService interface
         factory.setServiceClass(IHelloWorld.class);
         //publish the interface
-        factory.setAddress("http://0:8080/HelloWorld");
+        factory.setAddress("http://0:8080/Svop");
         factory.setServiceBean(helloWorld);
         //create WebService instance
-        factory.create();
+        factory.create();*/
     }
 
     public static void main(String[] args) throws InterruptedException {

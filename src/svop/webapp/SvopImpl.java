@@ -2,16 +2,21 @@ package svop.webapp;
 
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 
+import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.ws.rs.FormParam;
 import java.util.LinkedList;
 
-@WebService
-public class SvopImpl implements ISvop {
+public class SvopImpl implements IHelloWorld {
     LinkedList<Card> cardQueue = new LinkedList<Card>();
 
     public SvopImpl() {
         cardQueue.add(new Card(0, "queue starter element"));
+    }
+
+    @Override
+    public String sayHi(@WebParam(name="text") String text) {
+        return "hei";
     }
 
     /**
@@ -19,7 +24,7 @@ public class SvopImpl implements ISvop {
      * @param c
      * @return
      */
-    @Override
+/*    @Override
     public Card swapCard(@Multipart("card") Card c) {
         cardQueue.add(c);
         return cardQueue.remove();
@@ -34,5 +39,5 @@ public class SvopImpl implements ISvop {
     @Override
     public String debugPost() {
         return "{\"test\"}";
-    }
+    }*/
 }
