@@ -5,18 +5,27 @@ import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.core.MultivaluedMap;
 import java.util.LinkedList;
 
-public class SvopImpl implements IHelloWorld {
-    LinkedList<Card> cardQueue = new LinkedList<Card>();
+public class SvopImpl implements ISvop {
+//    LinkedList<Card> cardQueue = new LinkedList<Card>();
+    Card initialCard;
 
     public SvopImpl() {
-        cardQueue.add(new Card(0, "queue starter element"));
+        //cardQueue.add(new Card(0, "queue starter element"));
+        initialCard = new Card();
     }
 
     @Override
     public String sayHi(@WebParam(name="text") String text) {
         return "hei";
+    }
+
+    @Override
+    public String postCard(Card card) {
+        return "You posted a card with ID: " + card.cardId + " from company " + card.company.name;
+        //return card.content;
     }
 
     /**
