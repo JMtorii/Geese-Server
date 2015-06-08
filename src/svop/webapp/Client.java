@@ -19,7 +19,6 @@ public class Client {
         factory.setAddress("http://0:8080");
         ISvop iSvop = (ISvop) factory.create();
         System.out.println("invoke webservice...");
-        System.out.println("message context is:" + iSvop.sayHi("Josen"));
         System.exit(0);
     }
 }

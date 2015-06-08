@@ -18,7 +18,7 @@ public class SvopImpl implements ISvop {
     }
 
     @Override
-    public String sayHi(@WebParam(name="text") String text) {
+    public String sayHi() {
         return "hei";
     }
 

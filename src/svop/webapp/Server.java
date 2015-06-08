@@ -7,6 +7,7 @@ import org.apache.cxf.jaxrs.lifecycle.SingletonResourceProvider;
 
 public class Server {
     private Server() {
+        System.out.println("Starting svop server...");
         JAXRSServerFactoryBean sf = new JAXRSServerFactoryBean();
         sf.setResourceClasses(SvopImpl.class);
         sf.setResourceProvider(SvopImpl.class, new SingletonResourceProvider(new SvopImpl()));
@@ -33,7 +34,7 @@ public class Server {
         //now start the webservice server
         new Server();
         System.out.println("svop.webapp.Server ready...");
-        Thread.sleep(1000 * 3000);
+        Thread.sleep(1000 * 300000);
         System.out.println("svop.webapp.Server exit...");
         System.exit(0);
     }

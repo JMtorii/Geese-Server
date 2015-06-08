@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<web-app id="WebApp_ID" version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
-         xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+<web-app id="WebApp_ID" version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemalocation="http://java.sun.com/xml/ns/javaee
-        http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+         xsi:schemalocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     <servlet>
         <display-name>CXFNonSpringJaxrsServlet</display-name>
         <servlet-name>CXFNonSpringJaxrsServlet</servlet-name>
@@ -11,15 +10,12 @@
         </servlet-class>
         <init-param>
             <param-name>jaxrs.serviceClasses</param-name>
-            <param-value>com.student.ChangeStudentDetailsImpl</param-value>
+            <param-value>svop.webapp.SvopImpl</param-value>
         </init-param>
-        <init-param>
-            <param-name>jaxrs.address</param-name>
-            <param-value>/rest</param-value>
-        </init-param>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>CXFNonSpringJaxrsServlet</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/flock</url-pattern>
     </servlet-mapping>
 </web-app>
