@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Class-Path: C:\apache-cxf-3.0.4\lib
-Main-Class: svop.webapp.Server
-
