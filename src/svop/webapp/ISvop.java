@@ -1,10 +1,21 @@
-package svop.webapp;
+package flock.spring.service;
 
+import javax.jws.WebService;
 
-import javax.jws.WebParam;
-import javax.ws.rs.*;
+@WebService
+public interface HelloWorld {
+    String sayHi(String text);
+}
 
-@Path("/flock")
+/*@WebService(endpointInterface = "flock.spring.service.HelloWorld")
+public class HelloWorldImpl implements HelloWorld {
+
+    public String sayHi(String text) {
+        System.out.println("sayHi called");
+        return "Hello " + text;
+    }
+}*/
+/*@Path("/flock")
 @Consumes("application/json")
 @Produces("application/json")
 public interface ISvop {
@@ -17,4 +28,4 @@ public interface ISvop {
     @Path ("card")
     String postCard(Card card);
 
-}
+}*/
