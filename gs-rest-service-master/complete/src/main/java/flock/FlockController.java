@@ -1,14 +1,12 @@
 package flock;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import transitobjects.ClientFlock;
 
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
-public class CardController {
+public class FlockController {
     private final AtomicLong cardCounter = new AtomicLong();
     private final AtomicLong flockCounter = new AtomicLong();
 
@@ -18,9 +16,10 @@ public class CardController {
     }
 
     @RequestMapping(value="/flock/create", method=RequestMethod.POST)
-    public Flock createFlock(@RequestParam(value="name") String name,
-                             @RequestParam(value="creatorId") long creatorId) {
-        return new Flock(flockCounter.incrementAndGet(), name, creatorId);
+    public ClientFlock createFlock(@RequestBody ClientFlock flock
+                            /*@RequestParam(value="name") String name,
+                             @RequestParam(value="creatorId") long creatorId*/) {
+        return flock;
     }
 
     @RequestMapping("/flock/get")
