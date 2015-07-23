@@ -3,7 +3,7 @@ package transitobjects;
 /**
  * Created by LocalEvan on 2015-07-22.
  */
-public class Post {
+public class PostPayload {
     private int postid;
     private int topicid;
     private int createdby;

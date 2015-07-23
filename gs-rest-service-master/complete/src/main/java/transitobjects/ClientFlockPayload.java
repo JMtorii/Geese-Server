@@ -3,7 +3,7 @@ package transitobjects;
 /**
  * Created by LocalEvan on 2015-07-22.
  */
-public class ClientFlock {
+public class ClientFlockPayload {
     private long id;
     private String name;
     private String description;

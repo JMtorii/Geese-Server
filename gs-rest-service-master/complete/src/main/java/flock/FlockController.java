@@ -1,7 +1,9 @@
 package flock;
 
 import org.springframework.web.bind.annotation.*;
-import transitobjects.ClientFlock;
+import transitobjects.ClientFlockPayload;
+import transitobjects.CreateFlockPayload;
+import transitobjects.JsonResponse;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -12,19 +14,19 @@ public class FlockController {
 
     @RequestMapping("/flock/sample")
     public Card sampleCard() {
-        return new Card(cardCounter.incrementAndGet(), 1337, new User("Billy Bee", "sample_email@gmail.com", 1416123456), new ImageLogo("Images/HappyBee.png", "Haps Bee"), new Company("Taktme", "Dictator-For-Life"));
+        return new Card(cardCounter.incrementAndGet(), 1337, new User("Willy Bee", "sample_email@gmail.com", 1416123456), new ImageLogo("Images/HappyBee.png", "Haps Bee"), new Company("Taktme", "Dictator-For-Life"));
     }
 
     @RequestMapping(value="/flock/create", method=RequestMethod.POST)
-    public ClientFlock createFlock(@RequestBody ClientFlock flock
+    public JsonResponse createFlock(@RequestBody CreateFlockPayload flock
                             /*@RequestParam(value="name") String name,
                              @RequestParam(value="creatorId") long creatorId*/) {
-        return flock;
+        return new JsonResponse("OK", ""); // success
     }
 
     @RequestMapping("/flock/get")
-    public Flock getFlock(@RequestParam(value="id") long id) {
+    public JsonResponse getFlock(@RequestParam(value="id") long id) {
         // TODO
-        return null;
+        return new JsonResponse("OK", ""); // success
     }
 }

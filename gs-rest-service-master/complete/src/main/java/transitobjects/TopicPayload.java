@@ -3,7 +3,7 @@ package transitobjects;
 /**
  * Created by LocalEvan on 2015-07-22.
  */
-public class Topic {
+public class TopicPayload {
     private int topicid;
     private int groupid;
     private int createdBy;

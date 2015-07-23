@@ -3,7 +3,7 @@ package transitobjects;
 /**
  * Created by LocalEvan on 2015-07-22.
  */
-public class User {
+public class UserPayload {
     private int userid;
     private String uuid;
 
