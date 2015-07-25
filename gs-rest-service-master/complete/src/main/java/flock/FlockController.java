@@ -14,35 +14,28 @@ import java.util.concurrent.atomic.AtomicLong;
 public class FlockController {
     static final Logger logger = LoggerFactory.getLogger(FlockController.class);
 
-    private final AtomicLong cardCounter = new AtomicLong();
     private final AtomicLong flockCounter = new AtomicLong();
 
-    @RequestMapping(value = "/demo", method=RequestMethod.POST)
-    public String create(@RequestBody Message message) {
-        return "hey";
-    }
+    // TODO: More than just one sample flock
+    Flock localTestFlock;
 
-    @RequestMapping(value = "/demo", method=RequestMethod.GET)
-    public String create(String h) {
-        return h;
-    }
-
-    @RequestMapping("/sample")
-    public Card sampleCard() {
-        return new Card(cardCounter.incrementAndGet(), 1337, new User("Xilly Bee", "sample_email@gmail.com", 1416123456), new ImageLogo("Images/HappyBee.png", "Haps Bee"), new Company("Taktme", "Dictator-For-Life"));
-    }
-
-    @RequestMapping(value="/create", method=RequestMethod.POST, produces = "application/json; charset=utf-8")
-    public JsonResponse createFlock(@RequestBody CreateFlockPayload flock) {
+    @RequestMapping(value="/", method=RequestMethod.POST)
+    public String createFlock(@RequestBody CreateFlockPayload flock) {
                             /*@RequestParam(value="name") String name,
                              @RequestParam(value="creatorId") long creatorId) {*/
+        localTestFlock = new Flock(flock);
+        long newId = localTestFlock.getId();
 
-        return new JsonResponse("OK", ""); // success
+        return "{\"Result\": \"OK\", \"FlockId\": \"" + newId + "\"}"; // success
     }
 
-    @RequestMapping("/get")
-    public JsonResponse getFlock(@RequestParam(value="id") long id) {
+    @RequestMapping(value="/", method=RequestMethod.GET)
+    public ClientFlockPayload getFlock(@RequestParam(value="id") long id) {
         // TODO
-        return new JsonResponse("OK", ""); // success
+        if (localTestFlock.getId() == id) {
+            return localTestFlock.getClientPayload(); // success
+        } else {
+            return null; // failure TODO: better error handling
+        }
     }
 }
