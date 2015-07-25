@@ -11,7 +11,6 @@ public class CreateFlockPayload {
     private double latitude;
     private double longitude;
     private long author;*/
-    @JsonProperty("range")
     private int range;
 
     //public CreateFlockPayload() {
