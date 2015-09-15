@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import transitobjects.ClientFlockPayload;
 import transitobjects.CreateFlockPayload;
+import transitobjects.JoinFlockPayload;
 import transitobjects.JsonResponse;
 
 import java.util.concurrent.atomic.AtomicLong;
@@ -21,10 +22,10 @@ public class FlockController {
 
     @RequestMapping(value="/", method=RequestMethod.POST)
     public String createFlock(@RequestBody CreateFlockPayload flock) {
-                            /*@RequestParam(value="name") String name,
-                             @RequestParam(value="creatorId") long creatorId) {*/
         localTestFlock = new Flock(flock);
-        long newId = localTestFlock.getId();
+        long newId = localTestFlock.getId(); // move this to DB
+
+        /* SQL ADD NEW FLOCK, WITH UNIQUE ID */
 
         return "{\"Result\": \"OK\", \"FlockId\": \"" + newId + "\"}"; // success
     }
@@ -37,5 +38,25 @@ public class FlockController {
         } else {
             return null; // failure TODO: better error handling
         }
+    }
+
+    @RequestMapping(value="/", method=RequestMethod.POST)
+    public String joinFlock(@RequestBody JoinFlockPayload membership) {
+
+        /* SQL, CHECK MEMBERSHIP AUTHENTICATION AGAINST DATABASE */
+
+        /* SQL ADD ENTRY FOR MEMBERSHIP RELATION TABLE */
+
+        return "{\"Result\": \"OK\", \"FlockId\": \"" + membership.getFlockId() + "\"}"; // success
+    }
+
+    @RequestMapping(value="/", method=RequestMethod.POST)
+    public String leaveFlock(@RequestBody JoinFlockPayload membership) {
+
+        /* SQL, CHECK MEMBERSHIP AUTHENTICATION AGAINST DATABASE */
+
+        /* SQL REMOVE ENTRY FOR MEMBERSHIP RELATION TABLE */
+
+        return "{\"Result\": \"OK\", \"FlockId\": \"" + membership.getFlockId() + "\"}"; // success
     }
 }
