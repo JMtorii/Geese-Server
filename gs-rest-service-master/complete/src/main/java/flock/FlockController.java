@@ -40,7 +40,7 @@ public class FlockController {
         }
     }
 
-    @RequestMapping(value="/", method=RequestMethod.POST)
+    @RequestMapping(value="/join", method=RequestMethod.POST)
     public String joinFlock(@RequestBody JoinFlockPayload membership) {
 
         /* SQL, CHECK MEMBERSHIP AUTHENTICATION AGAINST DATABASE */
@@ -50,7 +50,7 @@ public class FlockController {
         return "{\"Result\": \"OK\", \"FlockId\": \"" + membership.getFlockId() + "\"}"; // success
     }
 
-    @RequestMapping(value="/", method=RequestMethod.POST)
+    @RequestMapping(value="/leave", method=RequestMethod.POST)
     public String leaveFlock(@RequestBody JoinFlockPayload membership) {
 
         /* SQL, CHECK MEMBERSHIP AUTHENTICATION AGAINST DATABASE */
