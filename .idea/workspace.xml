@@ -7,22 +7,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b555295-7e24-4b64-b574-7278b582da7f" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\.classpath" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\README.md" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\.idea\.name" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\.idea\artifacts\swapserv.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\.idea\compiler.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\.idea\copyright\profiles_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\.idea\libraries\CXF.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\.idea\libraries\Jackson.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\.idea\libraries\Tomcat.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\.idea\libraries\com_fasterxml_jackson_core_com_springsource_com_fasterxml_jackson_core_jackson_annotations_2_0_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\.idea\misc.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\.idea\modules.xml" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\.idea\uiDesigner.xml" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\.idea\vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\.classpath" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\.project" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\README.md" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\.idea\libraries\Tomcat.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\.idea\libraries\CXF.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\.idea\copyright\profiles_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\.idea\misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\.idea\libraries\Jackson.xml" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\Swap-Server.iml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\.idea\libraries\com_fasterxml_jackson_core_com_springsource_com_fasterxml_jackson_core_jackson_annotations_2_0_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Evan\workspace\Swap-Server\.idea\compiler.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
     </list>
     <ignored path="Swap-Server.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -137,7 +137,6 @@
     <panes>
       <pane id="PackagesPane" />
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -148,6 +147,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1360,6 +1360,7 @@
       <workItem from="1433357259871" duration="5519000" />
       <workItem from="1433450923679" duration="2477000" />
       <workItem from="1433784153306" duration="4014000" />
+      <workItem from="1442276361237" duration="53000" />
     </task>
     <task id="LOCAL-00001" summary="Hello World with Apache CXF and Tomcat in IntelliJ.">
       <created>1428788260014</created>
@@ -1407,7 +1408,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="71387000" />
+    <option name="totallyTimeSpent" value="71440000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1424,30 +1425,30 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32914287" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3281075" sideWeight="0.49785176" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34042552" sideWeight="0.5085929" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24636059" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3281075" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34042552" sideWeight="0.4914071" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32922733" sideWeight="0.49624062" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2567132" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3287805" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24973032" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3281075" sideWeight="0.49785176" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3281075" sideWeight="0.49460626" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3661814" sideWeight="0.495685" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34042552" sideWeight="0.4914071" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3287805" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />

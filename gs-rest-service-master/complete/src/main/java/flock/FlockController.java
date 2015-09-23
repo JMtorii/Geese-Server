@@ -3,10 +3,7 @@ package flock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
-import transitobjects.ClientFlockPayload;
-import transitobjects.CreateFlockPayload;
-import transitobjects.JoinFlockPayload;
-import transitobjects.JsonResponse;
+import transitobjects.*;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -58,5 +55,59 @@ public class FlockController {
         /* SQL REMOVE ENTRY FOR MEMBERSHIP RELATION TABLE */
 
         return "{\"Result\": \"OK\", \"FlockId\": \"" + membership.getFlockId() + "\"}"; // success
+    }
+
+    @RequestMapping(value="/topic", method=RequestMethod.POST)
+    public String createTopic(@RequestBody CreateTopicPayload topic) {
+        /* SQL, CHECK AUTH */
+
+        /* SQL, CHECK IF TOPIC EXISTS */
+
+        /* SQL, ADD TOPIC TO DATABASE */
+
+        return "{\"Result\": \"OK\", \"TopicId\": \"" + topic.getTopicPayload().getTopicId() + "\"}"; // success
+    }
+
+    /*@RequestMapping(value="/topic", method=RequestMethod.POST)
+    public String editTopic(@RequestBody CreateTopicPayload membership) {
+
+    }*/
+
+    @RequestMapping(value="/topic", method=RequestMethod.POST)
+    public String deleteTopic(@RequestBody DeleteTopicPayload topic) {
+        /* SQL, CHECK AUTH */
+
+        /* SQL, CHECK IF TOPIC EXISTS */
+
+        /* SQL, REMOVE TOPIC FROM DATABASE */
+
+        return "{\"Result\": \"OK\", \"TopicId\": \"" + topic.getTopicId() + "\"}"; // success
+    }
+
+    @RequestMapping(value="/post", method=RequestMethod.POST)
+    public String createPost(@RequestBody CreatePostPayload post) {
+        /* SQL, CHECK AUTH */
+
+        /* SQL, CHECK IF POST EXISTS */
+
+        /* SQL, REMOVE POST FROM DATABASE */
+
+        return "{\"Result\": \"OK\", \"PostId\": \"" + post.getPostPayload().getPostId() + "\"}"; // success
+    }
+
+    /*@RequestMapping(value="/topic", method=RequestMethod.POST)
+    public String editPost(@RequestBody CreateTopicPayload membership) {
+
+    }*/
+
+    @RequestMapping(value="/post", method=RequestMethod.POST)
+    public String deletePost(@RequestBody DeletePostPayload post) {
+        /* SQL, CHECK AUTH */
+
+        /* SQL, CHECK IF POST EXISTS */
+
+        /* SQL, REMOVE POST FROM DATABASE */
+
+        return "{\"Result\": \"OK\", \"PostId\": \"" + post.getPostId() + "\"}"; // success
     }
 }
