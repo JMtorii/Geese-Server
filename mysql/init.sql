@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS Flock
 	description VARCHAR(255),
 	latitude FLOAT(10,6),
 	longitude FLOAT(10,6),
-	radius DOUBLE,
+	range DOUBLE,
 	CONSTRAINT Flock_pk PRIMARY KEY (id),
 	CONSTRAINT Flock_Author_fk FOREIGN KEY (authorid) REFERENCES Goose (id)
 );
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS Post
 INSERT INTO Goose (uuid)
 VALUES ('f81d4fae-7dec-11d0-a765-00a0c91e6bf6');
 
-INSERT INTO Flock (authorid, name, description, latitude, longitude, radius)
+INSERT INTO Flock (authorid, name, description, latitude, longitude, range)
 VALUES (1, 'New Flock', 'POST test', 12.34567, -1.123456, 1);
 
 INSERT INTO Membership (gooseid, flockid)
