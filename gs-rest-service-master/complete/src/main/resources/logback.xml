@@ -16,15 +16,15 @@
         </encoder>
     </appender>-->
 
-    <logger name="org.hibernate" level="DEBUG" />
+    <logger name="org.hibernate" level="INFO" />
 
-    <logger name="org.springframework" level="TRACE" />
+    <logger name="org.springframework" level="INFO" />
     <logger name="org.springframework.transaction" level="INFO" />
-    <logger name="org.springframework.security" level="INFO" /> <!-- to debug security related issues (DEBUG) -->
+    <logger name="org.springframework.security" level="DEBUG" /> <!-- to debug security related issues (DEBUG) -->
     <logger name="org.springframework.web.servlet.mvc" level="TRACE" /> <!-- some serialization issues are at trace level here: org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod -->
 
     <!-- our service -->
-    <logger name="flock" level="DEBUG" />
+    <logger name="flock" level="INFO" />
     <!-- <logger name="com.app" level="INFO" /> --><!-- to follow if setup is being executed -->
 
     <root level="INFO">
