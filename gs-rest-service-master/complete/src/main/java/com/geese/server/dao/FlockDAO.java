@@ -25,10 +25,9 @@ public interface FlockDAO {
     /**
      * Finds the information of a single Flock entry.
      * @param id    The id of the requested Flock entry.
-     * @return      The information of the found Flock entry. If there isn't an entry, this method returns an empty
-     *              object.
+     * @return      The information of the found Flock entry.
      */
-    Optional<Flock> findOne(int id);
+    Flock findOne(int id);
 
     /**
      * Saves a new Flock entry to the database.

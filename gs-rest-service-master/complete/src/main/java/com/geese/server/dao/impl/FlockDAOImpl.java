@@ -28,8 +28,7 @@ public class FlockDAOImpl implements FlockDAO {
     // TODO: change to PreparedStatement
     // http://www.mkyong.com/spring/maven-spring-jdbc-example/
     @Override
-    public Optional<Flock> findOne(int id) {
-        String sql = "SELECT * FROM FLOCK WHERE ID = ?";
+    public Flock findOne(int id) {
         Connection connection = null;
 
 //        try {
