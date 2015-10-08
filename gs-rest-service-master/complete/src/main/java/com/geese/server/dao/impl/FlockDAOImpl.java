@@ -2,18 +2,20 @@ package com.geese.server.dao.impl;
 
 import com.geese.server.dao.FlockDAO;
 import com.geese.server.domain.Flock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by JMtorii on 2015-10-06.
  */
+@Repository
 public class FlockDAOImpl implements FlockDAO {
-    private DataSource dataSource;
+    @Autowired
+    protected JdbcTemplate jdbc;
 
     @Override
     public void delete(Flock deleted) {
