@@ -1,5 +1,6 @@
 package com.geese.server.controller;
 
+import com.geese.server.domain.Flock;
 import com.geese.server.service.FlockService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import transitobjects.CreateFlockPayload;
 
 
 /**
@@ -26,7 +26,7 @@ public class FlockController {
     }
 
     @RequestMapping(value="/", method= RequestMethod.POST)
-    public String createFlock(@RequestBody CreateFlockPayload flock) {
+    public String createFlock(@RequestBody Flock flock) {
 //        localTestFlock = new Flock(flock);
 //        long newId = localTestFlock.getId(); // move this to DB
 //
