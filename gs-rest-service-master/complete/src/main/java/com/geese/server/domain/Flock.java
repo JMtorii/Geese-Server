@@ -50,34 +50,6 @@ public class Flock {
         return range;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setAuthorid(int authorid) {
-        this.authorid = authorid;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setLatitude(float latitude) {
-        this.latitude = latitude;
-    }
-
-    public void setLongitude(float longitude) {
-        this.longitude = longitude;
-    }
-
-    public void setRange(double range) {
-        this.range = range;
-    }
-
     static class Builder {
         private int id;
         private int authorid;
