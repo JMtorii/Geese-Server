@@ -3,7 +3,7 @@ package com.geese.server.dao.impl;
 import com.geese.server.dao.FlockDAO;
 import com.geese.server.domain.Flock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
+//import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -14,8 +14,8 @@ import java.util.List;
  */
 @Repository
 public class FlockDAOImpl implements FlockDAO {
-    @Autowired
-    protected JdbcTemplate jdbc;
+    //@Autowired
+    //protected JdbcTemplate jdbc;
 
     @Override
     public void delete(Flock deleted) {
