@@ -31,7 +31,7 @@ public interface FlockDAO {
     /**
      * Saves a new Flock entry to the database.
      * @param saved     The information of the saved Flock entry.
-     * @return          The information fo the saved Flock entry.
+     * @return          Whether the Flock was inserted successfully
      */
-    Flock save(Flock saved);
+    Boolean save(Flock saved);
 }

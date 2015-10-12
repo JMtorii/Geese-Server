@@ -1,8 +1,10 @@
 package com.geese.server.service.impl;
 
 import com.geese.server.dao.FlockDAO;
+import com.geese.server.dao.impl.FlockDAOImpl;
 import com.geese.server.domain.Flock;
 import com.geese.server.service.FlockService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.List;
  */
 @Service
 public class FlockServiceImpl implements FlockService {
+    @Autowired
     private FlockDAO flockDAO;
 
     // https://github.com/pkainulainen/java-advent-2014/blob/master/src/main/java/com/javaadvent/bootrest/todo/MongoDbTodoService.java
@@ -32,8 +35,8 @@ public class FlockServiceImpl implements FlockService {
     }
 
     @Override
-    public Flock save(Flock saved) {
-        return null;
+    public Boolean save(Flock saved) {
+        return flockDAO.save(saved);
     }
 
     @Override
