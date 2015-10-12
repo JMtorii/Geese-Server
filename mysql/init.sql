@@ -5,7 +5,11 @@ use geese_db;
 CREATE TABLE IF NOT EXISTS Goose
 (
 	id INT(16) NOT NULL AUTO_INCREMENT,
-	uuid CHAR(36) NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	email VARCHAR(254) NOT NULL,
+	verified BOOLEAN NOT NULL,
+	password CHAR(256),
+	salt CHAR(64),
 	CONSTRAINT Goose_pk PRIMARY KEY (id)
 );
 
@@ -61,8 +65,8 @@ CREATE TABLE IF NOT EXISTS User
 	CONSTRAINT User_pk PRIMARY KEY (id)	
 };
 
-INSERT INTO Goose (uuid)
-VALUES ('f81d4fae-7dec-11d0-a765-00a0c91e6bf6');
+INSERT INTO Goose (name, email, verified)
+VALUES ('Ni', 'n37zhang@uwaterloo.ca', 'true');
 
 INSERT INTO Flock (authorid, name, description, latitude, longitude, range)
 VALUES (1, 'New Flock', 'POST test', 12.34567, -1.123456, 1);
