@@ -61,13 +61,12 @@ public class FlockDAOImpl implements FlockDAO {
     }
 
     @Override
-    public Boolean save(final Flock saved) {
+    public Flock save(final Flock saved) {
         String insertString = "INSERT INTO Flock " +
                 "(authorid, name, description, latitude, longitude, radius)" +
                 "VALUES (?, ?, ?, ?, ?, ?)";
 
-        LOGGER.error("SOME SHIT: " + String.valueOf(saved.getAuthorid()));
-        return jdbc.execute(insertString, new PreparedStatementCallback<Boolean>() {
+        boolean success = jdbc.execute(insertString, new PreparedStatementCallback<Boolean>() {
             @Override
             public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
                 ps.setInt(1, saved.getAuthorid());
@@ -80,5 +79,7 @@ public class FlockDAOImpl implements FlockDAO {
                 return ps.execute();
             }
         });
+
+        return saved;
     }
 }

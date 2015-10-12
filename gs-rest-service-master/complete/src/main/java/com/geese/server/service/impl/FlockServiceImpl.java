@@ -35,7 +35,7 @@ public class FlockServiceImpl implements FlockService {
     }
 
     @Override
-    public Boolean save(Flock saved) {
+    public Flock save(Flock saved) {
         return flockDAO.save(saved);
     }
 

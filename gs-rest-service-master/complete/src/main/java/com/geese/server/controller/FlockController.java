@@ -1,6 +1,5 @@
 package com.geese.server.controller;
 
-import com.geese.server.dao.impl.FlockDAOImpl;
 import com.geese.server.domain.Flock;
 import com.geese.server.service.FlockService;
 import org.slf4j.Logger;
@@ -27,15 +26,8 @@ public class FlockController {
     }
 
     @RequestMapping(value="/", method= RequestMethod.POST)
-    public String createFlock(@RequestBody Flock flock) {
-        flockService.save(flock);
-
-//        long newId = localTestFlock.getId(); // move this to DB
-//
-//        /* SQL ADD NEW FLOCK, WITH UNIQUE ID */
-//
-//        return "{\"Result\": \"OK\", \"FlockId\": \"" + newId + "\"}"; // success
-
-        return "";
+    public Flock createFlock(@RequestBody Flock flock) {
+        Flock created = flockService.save(flock);
+        return created;
     }
 }

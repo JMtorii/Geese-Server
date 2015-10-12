@@ -30,9 +30,9 @@ public interface FlockService {
     /**
      * Saves a new Flock entry to the database.
      * @param saved     The information of the saved Flock entry.
-     * @return          Whether the Flock was saved successfully
+     * @return          The information of the saved Flock entry.
      */
-    Boolean save(Flock saved);
+    Flock save(Flock saved);
 
     /**
      * Updates the information of an existing Flock entry.
