@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/flock")
 public class FlockController {
-    private static  Logger LOGGER = LoggerFactory.getLogger(FlockController.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(FlockController.class);
     private FlockService flockService;
 
     @Autowired
