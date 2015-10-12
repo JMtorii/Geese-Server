@@ -4,7 +4,6 @@ package com.geese.server.domain;
  * Created by JMtorii on 2015-10-06.
  */
 
-// TODO
 public class Flock {
     private int id;
     private int authorid;

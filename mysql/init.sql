@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS test;
+CREATE DATABASE IF NOT EXISTS geese_db;
 
-use test;
+use geese_db;
 
 CREATE TABLE IF NOT EXISTS Goose
 (
@@ -52,6 +52,14 @@ CREATE TABLE IF NOT EXISTS Post
 	CONSTRAINT Post_Topic_fk FOREIGN KEY (topicid) REFERENCES Topic (id),
 	CONSTRAINT Post_Author_fk FOREIGN KEY (authorid) REFERENCES Goose (id)
 );
+
+CREATE TABLE IF NOT EXISTS User
+{
+	id INT(16) NOT NULL AUTO_INCREMENT,
+	email VARCHAR(255) NOT NULL,
+	password CHAR(128) NOT NULL,
+	CONSTRAINT User_pk PRIMARY KEY (id)	
+};
 
 INSERT INTO Goose (uuid)
 VALUES ('f81d4fae-7dec-11d0-a765-00a0c91e6bf6');
