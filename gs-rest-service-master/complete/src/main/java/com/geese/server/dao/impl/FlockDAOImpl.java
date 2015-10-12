@@ -2,6 +2,8 @@ package com.geese.server.dao.impl;
 
 import com.geese.server.dao.FlockDAO;
 import com.geese.server.domain.Flock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -21,21 +23,10 @@ import java.util.List;
  */
 @Repository
 public class FlockDAOImpl implements FlockDAO {
+    private static Logger LOGGER = LoggerFactory.getLogger(FlockDAOImpl.class);
+
     @Autowired
     protected JdbcTemplate jdbc;
-
-    /*`id` int(16) NOT NULL AUTO_INCREMENT,
-    `authorid` int(16) NOT NULL,
-    `name` varchar(32) DEFAULT NULL,
-    `description` varchar(255) DEFAULT NULL,
-    `latitude` float(10,6) DEFAULT NULL,
-    `longitude` float(10,6) DEFAULT NULL,
-    `radius` double DEFAULT NULL,*/
-
-    String insertString = "INSERT INTO FLOCK " +
-            "(AUTHORID, NAME, DESCRIPTION, LATITUDE," +
-            " LONGITUDE, RADIUS) VALUES " +
-            "(?, ?, ?, ?, ?, ?)";
 
     @Override
     public void delete(Flock deleted) {
@@ -71,8 +62,11 @@ public class FlockDAOImpl implements FlockDAO {
 
     @Override
     public Boolean save(final Flock saved) {
-        // Don't need to create new JdbcTemplate if it's autowired
-        //this.jdbc = new JdbcTemplate(dataSource);
+        String insertString = "INSERT INTO Flock " +
+                "(authorid, name, description, latitude, longitude, radius)" +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+
+        LOGGER.error("SOME SHIT: " + String.valueOf(saved.getAuthorid()));
         return jdbc.execute(insertString, new PreparedStatementCallback<Boolean>() {
             @Override
             public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
