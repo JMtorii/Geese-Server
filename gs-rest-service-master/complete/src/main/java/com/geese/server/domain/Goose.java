@@ -49,11 +49,13 @@ public class Goose {
     }
 
     static class Builder {
+        //required
         private int id;
         private String name;
         private String email;
         private boolean verified;
 
+        //optional
         private String password;
         private String salt;
 
