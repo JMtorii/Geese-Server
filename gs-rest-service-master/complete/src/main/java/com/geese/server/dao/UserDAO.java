@@ -26,7 +26,7 @@ public interface UserDAO {
      * @param savedUser     The information of the saved Flock entry.
      * @return          The number of affected rows
      */
-    int save(User savedUser);
+    User save(User savedUser);
 
     /**
      * Deletes a Flock entry from the database.
