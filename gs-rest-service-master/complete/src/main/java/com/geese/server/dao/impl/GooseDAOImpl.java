@@ -33,14 +33,15 @@ public class GooseDAOImpl implements GooseDAO {
     @Override
     public Goose save(final Goose savedGoose) {
         String insertString = "INSERT INTO Goose " +
-                "(email, password)" +
-                "VALUES (?, ?)";
+                "(name, email, verified)" +
+                "VALUES (?, ?, ?)";
 
         boolean success = jdbc.execute(insertString, new PreparedStatementCallback<Boolean>() {
             @Override
             public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
-                ps.setString(1, savedGoose.getEmail());
-                ps.setString(2, savedGoose.getPassword());
+                ps.setString(1, savedGoose.getName());
+                ps.setString(2, savedGoose.getEmail());
+                ps.setBoolean(3, savedGoose.getVerified());
 
                 return ps.execute();
             }
