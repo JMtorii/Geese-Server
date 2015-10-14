@@ -5,7 +5,11 @@ use geese_db;
 CREATE TABLE IF NOT EXISTS Goose
 (
 	id INT(16) NOT NULL AUTO_INCREMENT,
-	uuid CHAR(36) NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	email VARCHAR(254) NOT NULL,
+	verified BOOLEAN NOT NULL,
+	password CHAR(64),
+	salt CHAR(64),
 	CONSTRAINT Goose_pk PRIMARY KEY (id)
 );
 
@@ -17,7 +21,7 @@ CREATE TABLE IF NOT EXISTS Flock
 	description VARCHAR(255),
 	latitude FLOAT(10,6),
 	longitude FLOAT(10,6),
-	range DOUBLE,
+	radius DOUBLE,
 	CONSTRAINT Flock_pk PRIMARY KEY (id),
 	CONSTRAINT Flock_Author_fk FOREIGN KEY (authorid) REFERENCES Goose (id)
 );
@@ -60,18 +64,3 @@ CREATE TABLE IF NOT EXISTS User
 	password CHAR(128) NOT NULL,
 	CONSTRAINT User_pk PRIMARY KEY (id)	
 };
-
-INSERT INTO Goose (uuid)
-VALUES ('f81d4fae-7dec-11d0-a765-00a0c91e6bf6');
-
-INSERT INTO Flock (authorid, name, description, latitude, longitude, range)
-VALUES (1, 'New Flock', 'POST test', 12.34567, -1.123456, 1);
-
-INSERT INTO Membership (gooseid, flockid)
-VALUES (1, 1);
-
-INSERT INTO Topic (flockid, authorid, title, description)
-VALUES (1, 1, 'First', 'Insert a joke here');
-
-INSERT INTO Post (topicid, authorid, text)
-VALUES (1, 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');

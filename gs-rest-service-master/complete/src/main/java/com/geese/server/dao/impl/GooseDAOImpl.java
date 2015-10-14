@@ -1,7 +1,7 @@
 package com.geese.server.dao.impl;
 
-import com.geese.server.dao.UserDAO;
-import com.geese.server.domain.User;
+import com.geese.server.dao.GooseDAO;
+import com.geese.server.domain.Goose;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,48 +16,49 @@ import java.util.List;
  * Created by JMtorii on 2015-10-12.
  */
 @Repository
-public class UserDAOImpl implements UserDAO {
+public class GooseDAOImpl implements GooseDAO {
     @Autowired
     protected JdbcTemplate jdbc;
 
     @Override
-    public List<User> findAll() {
+    public List<Goose> findAll() {
         return null;
     }
 
     @Override
-    public User findOne(int id) {
+    public Goose findOne(int id) {
         return null;
     }
 
     @Override
-    public User save(final User savedUser) {
-        String insertString = "INSERT INTO User " +
-                "(email, password)" +
-                "VALUES (?, ?)";
+    public Goose save(final Goose savedGoose) {
+        String insertString = "INSERT INTO Goose " +
+                "(name, email, verified)" +
+                "VALUES (?, ?, ?)";
 
         boolean success = jdbc.execute(insertString, new PreparedStatementCallback<Boolean>() {
             @Override
             public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
-                ps.setString(1, savedUser.getEmail());
-                ps.setString(2, savedUser.getPassword());
+                ps.setString(1, savedGoose.getName());
+                ps.setString(2, savedGoose.getEmail());
+                ps.setBoolean(3, savedGoose.getVerified());
 
                 return ps.execute();
             }
         });
 
-        return savedUser;
+        return savedGoose;
 
 
 //        return jdbc.update(
-//                "INSERT INTO User (email, password) " +
+//                "INSERT INTO Goose (email, password) " +
 //                        "values (?, ?)",
-//                savedUser.getEmail(), savedUser.getPassword()
+//                savedGoose.getEmail(), savedGoose.getPassword()
 //        );
     }
 
     @Override
-    public void delete(User deletedUser) {
+    public void delete(Goose deletedGoose) {
 
     }
 }
