@@ -74,7 +74,7 @@ public class FlockDAOImpl implements FlockDAO {
                 ps.setString(3, saved.getDescription());
                 ps.setFloat(4, saved.getLatitude());
                 ps.setFloat(5, saved.getLongitude());
-                ps.setDouble(6, saved.getRange());
+                ps.setDouble(6, saved.getRadius());
 
                 return ps.execute();
             }

@@ -11,7 +11,7 @@ public class Flock {
     private String description;
     private float latitude;
     private float longitude;
-    private double range;
+    private double radius;
 
     public Flock() {}
 
@@ -45,8 +45,8 @@ public class Flock {
         return longitude;
     }
 
-    public double getRange() {
-        return range;
+    public double getRadius() {
+        return radius;
     }
 
     static class Builder {
@@ -56,7 +56,7 @@ public class Flock {
         private String description;
         private float latitude;
         private float longitude;
-        private double range;
+        private double radius;
 
         private Builder() {}
 
@@ -90,8 +90,8 @@ public class Flock {
             return this;
         }
 
-        Builder range(double range) {
-            this.range = range;
+        Builder radius(double radius) {
+            this.radius = radius;
             return this;
         }
 

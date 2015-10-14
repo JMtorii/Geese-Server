@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS Flock
 	description VARCHAR(255),
 	latitude FLOAT(10,6),
 	longitude FLOAT(10,6),
-	range DOUBLE,
+	radius DOUBLE,
 	CONSTRAINT Flock_pk PRIMARY KEY (id),
 	CONSTRAINT Flock_Author_fk FOREIGN KEY (authorid) REFERENCES Goose (id)
 );
