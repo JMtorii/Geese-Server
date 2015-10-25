@@ -46,7 +46,7 @@ public class Goose {
         return salt;
     }
 
-    static class Builder {
+    public static class Builder {
         //required
         private int id;
         private String name;
@@ -57,24 +57,24 @@ public class Goose {
         private String password;
         private String salt;
 
-        private Builder(int id, String name, String email, boolean verified) {
+        public  Builder(int id, String name, String email, boolean verified) {
             this.id = id;
             this.name = name;
             this.email = email;
             this.verified = verified;
         }
 
-        Builder password(String password) {
+        public Builder password(String password) {
             this.password = password;
             return this;
         }
 
-        Builder salt(String salt) {
+        public Builder salt(String salt) {
             this.salt = salt;
             return this;
         }
 
-        Goose build() {
+        public Goose build() {
             return new Goose(this);
         }
     }

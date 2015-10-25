@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -27,15 +29,32 @@ public class GooseDAOImpl implements GooseDAO {
     }
 
     @Override
-    public Goose findOne(int gooseId) {
-        return null;
+    public Goose findOne(final int gooseId) {
+        String sqlString =
+                "SELECT * FROM Goose " +
+                "WHERE id = ?;";
+
+        return jdbc.queryForObject(sqlString, new Object[]{gooseId}, new RowMapper<Goose>() {
+            @Override
+            public Goose mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return new Goose.Builder(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getBoolean("verified")
+                )
+                        .password(rs.getString("password"))
+                        .salt(rs.getString("salt"))
+                        .build();
+            }
+        });
     }
 
     @Override
     public Goose create(final Goose createdGoose) {
-        String insertString = "INSERT INTO Goose " +
-                "(name, email, verified)" +
-                "VALUES (?, ?, ?)";
+        String insertString =
+                "INSERT INTO Goose (name, email, verified)" +
+                "VALUES (?, ?, ?);";
 
         boolean success = jdbc.execute(insertString, new PreparedStatementCallback<Boolean>() {
             @Override
@@ -59,12 +78,12 @@ public class GooseDAOImpl implements GooseDAO {
     }
 
     @Override
-    public Goose update(Goose updatedGoose) {
+    public Goose update(final Goose updatedGoose) {
         return null;
     }
 
     @Override
-    public Goose delete(int gooseId) {
+    public Goose delete(final int gooseId) {
         return null;
     }
 }
