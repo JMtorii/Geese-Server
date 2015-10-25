@@ -17,16 +17,16 @@ import java.util.ArrayList;
 public class GooseController {
 
     @Autowired
-    private GooseService userService;
+    private GooseService gooseService;
 
     /**
-     * Gets a user by id
-     * @param gooseId   Identifier for goose
-     * @return          If goose is found, return the user object and HTTP status 302; otherwise, 404
+     * Gets a Goose by id
+     * @param gooseId   Identifier for Goose
+     * @return          If Goose is found, return the Goose object and HTTP status 302; otherwise, 404
      */
     @RequestMapping(value = "/{gooseId}", method = RequestMethod.GET)
-    public ResponseEntity<Goose> getUser(@PathVariable String gooseId) {
-        Goose foundGoose = userService.findOne(gooseId);
+    public ResponseEntity<Goose> getGoose(@PathVariable String gooseId) {
+        Goose foundGoose = gooseService.findOne(gooseId);
 
         if (foundGoose != null) {
             return new ResponseEntity<>(foundGoose, HttpStatus.FOUND);
@@ -36,12 +36,12 @@ public class GooseController {
     }
 
     /**
-     * Gets all users
-     * @return      If geese exist, return list of users and HTTP status 302; otherwise, 404
+     * Gets all Geese
+     * @return      If Geese exist, return list of Geese and HTTP status 302; otherwise, 404
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<ArrayList<Goose>> getAllGeese() {
-        ArrayList<Goose> geese = userService.findAll();
+        ArrayList<Goose> geese = gooseService.findAll();
 
         if (geese != null) {
             return new ResponseEntity<>(geese, HttpStatus.FOUND);
@@ -51,13 +51,13 @@ public class GooseController {
     }
 
     /**
-     * Creates a new goose if the id and username do not exist
+     * Creates a new Goose if the id and username do not exist
      * @param goose Goose to persist in server
-     * @return      If user is successfully created, return HTTP status 201; otherwise, 400
+     * @return      If Goose is successfully created, return HTTP status 201; otherwise, 400
      */
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<Goose> createGoose(@RequestBody Goose goose) {
-        Goose createdGoose = userService.create(goose);
+        Goose createdGoose = gooseService.create(goose);
 
         if (createdGoose != null) {
             return new ResponseEntity<>(HttpStatus.CREATED);
@@ -68,14 +68,14 @@ public class GooseController {
     }
 
     /**
-     * Updates an existing user
-     * @param gooseId   Identifier for user
-     * @param goose     User to persist in server
-     * @return          If the user exists and is changed, return HTTP status 202; otherwise 404.
+     * Updates an existing Goose
+     * @param gooseId   Identifier for Goose
+     * @param goose     Goose to persist in server
+     * @return          If the Goose exists and is changed, return HTTP status 202; otherwise 404.
      */
     @RequestMapping(value = "/{gooseId}", method = RequestMethod.PUT)
-    public ResponseEntity<Goose> updateUser(@PathVariable String gooseId, @RequestBody Goose goose) {
-        Goose updatedGoose = userService.update(gooseId, goose);
+    public ResponseEntity<Goose> updateGoose(@PathVariable String gooseId, @RequestBody Goose goose) {
+        Goose updatedGoose = gooseService.update(gooseId, goose);
 
         if (updatedGoose != null) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
@@ -85,13 +85,13 @@ public class GooseController {
     }
 
     /**
-     * Deletes an existing user
-     * @param gooseId   Identifier for the user
-     * @return          If the user exists and is deleted, return HTTP status 202; otherwise 404.
+     * Deletes an existing Goose
+     * @param gooseId   Identifier for the Goose
+     * @return          If the Goose exists and is deleted, return HTTP status 202; otherwise 404.
      */
     @RequestMapping(value = "/{gooseId}", method = RequestMethod.DELETE)
-    public ResponseEntity<Goose> deleteUser(@PathVariable String gooseId) {
-        Goose deletedGoose = userService.delete(gooseId);
+    public ResponseEntity<Goose> deleteGoose(@PathVariable String gooseId) {
+        Goose deletedGoose = gooseService.delete(gooseId);
 
         if (deletedGoose != null) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);

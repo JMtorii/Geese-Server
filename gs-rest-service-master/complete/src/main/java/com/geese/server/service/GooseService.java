@@ -23,10 +23,10 @@ public interface GooseService {
 
     /**
      * Creates a new Goose entry to the database.
-     * @param gooseUser         The information of the new Goose entry.
+     * @param createdGoose      The information of the new Goose entry.
      * @return                  The created Goose.
      */
-    Goose create(Goose gooseUser);
+    Goose create(Goose createdGoose);
 
     /**
      * Updates an existing Goose entry in the database.

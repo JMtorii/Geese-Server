@@ -29,8 +29,8 @@ public class GooseServiceImpl implements GooseService {
     }
 
     @Override
-    public Goose create(Goose savedGoose) {
-        return gooseDAO.create(savedGoose);
+    public Goose create(Goose createdGoose) {
+        return gooseDAO.create(createdGoose);
     }
 
     @Override
