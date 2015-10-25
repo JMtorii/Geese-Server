@@ -3,7 +3,6 @@ package com.geese.server.domain;
 /**
  * Created by JMtorii on 2015-10-06.
  */
-
 public class Goose {
     private int id;
     private String name;
@@ -12,7 +11,6 @@ public class Goose {
     private String password;
     private String salt;
 
-    //TODO: Do we want the empty constructor?
     public Goose() {}
 
     private Goose(Builder builder) {
@@ -64,26 +62,6 @@ public class Goose {
             this.name = name;
             this.email = email;
             this.verified = verified;
-        }
-
-        Builder id(int id) {
-            this.id = id;
-            return this;
-        }
-
-        Builder name(String name) {
-            this.name = name;
-            return this;
-        }
-
-        Builder email(String email) {
-            this.email = email;
-            return this;
-        }
-
-        Builder verified(boolean verified) {
-            this.verified = verified;
-            return this;
         }
 
         Builder password(String password) {

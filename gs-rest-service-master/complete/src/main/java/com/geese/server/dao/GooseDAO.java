@@ -2,35 +2,42 @@ package com.geese.server.dao;
 
 import com.geese.server.domain.Goose;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by JMtorii on 2015-10-12.
  */
 public interface GooseDAO {
     /**
-     * Finds all Flock entries from the database.
-     * @return  The information of all Flock entries that are found from the database.
+     * Finds all Goose entries from the database.
+     * @return  All existing Geese.
      */
-    List<Goose> findAll();
+    ArrayList<Goose> findAll();
 
     /**
-     * Finds the information of a single Flock entry.
-     * @param id    The id of the requested Flock entry.
-     * @return      The information of the found Flock entry.
+     * Finds the a single Goose.
+     * @param gooseId   The id of the requested Goose entry.
+     * @return          The found Goose.
      */
-    Goose findOne(int id);
+    Goose findOne(int gooseId);
 
     /**
-     * Saves a new Flock entry to the database.
-     * @param savedGoose     The information of the saved Flock entry.
-     * @return          The number of affected rows
+     * Creates a new User entry to the database.
+     * @param createdGoose      The information of the new User entry.
+     * @return                  The created Goose.
      */
-    Goose save(Goose savedGoose);
+    Goose create(Goose createdGoose);
 
     /**
-     * Deletes a Flock entry from the database.
-     * @param deletedGoose   The deleted Flock entry.
+     * Updates an existing Goose entry in the database.
+     * @param updatedGoose  The information of the updated Goose entry.
+     * @return              The updated Goose.
      */
-    void delete(Goose deletedGoose);
+    Goose update(Goose updatedGoose);
+
+    /**
+     * Deletes a Goose from the database.
+     * @param gooseId   The deleted Goose entry.
+     */
+    Goose delete(int gooseId);
 }

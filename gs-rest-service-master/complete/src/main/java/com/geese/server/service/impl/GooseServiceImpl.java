@@ -6,33 +6,41 @@ import com.geese.server.service.GooseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by JMtorii on 2015-10-12.
  */
 @Service
+@SuppressWarnings("unused")
 public class GooseServiceImpl implements GooseService {
+
     @Autowired
     GooseDAO gooseDAO;
 
     @Override
-    public List<Goose> findAll() {
-        return null;
+    public ArrayList<Goose> findAll() {
+        return gooseDAO.findAll();
     }
 
     @Override
-    public Goose findOne(int id) {
-        return null;
+    public Goose findOne(String gooseId) {
+        return gooseDAO.findOne(Integer.valueOf(gooseId));
     }
 
     @Override
-    public Goose save(Goose savedGoose) {
-        return gooseDAO.save(savedGoose);
+    public Goose create(Goose savedGoose) {
+        return gooseDAO.create(savedGoose);
     }
 
     @Override
-    public void delete(Goose deletedGoose) {
+    public Goose update(String gooseId, Goose updatedGoose) {
+        // TODO: check whether gooseId matches updatedGoose.gooseId
+        return gooseDAO.update(updatedGoose);
+    }
 
+    @Override
+    public Goose delete(String gooseId) {
+        return gooseDAO.delete(Integer.valueOf(gooseId));
     }
 }

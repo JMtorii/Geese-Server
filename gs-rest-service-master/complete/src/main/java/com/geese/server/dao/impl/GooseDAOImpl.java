@@ -10,28 +10,29 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by JMtorii on 2015-10-12.
  */
 @Repository
+@SuppressWarnings("unused")
 public class GooseDAOImpl implements GooseDAO {
     @Autowired
     protected JdbcTemplate jdbc;
 
     @Override
-    public List<Goose> findAll() {
+    public ArrayList<Goose> findAll() {
         return null;
     }
 
     @Override
-    public Goose findOne(int id) {
+    public Goose findOne(int gooseId) {
         return null;
     }
 
     @Override
-    public Goose save(final Goose savedGoose) {
+    public Goose create(final Goose createdGoose) {
         String insertString = "INSERT INTO Goose " +
                 "(name, email, verified)" +
                 "VALUES (?, ?, ?)";
@@ -39,15 +40,15 @@ public class GooseDAOImpl implements GooseDAO {
         boolean success = jdbc.execute(insertString, new PreparedStatementCallback<Boolean>() {
             @Override
             public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
-                ps.setString(1, savedGoose.getName());
-                ps.setString(2, savedGoose.getEmail());
-                ps.setBoolean(3, savedGoose.getVerified());
+                ps.setString(1, createdGoose.getName());
+                ps.setString(2, createdGoose.getEmail());
+                ps.setBoolean(3, createdGoose.getVerified());
 
                 return ps.execute();
             }
         });
 
-        return savedGoose;
+        return createdGoose;
 
 
 //        return jdbc.update(
@@ -58,7 +59,12 @@ public class GooseDAOImpl implements GooseDAO {
     }
 
     @Override
-    public void delete(Goose deletedGoose) {
+    public Goose update(Goose updatedGoose) {
+        return null;
+    }
 
+    @Override
+    public Goose delete(int gooseId) {
+        return null;
     }
 }
