@@ -9,28 +9,35 @@ import java.util.List;
  */
 public interface GooseDAO {
     /**
-     * Finds all Flock entries from the database.
-     * @return  The information of all Flock entries that are found from the database.
+     * Finds all Goose entries from the database.
+     * @return  All existing Geese.
      */
     List<Goose> findAll();
 
     /**
-     * Finds the information of a single Flock entry.
-     * @param id    The id of the requested Flock entry.
-     * @return      The information of the found Flock entry.
+     * Finds the a single Goose.
+     * @param gooseId   The id of the requested Goose entry.
+     * @return          The found Goose.
      */
-    Goose findOne(int id);
+    Goose findOne(final int gooseId);
 
     /**
-     * Saves a new Flock entry to the database.
-     * @param savedGoose     The information of the saved Flock entry.
-     * @return          The number of affected rows
+     * Creates a new User entry to the database.
+     * @param createdGoose      The information of the new User entry.
+     * @return                  The created Goose.
      */
-    Goose save(Goose savedGoose);
+    Goose create(final Goose createdGoose);
 
     /**
-     * Deletes a Flock entry from the database.
-     * @param deletedGoose   The deleted Flock entry.
+     * Updates an existing Goose entry in the database.
+     * @param updatedGoose  The information of the updated Goose entry.
+     * @return              The updated Goose.
      */
-    void delete(Goose deletedGoose);
+    Goose update(final Goose updatedGoose);
+
+    /**
+     * Deletes a Goose from the database.
+     * @param gooseId   The deleted Goose entry.
+     */
+    Goose delete(final int gooseId);
 }
