@@ -6,7 +6,7 @@ import com.geese.server.service.GooseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by JMtorii on 2015-10-12.
@@ -19,7 +19,7 @@ public class GooseServiceImpl implements GooseService {
     GooseDAO gooseDAO;
 
     @Override
-    public ArrayList<Goose> findAll() {
+    public List<Goose> findAll() {
         return gooseDAO.findAll();
     }
 

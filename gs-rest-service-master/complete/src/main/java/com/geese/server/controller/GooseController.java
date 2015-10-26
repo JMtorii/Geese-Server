@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by JMtorii on 2015-10-12.
@@ -40,8 +40,8 @@ public class GooseController {
      * @return      If Geese exist, return list of Geese and HTTP status 302; otherwise, 404
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<ArrayList<Goose>> getAllGeese() {
-        ArrayList<Goose> geese = gooseService.findAll();
+    public ResponseEntity<List<Goose>> getAllGeese() {
+        List<Goose> geese = gooseService.findAll();
 
         if (geese != null) {
             return new ResponseEntity<>(geese, HttpStatus.FOUND);
