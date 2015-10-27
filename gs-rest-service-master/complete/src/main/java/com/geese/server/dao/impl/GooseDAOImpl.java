@@ -5,14 +5,11 @@ import com.geese.server.domain.Goose;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -56,7 +53,7 @@ public class GooseDAOImpl implements GooseDAO {
 
             return geese;
         } catch (EmptyResultDataAccessException e) {
-            logger.warn("Goose: findOne returns no rows");
+            logger.warn("Goose: findAll returns no rows");
             return null;
         }
     }
@@ -94,32 +91,37 @@ public class GooseDAOImpl implements GooseDAO {
     }
 
     @Override
-    public Goose create(final Goose createdGoose) {
-        String insertString =
+    public int create(final Goose createdGoose) {
+        String sqlString =
                 "INSERT INTO Goose (name, email, verified)" +
                 "VALUES (?, ?, ?);";
 
-        boolean success = jdbc.execute(insertString, new PreparedStatementCallback<Boolean>() {
-            @Override
-            public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
-                ps.setString(1, createdGoose.getName());
-                ps.setString(2, createdGoose.getEmail());
-                ps.setBoolean(3, createdGoose.getVerified());
-
-                return ps.execute();
-            }
-        });
-
-        return createdGoose;
+        return jdbc.update(sqlString,
+                createdGoose.getName(),
+                createdGoose.getEmail(),
+                createdGoose.getVerified());
     }
 
     @Override
-    public Goose update(final Goose updatedGoose) {
-        return null;
+    public int update(final Goose updatedGoose) {
+        String sqlString =
+                "UPDATE Goose " +
+                "SET name = ?, email = ?, verified = ?" +
+                "WHERE id = ?";
+
+        return jdbc.update(sqlString,
+                updatedGoose.getName(),
+                updatedGoose.getEmail(),
+                updatedGoose.getVerified(),
+                updatedGoose.getId());
     }
 
     @Override
-    public Goose delete(final int gooseId) {
-        return null;
+    public int delete(final int gooseId) {
+        String sqlString =
+                "DELETE FROM Goose " +
+                "WHERE id = ?";
+
+        return jdbc.update(sqlString, gooseId);
     }
 }

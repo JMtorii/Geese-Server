@@ -29,18 +29,18 @@ public class GooseServiceImpl implements GooseService {
     }
 
     @Override
-    public Goose create(Goose createdGoose) {
+    public int create(Goose createdGoose) {
         return gooseDAO.create(createdGoose);
     }
 
     @Override
-    public Goose update(String gooseId, Goose updatedGoose) {
+    public int update(String gooseId, Goose updatedGoose) {
         // TODO: check whether gooseId matches updatedGoose.gooseId
         return gooseDAO.update(updatedGoose);
     }
 
     @Override
-    public Goose delete(String gooseId) {
+    public int delete(String gooseId) {
         return gooseDAO.delete(Integer.valueOf(gooseId));
     }
 }

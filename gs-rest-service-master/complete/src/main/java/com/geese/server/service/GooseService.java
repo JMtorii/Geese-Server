@@ -24,21 +24,22 @@ public interface GooseService {
     /**
      * Creates a new Goose entry to the database.
      * @param createdGoose      The information of the new Goose entry.
-     * @return                  The created Goose.
+     * @return                  The number of created Goose objects.
      */
-    Goose create(Goose createdGoose);
+    int create(Goose createdGoose);
 
     /**
      * Updates an existing Goose entry in the database.
      * @param gooseId       The gooseId of the requested Goose entry.
      * @param updatedGoose  The information of the updated Goose entry.
-     * @return              The updated Goose.
+     * @return              The number of updated Goose objects.
      */
-    Goose update(String gooseId, Goose updatedGoose);
+    int update(String gooseId, Goose updatedGoose);
 
     /**
      * Deletes a Goose from the database.
      * @param gooseId   ID to delete from database.
+     * @return          The number of deleted Goose objects.
      */
-    Goose delete(String gooseId);
+    int delete(String gooseId);
 }

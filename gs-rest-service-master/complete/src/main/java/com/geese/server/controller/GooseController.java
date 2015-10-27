@@ -57,9 +57,9 @@ public class GooseController {
      */
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<Goose> createGoose(@RequestBody Goose goose) {
-        Goose createdGoose = gooseService.create(goose);
+        int numCreatedGoose = gooseService.create(goose);
 
-        if (createdGoose != null) {
+        if (numCreatedGoose > 0) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
             // TODO: choose better HTTP status
@@ -75,9 +75,9 @@ public class GooseController {
      */
     @RequestMapping(value = "/{gooseId}", method = RequestMethod.PUT)
     public ResponseEntity<Goose> updateGoose(@PathVariable String gooseId, @RequestBody Goose goose) {
-        Goose updatedGoose = gooseService.update(gooseId, goose);
+        int numUpdatedGoose = gooseService.update(gooseId, goose);
 
-        if (updatedGoose != null) {
+        if (numUpdatedGoose > 0) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -91,9 +91,9 @@ public class GooseController {
      */
     @RequestMapping(value = "/{gooseId}", method = RequestMethod.DELETE)
     public ResponseEntity<Goose> deleteGoose(@PathVariable String gooseId) {
-        Goose deletedGoose = gooseService.delete(gooseId);
+        int numDeletedGoose = gooseService.delete(gooseId);
 
-        if (deletedGoose != null) {
+        if (numDeletedGoose > 0) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
