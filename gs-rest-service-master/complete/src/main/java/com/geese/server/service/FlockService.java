@@ -10,9 +10,10 @@ import java.util.List;
 public interface FlockService {
     /**
      * Deletes a Flock entry from the database.
-     * @param deleted   The deleted Flock entry.
+     * @param flockId   The id of the Flock to delete from the database
+     * @return  The number of deleted Flocks
      */
-    void delete(Flock deleted);
+    int delete(String flockId);
 
     /**
      * Finds all Flock entries from the database.
@@ -22,22 +23,23 @@ public interface FlockService {
 
     /**
      * Finds the information of a single Flock entry.
-     * @param id    The id of the requested Flock entry.
+     * @param flockId    The id of the requested Flock entry.
      * @return      The information of the found Flock entry.
      */
-    Flock findOne(int id);
+    Flock findOne(String flockId);
 
     /**
      * Saves a new Flock entry to the database.
      * @param saved     The information of the saved Flock entry.
-     * @return          The information of the saved Flock entry.
+     * @return          Number of created entries
      */
-    Flock save(Flock saved);
+    int create(Flock saved);
 
     /**
-     * Updates the information of an existing Flock entry.
-     * @param flock     The information of the updated Flock entry.
-     * @return          The information of the updated Flock entry.
+     * Updates an existing Flock entry in the database.
+     * @param flockId       The flockId of the requested Flock entry.
+     * @param updatedFlock  The information of the updated Flock entry.
+     * @return              The number of updated Flock objects.
      */
-    Flock update(Flock flock);
+    int update(String flockId, Flock updatedFlock);
 }

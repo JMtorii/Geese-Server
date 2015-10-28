@@ -29,8 +29,8 @@ public class FlockDAOImpl implements FlockDAO {
     protected JdbcTemplate jdbc;
 
     @Override
-    public void delete(Flock deleted) {
-
+    public int delete(int flockId) {
+        return 0;
     }
 
     @Override
@@ -38,30 +38,14 @@ public class FlockDAOImpl implements FlockDAO {
         return null;
     }
 
-    // TODO: change to PreparedStatement
-    // http://www.mkyong.com/spring/maven-spring-jdbc-example/
     @Override
     public Flock findOne(int id) {
         Connection connection = null;
-
-//        try {
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        } finally {
-//            if(connection != null ) {
-//                try {
-//                    connection.close();
-//                } catch (SQLException e) {
-//
-//                }
-//            }
-//        }
-
         return null;
     }
 
     @Override
-    public Flock save(final Flock saved) {
+    public int create(final Flock created) {
         String insertString = "INSERT INTO Flock " +
                 "(authorid, name, description, latitude, longitude, radius)" +
                 "VALUES (?, ?, ?, ?, ?, ?)";
@@ -69,17 +53,22 @@ public class FlockDAOImpl implements FlockDAO {
         boolean success = jdbc.execute(insertString, new PreparedStatementCallback<Boolean>() {
             @Override
             public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
-                ps.setInt(1, saved.getAuthorid());
-                ps.setString(2, saved.getName());
-                ps.setString(3, saved.getDescription());
-                ps.setFloat(4, saved.getLatitude());
-                ps.setFloat(5, saved.getLongitude());
-                ps.setDouble(6, saved.getRadius());
+                ps.setInt(1, created.getAuthorid());
+                ps.setString(2, created.getName());
+                ps.setString(3, created.getDescription());
+                ps.setFloat(4, created.getLatitude());
+                ps.setFloat(5, created.getLongitude());
+                ps.setDouble(6, created.getRadius());
 
                 return ps.execute();
             }
         });
 
-        return saved;
+        return 1;
+    }
+
+    @Override
+    public int update(Flock updated) {
+        return 0;
     }
 }
