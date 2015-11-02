@@ -1,7 +1,6 @@
 package com.geese.server.service.impl;
 
 import com.geese.server.dao.FlockDAO;
-import com.geese.server.dao.impl.FlockDAOImpl;
 import com.geese.server.domain.Flock;
 import com.geese.server.service.FlockService;
 import org.springframework.beans.factory.annotation.Autowired;
