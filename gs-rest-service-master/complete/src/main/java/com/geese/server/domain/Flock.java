@@ -49,7 +49,7 @@ public class Flock {
         return radius;
     }
 
-    static class Builder {
+    public static class Builder {
         private int id;
         private int authorid;
         private String name;
@@ -58,45 +58,45 @@ public class Flock {
         private float longitude;
         private double radius;
 
-        private Builder() {}
+        public Builder() {}
 
-        Builder id(int id) {
+        public Builder id(int id) {
             this.id = id;
             return this;
         }
 
-        Builder authorid(int authorid) {
+        public Builder authorid(int authorid) {
             this.authorid = authorid;
             return this;
         }
 
-        Builder name(String name) {
+        public Builder name(String name) {
             this.name = name;
             return this;
         }
 
-        Builder description(String description) {
+        public Builder description(String description) {
             this.description = description;
             return this;
         }
 
-        Builder latitude(float latitude) {
+        public Builder latitude(float latitude) {
             this.latitude = latitude;
             return this;
         }
 
-        Builder longitude(float longitude) {
+        public Builder longitude(float longitude) {
             this.longitude = longitude;
             return this;
         }
 
-        Builder radius(double radius) {
+        public Builder radius(double radius) {
             this.radius = radius;
             return this;
         }
 
         // TODO: potentially check for non-null values
-        Flock build() {
+        public Flock build() {
             return new Flock(this);
         }
     }

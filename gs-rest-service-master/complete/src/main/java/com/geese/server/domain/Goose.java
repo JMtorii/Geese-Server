@@ -57,7 +57,7 @@ public class Goose {
         private String password;
         private String salt;
 
-        public  Builder(int id, String name, String email, boolean verified) {
+        public Builder(int id, String name, String email, boolean verified) {
             this.id = id;
             this.name = name;
             this.email = email;
