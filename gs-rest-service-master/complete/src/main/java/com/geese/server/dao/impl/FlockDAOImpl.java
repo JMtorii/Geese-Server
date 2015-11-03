@@ -13,9 +13,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
 
 /**
@@ -63,8 +65,8 @@ public class FlockDAOImpl implements FlockDAO {
     @Override
     public Flock save(final Flock saved) {
         String insertString = "INSERT INTO Flock " +
-                "(authorid, name, description, latitude, longitude, radius)" +
-                "VALUES (?, ?, ?, ?, ?, ?)";
+                "(authorid, name, description, latitude, longitude, radius, score, createdTime, expireTime)" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         boolean success = jdbc.execute(insertString, new PreparedStatementCallback<Boolean>() {
             @Override
@@ -75,7 +77,9 @@ public class FlockDAOImpl implements FlockDAO {
                 ps.setFloat(4, saved.getLatitude());
                 ps.setFloat(5, saved.getLongitude());
                 ps.setDouble(6, saved.getRadius());
-
+                ps.setInt(7, 0); saved.getScore();
+                ps.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now(ZoneId.ofOffset("", ZoneOffset.UTC))));
+                ps.setNull(9, Types.TIMESTAMP);
                 return ps.execute();
             }
         });
