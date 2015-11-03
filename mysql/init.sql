@@ -25,8 +25,8 @@ CREATE TABLE IF NOT EXISTS Flock
 	longitude FLOAT(10,6) NOT NULL, -- Longitude of Flock creation point
 	radius DOUBLE NOT NULL, -- Range in meters for discovery of Flock from creation point
 	score INT(16) NOT NULL, -- Up/down votes
-	createdTime DATETIME NOT NULL, -- Time of flock creation
-	-- add end time for transient flocks?
+	createdTime DATETIME NOT NULL, -- Time of flock creation (NOTE: ALL TIMES ARE IN UTC-0)
+	expireTime DATETIME, -- Time the flock expires, null if never
 	CONSTRAINT Flock_pk PRIMARY KEY (id),
 	CONSTRAINT Flock_Author_fk FOREIGN KEY (authorid) REFERENCES Goose (id)
 );
@@ -97,10 +97,3 @@ CREATE TABLE IF NOT EXISTS PostVote
 	CONSTRAINT PostVote_Goose_fk FOREIGN KEY (gooseid) REFERENCES Goose (id),
 	CONSTRAINT PostVote_Post_fk FOREIGN KEY (postid) REFERENCES Post (id)
 );
-
--- Table for logged in sessions
--- CREATE TABLE IF NOT EXISTS Session
--- {
--- 	gooseid INT(16) NOT NULL,
---  cookie CHAR(64) NOT NULL
--- }
