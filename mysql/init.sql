@@ -97,3 +97,4 @@ CREATE TABLE IF NOT EXISTS PostVote
 	CONSTRAINT PostVote_Goose_fk FOREIGN KEY (gooseid) REFERENCES Goose (id),
 	CONSTRAINT PostVote_Post_fk FOREIGN KEY (postid) REFERENCES Post (id)
 );
+
