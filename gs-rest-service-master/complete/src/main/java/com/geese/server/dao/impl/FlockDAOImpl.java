@@ -1,6 +1,7 @@
 package com.geese.server.dao.impl;
 
 import com.geese.server.dao.FlockDAO;
+import com.geese.server.dao.util.TimeHelper;
 import com.geese.server.domain.Flock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -39,13 +41,16 @@ public class FlockDAOImpl implements FlockDAO {
             for (Map row : rows) {
                 Flock flock = new Flock.Builder()
                         .id((int)row.get("id"))
-                        .authorid((int)row.get("authorid"))
-                        .name((String)row.get("name"))
-                        .description((String)row.get("description"))
-                        .latitude((float)row.get("latitude"))
-                        .longitude((float)row.get("longitude"))
-                        .radius((double)row.get("radius")
-                        ).build();
+                        .authorid((int) row.get("authorid"))
+                        .name((String) row.get("name"))
+                        .description((String) row.get("description"))
+                        .latitude((float) row.get("latitude"))
+                        .longitude((float) row.get("longitude"))
+                        .radius((double) row.get("radius"))
+                        .score((int) row.get("score"))
+                        .createdTime((LocalDateTime) row.get("createdTime"))
+                        .expireTime((LocalDateTime) row.get("expireTime"))
+                        .build();
 
                 flocks.add(flock);
             }
@@ -78,8 +83,11 @@ public class FlockDAOImpl implements FlockDAO {
                                 .description(rs.getString("description"))
                                 .latitude(rs.getFloat("latitude"))
                                 .longitude(rs.getFloat("longitude"))
-                                .radius(rs.getDouble("radius")
-                        ).build();
+                                .radius(rs.getDouble("radius"))
+                                .score(rs.getInt("score"))
+                                .createdTime(TimeHelper.fromDB(rs.getTimestamp("createdTime")))
+                                .expireTime(TimeHelper.fromDB(rs.getTimestamp("expireTime")))
+                                .build();
                     }
                 }
             });
@@ -94,7 +102,7 @@ public class FlockDAOImpl implements FlockDAO {
         String query =
                 "UPDATE Flock " +
                         "SET authorid = ?, name = ?, description = ?, latitude = ?," +
-                        "longitude = ?, radius = ?" +
+                        "longitude = ?, radius = ?, score = ?, createdTime = ?, expireTime = ?" +
                         "WHERE id = ?";
 
         return jdbc.update(query,
@@ -104,6 +112,9 @@ public class FlockDAOImpl implements FlockDAO {
                 updatedFlock.getLatitude(),
                 updatedFlock.getLongitude(),
                 updatedFlock.getRadius(),
+                updatedFlock.getScore(),
+                TimeHelper.toDB(updatedFlock.getCreatedTime()),
+                TimeHelper.toDB(updatedFlock.getExpireTime()),
                 updatedFlock.getId());
     }
 
@@ -119,15 +130,19 @@ public class FlockDAOImpl implements FlockDAO {
     @Override
     public int create(final Flock created) {
         String query = "INSERT INTO Flock " +
-                "(authorid, name, description, latitude, longitude, radius)" +
-                "VALUES (?, ?, ?, ?, ?, ?)";
+                "(authorid, name, description, latitude, longitude, radius, score, createdTime, expireTime)" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-            return jdbc.update(query,
-                    created.getAuthorid(),
-                    created.getName(),
-                    created.getDescription(),
-                    created.getLatitude(),
-                    created.getLongitude(),
-                    created.getRadius());
+        return jdbc.update(query,
+                created.getAuthorid(),
+                created.getName(),
+                created.getDescription(),
+                created.getLatitude(),
+                created.getLongitude(),
+                created.getRadius(),
+                created.getScore(),
+                TimeHelper.toDB(created.getCreatedTime()), //TODO use client or server version? Timestamp.valueOf(LocalDateTime.now(ZoneId.ofOffset("", ZoneOffset.UTC)))
+                TimeHelper.toDB(created.getExpireTime())
+        );
     }
 }
