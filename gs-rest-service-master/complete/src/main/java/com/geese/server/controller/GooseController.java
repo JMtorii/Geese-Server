@@ -22,14 +22,14 @@ public class GooseController {
     /**
      * Gets a Goose by id
      * @param gooseId   Identifier for Goose
-     * @return          If Goose is found, return the Goose object and HTTP status 302; otherwise, 404
+     * @return          If Goose is found, return the Goose object and HTTP status 200; otherwise, 404
      */
     @RequestMapping(value = "/{gooseId}", method = RequestMethod.GET)
     public ResponseEntity<Goose> getGoose(@PathVariable String gooseId) {
         Goose foundGoose = gooseService.findOne(gooseId);
 
         if (foundGoose != null) {
-            return new ResponseEntity<>(foundGoose, HttpStatus.FOUND);
+            return new ResponseEntity<>(foundGoose, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -37,14 +37,14 @@ public class GooseController {
 
     /**
      * Gets all Geese
-     * @return      If Geese exist, return list of Geese and HTTP status 302; otherwise, 404
+     * @return      If Geese exist, return list of Geese and HTTP status 200; otherwise, 404
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<Goose>> getAllGeese() {
         List<Goose> geese = gooseService.findAll();
 
         if (geese != null) {
-            return new ResponseEntity<>(geese, HttpStatus.FOUND);
+            return new ResponseEntity<>(geese, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
