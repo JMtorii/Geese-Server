@@ -1,7 +1,6 @@
 package com.geese.server.service.impl;
 
 import com.geese.server.dao.FlockDAO;
-import com.geese.server.dao.impl.FlockDAOImpl;
 import com.geese.server.domain.Flock;
 import com.geese.server.service.FlockService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,30 +16,30 @@ public class FlockServiceImpl implements FlockService {
     @Autowired
     private FlockDAO flockDAO;
 
-    // https://github.com/pkainulainen/java-advent-2014/blob/master/src/main/java/com/javaadvent/bootrest/todo/MongoDbTodoService.java
     @Override
-    public void delete(Flock deleted) {
-        Flock deletedFlock = findOne(deleted.getId());
-        flockDAO.delete(deletedFlock);
+    public int delete(String flockId) {
+        return flockDAO.delete(Integer.valueOf(flockId));
     }
 
     @Override
     public List<Flock> findAll() {
-        return null;
+        return flockDAO.findAll();
     }
 
     @Override
-    public Flock findOne(int id) {
-        return null;
+    public Flock findOne(String flockId) {
+        return flockDAO.findOne(Integer.valueOf(flockId));
+    }
+
+
+    @Override
+    public int create(Flock saved) {
+        return flockDAO.create(saved);
     }
 
     @Override
-    public Flock save(Flock saved) {
-        return flockDAO.save(saved);
-    }
-
-    @Override
-    public Flock update(Flock flock) {
-        return null;
+    // TODO: Why are we sending the flockId
+    public int update(String flockId, Flock updatedFlock) {
+        return flockDAO.update(updatedFlock);
     }
 }

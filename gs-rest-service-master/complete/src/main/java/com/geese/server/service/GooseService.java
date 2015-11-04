@@ -10,27 +10,36 @@ import java.util.List;
 public interface GooseService {
     /**
      * Finds all Goose entries from the database.
-     * @return  The information of all Goose entries that are found from the database.
+     * @return  All existing Geese.
      */
     List<Goose> findAll();
 
     /**
-     * Finds the information of a single Goose entry.
-     * @param id    The id of the requested Goose entry.
-     * @return      The information of the found Goose entry.
+     * Finds the a single Goose.
+     * @param gooseId   The gooseId of the requested Goose entry.
+     * @return          The found Goose.
      */
-    Goose findOne(int id);
+    Goose findOne(String gooseId);
 
     /**
-     * Saves a new Goose entry to the database.
-     * @param savedGoose     The information of the saved Goose entry.
-     * @return          The number of affected rows
+     * Creates a new Goose entry to the database.
+     * @param createdGoose      The information of the new Goose entry.
+     * @return                  The number of created Goose objects.
      */
-    Goose save(Goose savedGoose);
+    int create(Goose createdGoose);
 
     /**
-     * Deletes a Goose entry from the database.
-     * @param deletedGoose   The deleted Goose entry.
+     * Updates an existing Goose entry in the database.
+     * @param gooseId       The gooseId of the requested Goose entry.
+     * @param updatedGoose  The information of the updated Goose entry.
+     * @return              The number of updated Goose objects.
      */
-    void delete(Goose deletedGoose);
+    int update(String gooseId, Goose updatedGoose);
+
+    /**
+     * Deletes a Goose from the database.
+     * @param gooseId   ID to delete from database.
+     * @return          The number of deleted Goose objects.
+     */
+    int delete(String gooseId);
 }

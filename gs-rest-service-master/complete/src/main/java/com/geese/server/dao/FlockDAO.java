@@ -11,9 +11,9 @@ public interface FlockDAO {
 
     /**
      * Deletes a Flock entry from the database.
-     * @param deleted   The deleted Flock entry.
+     * @param flockId   The id of the flock entry to delete
      */
-    void delete(Flock deleted);
+    int delete(final int flockId);
 
     /**
      * Finds all Flock entries from the database.
@@ -23,15 +23,22 @@ public interface FlockDAO {
 
     /**
      * Finds the information of a single Flock entry.
-     * @param id    The id of the requested Flock entry.
+     * @param flockId    The id of the requested Flock entry.
      * @return      The information of the found Flock entry.
      */
-    Flock findOne(int id);
+    Flock findOne(final int flockId);
 
     /**
      * Saves a new Flock entry to the database.
-     * @param saved     The information of the saved Flock entry.
-     * @return          The information of the saved Flock entry.
+     * @param created   The information of the created Flock entry.
+     * @return          The number of created Flocks
      */
-    Flock save(Flock saved);
+    int create(final Flock created);
+
+    /**
+     * Update an existing Flock entry in the database.
+     * @param updated   The information of the saved Flock entry.
+     * @return          The number of updated entries
+     */
+    int update(final Flock updated);
 }
