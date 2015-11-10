@@ -1,6 +1,6 @@
 package com.geese.server.service;
 
-import com.geese.server.domain.Flock;
+import com.geese.server.domain.Topic;
 
 import java.util.List;
 
@@ -9,37 +9,37 @@ import java.util.List;
  */
 public interface TopicService {
     /**
-     * Deletes a Flock entry from the database.
-     * @param flockId   The id of the Flock to delete from the database
-     * @return  The number of deleted Flocks
+     * Deletes a Topic entry from the database.
+     * @param topicId   The id of the Topic to delete from the database
+     * @return  The number of deleted Topics
      */
-    int delete(String flockId);
+    int delete(String topicId);
 
     /**
-     * Finds all Flock entries from the database.
-     * @return  The information of all Flock entries that are found from the database.
+     * Finds all Topic entries from the database.
+     * @return  The information of all Topic entries that are found from the database.
      */
-    List<Flock> findAll();
+    List<Topic> findAll();
 
     /**
-     * Finds the information of a single Flock entry.
-     * @param flockId    The id of the requested Flock entry.
-     * @return      The information of the found Flock entry.
+     * Finds the information of a single Topic entry.
+     * @param topicId    The id of the requested Topic entry.
+     * @return      The information of the found Topic entry.
      */
-    Flock findOne(String flockId);
+    Topic findOne(String topicId);
 
     /**
-     * Saves a new Flock entry to the database.
-     * @param saved     The information of the saved Flock entry.
+     * Saves a new Topic entry to the database.
+     * @param saved     The information of the saved Topic entry.
      * @return          Number of created entries
      */
-    int create(Flock saved);
+    int create(Topic saved);
 
     /**
-     * Updates an existing Flock entry in the database.
-     * @param flockId       The flockId of the requested Flock entry.
-     * @param updatedFlock  The information of the updated Flock entry.
-     * @return              The number of updated Flock objects.
+     * Updates an existing Topic entry in the database.
+     * @param topicId       The topicId of the requested Topic entry.
+     * @param updatedTopic  The information of the updated Topic entry.
+     * @return              The number of updated Topic objects.
      */
-    int update(String flockId, Flock updatedFlock);
+    int update(String topicId, Topic updatedTopic);
 }

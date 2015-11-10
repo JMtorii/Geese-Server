@@ -1,7 +1,7 @@
 package com.geese.server.controller;
 
-import com.geese.server.domain.Flock;
-import com.geese.server.service.FlockService;
+import com.geese.server.domain.Event;
+import com.geese.server.service.EventService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,49 +13,49 @@ import java.util.List;
 
 
 /**
- * Created by JMtorii on 2015-10-06.
+ * Created by ecrothers on 2015-11-08.
  */
 @RestController
-@RequestMapping(value = "/flock")
+@RequestMapping(value = "/event")
 public class EventController {
     private static Logger LOGGER = LoggerFactory.getLogger(EventController.class);
 
     @Autowired
-    private FlockService flockService;
+    private EventService eventService;
 
-    /*FlockController(FlockService flockService) {
-        this.flockService = flockService;
+    /*EventController(EventService eventService) {
+        this.eventService = eventService;
     }*/
 
     /*@RequestMapping(value="/", method= RequestMethod.POST)
-    public Flock createFlock(@RequestBody Flock flock) {
-        Flock created = flockService.save(flock);
+    public Event createEvent(@RequestBody Event event) {
+        Event created = eventService.save(event);
         return created;
     }*/
 
     /**
-     * Gets a Flock by id
-     * @param flockId   Identifier for Flock
-     * @return          If Flock is found, return the Flock object and HTTP status 302; otherwise, 404
+     * Gets a Event by id
+     * @param eventId   Identifier for Event
+     * @return          If Event is found, return the Event object and HTTP status 302; otherwise, 404
      */
-    @RequestMapping(value = "/{flockId}", method = RequestMethod.GET)
-    public ResponseEntity<Flock> getFlock(@PathVariable String flockId) {
-        Flock foundFlock = flockService.findOne(flockId);
+    @RequestMapping(value = "/{eventId}", method = RequestMethod.GET)
+    public ResponseEntity<Event> getEvent(@PathVariable String eventId) {
+        Event foundEvent = eventService.findOne(eventId);
 
-        if (foundFlock != null) {
-            return new ResponseEntity<>(foundFlock, HttpStatus.FOUND);
+        if (foundEvent != null) {
+            return new ResponseEntity<>(foundEvent, HttpStatus.FOUND);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     /**
-     * Gets all Flocks in database
+     * Gets all Events in database
      * @return      If Geese exist, return list of Geese and HTTP status 302; otherwise, 404
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<List<Flock>> getAllFlocks() {
-        List<Flock> geese = flockService.findAll();
+    public ResponseEntity<List<Event>> getAllEvents() {
+        List<Event> geese = eventService.findAll();
 
         if (geese != null) {
             return new ResponseEntity<>(geese, HttpStatus.FOUND);
@@ -65,15 +65,15 @@ public class EventController {
     }
 
     /**
-     * Creates a new Flock if the flock does not already exist
-     * @param flock Flock to persist in server
-     * @return      If Flock is successfully created, return HTTP status 201; otherwise, 400
+     * Creates a new Event if the event does not already exist
+     * @param event Event to persist in server
+     * @return      If Event is successfully created, return HTTP status 201; otherwise, 400
      */
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<Flock> createFlock(@RequestBody Flock flock) {
-        int numCreatedFlock = flockService.create(flock);
+    public ResponseEntity<Event> createEvent(@RequestBody Event event) {
+        int numCreatedEvent = eventService.create(event);
 
-        if (numCreatedFlock > 0) {
+        if (numCreatedEvent > 0) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
             // TODO: choose better HTTP status
@@ -82,16 +82,16 @@ public class EventController {
     }
 
     /**
-     * Updates an existing Flock
-     * @param flockId   Identifier for Flock
-     * @param flock     Flock to persist in server
-     * @return          If the Flock exists and is changed, return HTTP status 202; otherwise 404.
+     * Updates an existing Event
+     * @param eventId   Identifier for Event
+     * @param event     Event to persist in server
+     * @return          If the Event exists and is changed, return HTTP status 202; otherwise 404.
      */
-    @RequestMapping(value = "/{flockId}", method = RequestMethod.PUT)
-    public ResponseEntity<Flock> updateFlock(@PathVariable String flockId, @RequestBody Flock flock) {
-        int numUpdatedFlock = flockService.update(flockId, flock);
+    @RequestMapping(value = "/{eventId}", method = RequestMethod.PUT)
+    public ResponseEntity<Event> updateEvent(@PathVariable String eventId, @RequestBody Event event) {
+        int numUpdatedEvent = eventService.update(eventId, event);
 
-        if (numUpdatedFlock > 0) {
+        if (numUpdatedEvent > 0) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -99,15 +99,15 @@ public class EventController {
     }
 
     /**
-     * Deletes an existing Flock
-     * @param flockId   Identifier for the Flock
-     * @return          If the Flock exists and is deleted, return HTTP status 202; otherwise 404.
+     * Deletes an existing Event
+     * @param eventId   Identifier for the Event
+     * @return          If the Event exists and is deleted, return HTTP status 202; otherwise 404.
      */
-    @RequestMapping(value = "/{flockId}", method = RequestMethod.DELETE)
-    public ResponseEntity<Flock> deleteFlock(@PathVariable String flockId) {
-        int numDeletedFlock = flockService.delete(flockId);
+    @RequestMapping(value = "/{eventId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Event> deleteEvent(@PathVariable String eventId) {
+        int numDeletedEvent = eventService.delete(eventId);
 
-        if (numDeletedFlock > 0) {
+        if (numDeletedEvent > 0) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
