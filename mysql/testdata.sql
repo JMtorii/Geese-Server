@@ -11,14 +11,23 @@ VALUES ('Johnny', 'n37zhang@uwaterloo.ca', 'true',
  '71680c71b244a1b88784e2890016fdb12617d35f20c01d02b25d6861304cff99'
 );
 
-INSERT INTO Flock (authorid, name, description, latitude, longitude, radius)
-VALUES (1, 'New Flock', 'POST test', 12.34567, -1.123456, 1);
+INSERT INTO Flock (authorid, name, description, latitude, longitude, radius, score, createdTime)
+VALUES (1, 'New Flock', 'POST test', 12.34567, -1.123456, 1, -222, NOW());
 
 INSERT INTO Membership (gooseid, flockid)
 VALUES (1, 1);
 
-INSERT INTO Topic (flockid, authorid, title, description)
-VALUES (1, 1, 'First', 'Insert a joke here');
+INSERT INTO Topic (flockid, authorid, title, description, pinned, score, createdTime)
+VALUES (1, 1, 'First', 'Insert a joke here', 222, NOW());
 
-INSERT INTO Post (topicid, authorid, text)
-VALUES (1, 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
+INSERT INTO Post (topicid, authorid, text, score, createdTime)
+VALUES (1, 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 222, NOW());
+
+INSERT INTO FlockVote (gooseid, flockid)
+VALUES (1, 1);
+
+INSERT INTO TopicVote (gooseid, topicid)
+VALUES (1, 1);
+
+INSERT INTO PostVote (gooseid, postid)
+VALUES (1, 1);

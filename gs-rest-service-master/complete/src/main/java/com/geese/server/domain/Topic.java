@@ -3,10 +3,10 @@ package com.geese.server.domain;
 import java.time.LocalDateTime;
 
 /**
- * Created by JMtorii on 2015-10-06.
+ * Created by ecrothers on 2015-11-08.
  */
 
-public class Flock {
+public class Topic {
     private int id;
     private int authorid;
     private String name;
@@ -18,9 +18,9 @@ public class Flock {
     private LocalDateTime createdTime;
     private LocalDateTime expireTime;
 
-    public Flock() {}
+    public Topic() {}
 
-    private Flock(Builder builder) {}
+    private Topic(Builder builder) {}
 
     static Builder getBuilder() {
         return new Builder();
@@ -172,8 +172,8 @@ public class Flock {
         }
 
         // TODO: potentially check for non-null values
-        public Flock build() {
-            return new Flock(this);
+        public Topic build() {
+            return new Topic(this);
         }
     }
 }

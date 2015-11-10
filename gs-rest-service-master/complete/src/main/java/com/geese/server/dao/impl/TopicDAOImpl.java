@@ -19,11 +19,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by ecrothers on 2015-10-06.
+ * Created by ecrothers on 2015-11-08.
  */
 @Repository
-public class FlockDAOImpl implements FlockDAO {
-    private static final Logger logger = LoggerFactory.getLogger(FlockDAOImpl.class);
+public class TopicDAOImpl implements FlockDAO {
+    private static final Logger logger = LoggerFactory.getLogger(TopicDAOImpl.class);
 
     @Autowired
     protected JdbcTemplate jdbc;

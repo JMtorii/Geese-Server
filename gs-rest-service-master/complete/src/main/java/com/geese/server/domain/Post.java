@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
  * Created by JMtorii on 2015-10-06.
  */
 
-public class Flock {
+public class Post {
     private int id;
     private int authorid;
     private String name;
@@ -18,9 +18,9 @@ public class Flock {
     private LocalDateTime createdTime;
     private LocalDateTime expireTime;
 
-    public Flock() {}
+    public Post() {}
 
-    private Flock(Builder builder) {}
+    private Post(Builder builder) {}
 
     static Builder getBuilder() {
         return new Builder();
@@ -172,8 +172,8 @@ public class Flock {
         }
 
         // TODO: potentially check for non-null values
-        public Flock build() {
-            return new Flock(this);
+        public Post build() {
+            return new Post(this);
         }
     }
 }

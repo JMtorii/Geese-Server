@@ -22,8 +22,8 @@ import java.util.Map;
  * Created by ecrothers on 2015-10-06.
  */
 @Repository
-public class FlockDAOImpl implements FlockDAO {
-    private static final Logger logger = LoggerFactory.getLogger(FlockDAOImpl.class);
+public class EventDAOImpl implements FlockDAO {
+    private static final Logger logger = LoggerFactory.getLogger(EventDAOImpl.class);
 
     @Autowired
     protected JdbcTemplate jdbc;
