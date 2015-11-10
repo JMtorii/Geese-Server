@@ -1,45 +1,45 @@
 package com.geese.server.service.impl;
 
-import com.geese.server.dao.FlockDAO;
-import com.geese.server.domain.Flock;
-import com.geese.server.service.FlockService;
+import com.geese.server.dao.EventDAO;
+import com.geese.server.domain.Event;
+import com.geese.server.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
- * Created by JMtorii on 2015-10-06.
+ * Created by ecrothers on 2015-11-08.
  */
 @Service
-public class EventServiceImpl implements FlockService {
+public class EventServiceImpl implements EventService {
     @Autowired
-    private FlockDAO flockDAO;
+    private EventDAO eventDAO;
 
     @Override
-    public int delete(String flockId) {
-        return flockDAO.delete(Integer.valueOf(flockId));
+    public int delete(String eventId) {
+        return eventDAO.delete(Integer.valueOf(eventId));
     }
 
     @Override
-    public List<Flock> findAll() {
-        return flockDAO.findAll();
+    public List<Event> findAll() {
+        return eventDAO.findAll();
     }
 
     @Override
-    public Flock findOne(String flockId) {
-        return flockDAO.findOne(Integer.valueOf(flockId));
+    public Event findOne(String eventId) {
+        return eventDAO.findOne(Integer.valueOf(eventId));
     }
 
 
     @Override
-    public int create(Flock saved) {
-        return flockDAO.create(saved);
+    public int create(Event saved) {
+        return eventDAO.create(saved);
     }
 
     @Override
-    // TODO: Why are we sending the flockId
-    public int update(String flockId, Flock updatedFlock) {
-        return flockDAO.update(updatedFlock);
+    // TODO: Why are we sending the eventId
+    public int update(String eventId, Event updatedEvent) {
+        return eventDAO.update(updatedEvent);
     }
 }

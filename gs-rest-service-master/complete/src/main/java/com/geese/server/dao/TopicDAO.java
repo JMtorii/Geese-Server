@@ -1,6 +1,6 @@
 package com.geese.server.dao;
 
-import com.geese.server.domain.Flock;
+import com.geese.server.domain.Topic;
 
 import java.util.List;
 
@@ -10,35 +10,35 @@ import java.util.List;
 public interface TopicDAO {
 
     /**
-     * Deletes a Flock entry from the database.
-     * @param flockId   The id of the flock entry to delete
+     * Deletes a Topic entry from the database.
+     * @param topicId   The id of the topic entry to delete
      */
-    int delete(final int flockId);
+    int delete(final int topicId);
 
     /**
-     * Finds all Flock entries from the database.
-     * @return  The information of all Flock entries that are found from the database.
+     * Finds all Topic entries from the database.
+     * @return  The information of all Topic entries that are found from the database.
      */
-    List<Flock> findAll();
+    List<Topic> findAll();
 
     /**
-     * Finds the information of a single Flock entry.
-     * @param flockId    The id of the requested Flock entry.
-     * @return      The information of the found Flock entry.
+     * Finds the information of a single Topic entry.
+     * @param topicId    The id of the requested Topic entry.
+     * @return      The information of the found Topic entry.
      */
-    Flock findOne(final int flockId);
+    Topic findOne(final int topicId);
 
     /**
-     * Saves a new Flock entry to the database.
-     * @param created   The information of the created Flock entry.
-     * @return          The number of created Flocks
+     * Saves a new Topic entry to the database.
+     * @param created   The information of the created Topic entry.
+     * @return          The number of created Topics
      */
-    int create(final Flock created);
+    int create(final Topic created);
 
     /**
-     * Update an existing Flock entry in the database.
-     * @param updated   The information of the saved Flock entry.
+     * Update an existing Topic entry in the database.
+     * @param updated   The information of the saved Topic entry.
      * @return          The number of updated entries
      */
-    int update(final Flock updated);
+    int update(final Topic updated);
 }

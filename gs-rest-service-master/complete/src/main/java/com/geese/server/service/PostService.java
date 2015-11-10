@@ -1,45 +1,45 @@
 package com.geese.server.service;
 
-import com.geese.server.domain.Flock;
+import com.geese.server.domain.Post;
 
 import java.util.List;
 
 /**
- * Created by JMtorii on 2015-10-06.
+ * Created by ecrothers on 2015-11-08.
  */
 public interface PostService {
     /**
-     * Deletes a Flock entry from the database.
-     * @param flockId   The id of the Flock to delete from the database
-     * @return  The number of deleted Flocks
+     * Deletes a Post entry from the database.
+     * @param postId   The id of the Post to delete from the database
+     * @return  The number of deleted Posts
      */
-    int delete(String flockId);
+    int delete(String postId);
 
     /**
-     * Finds all Flock entries from the database.
-     * @return  The information of all Flock entries that are found from the database.
+     * Finds all Post entries from the database.
+     * @return  The information of all Post entries that are found from the database.
      */
-    List<Flock> findAll();
+    List<Post> findAll();
 
     /**
-     * Finds the information of a single Flock entry.
-     * @param flockId    The id of the requested Flock entry.
-     * @return      The information of the found Flock entry.
+     * Finds the information of a single Post entry.
+     * @param postId    The id of the requested Post entry.
+     * @return      The information of the found Post entry.
      */
-    Flock findOne(String flockId);
+    Post findOne(String postId);
 
     /**
-     * Saves a new Flock entry to the database.
-     * @param saved     The information of the saved Flock entry.
+     * Saves a new Post entry to the database.
+     * @param saved     The information of the saved Post entry.
      * @return          Number of created entries
      */
-    int create(Flock saved);
+    int create(Post saved);
 
     /**
-     * Updates an existing Flock entry in the database.
-     * @param flockId       The flockId of the requested Flock entry.
-     * @param updatedFlock  The information of the updated Flock entry.
-     * @return              The number of updated Flock objects.
+     * Updates an existing Post entry in the database.
+     * @param postId       The postId of the requested Post entry.
+     * @param updatedPost  The information of the updated Post entry.
+     * @return              The number of updated Post objects.
      */
-    int update(String flockId, Flock updatedFlock);
+    int update(String postId, Post updatedPost);
 }

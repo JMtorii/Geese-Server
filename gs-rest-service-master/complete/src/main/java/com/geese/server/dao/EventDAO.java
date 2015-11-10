@@ -1,6 +1,6 @@
 package com.geese.server.dao;
 
-import com.geese.server.domain.Flock;
+import com.geese.server.domain.Event;
 
 import java.util.List;
 
@@ -10,35 +10,35 @@ import java.util.List;
 public interface EventDAO {
 
     /**
-     * Deletes a Flock entry from the database.
-     * @param flockId   The id of the flock entry to delete
+     * Deletes a Event entry from the database.
+     * @param eventId   The id of the event entry to delete
      */
-    int delete(final int flockId);
+    int delete(final int eventId);
 
     /**
-     * Finds all Flock entries from the database.
-     * @return  The information of all Flock entries that are found from the database.
+     * Finds all Event entries from the database.
+     * @return  The information of all Event entries that are found from the database.
      */
-    List<Flock> findAll();
+    List<Event> findAll();
 
     /**
-     * Finds the information of a single Flock entry.
-     * @param flockId    The id of the requested Flock entry.
-     * @return      The information of the found Flock entry.
+     * Finds the information of a single Event entry.
+     * @param eventId    The id of the requested Event entry.
+     * @return      The information of the found Event entry.
      */
-    Flock findOne(final int flockId);
+    Event findOne(final int eventId);
 
     /**
-     * Saves a new Flock entry to the database.
-     * @param created   The information of the created Flock entry.
-     * @return          The number of created Flocks
+     * Saves a new Event entry to the database.
+     * @param created   The information of the created Event entry.
+     * @return          The number of created Events
      */
-    int create(final Flock created);
+    int create(final Event created);
 
     /**
-     * Update an existing Flock entry in the database.
-     * @param updated   The information of the saved Flock entry.
+     * Update an existing Event entry in the database.
+     * @param updated   The information of the saved Event entry.
      * @return          The number of updated entries
      */
-    int update(final Flock updated);
+    int update(final Event updated);
 }

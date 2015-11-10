@@ -1,8 +1,8 @@
 package com.geese.server.dao.impl;
 
-import com.geese.server.dao.FlockDAO;
+import com.geese.server.dao.PostDAO;
 import com.geese.server.dao.util.TimeHelper;
-import com.geese.server.domain.Flock;
+import com.geese.server.domain.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,24 +22,24 @@ import java.util.Map;
  * Created by ecrothers on 2015-11-08.
  */
 @Repository
-public class PostDAOImpl implements FlockDAO {
+public class PostDAOImpl implements PostDAO {
     private static final Logger logger = LoggerFactory.getLogger(PostDAOImpl.class);
 
     @Autowired
     protected JdbcTemplate jdbc;
 
     @Override
-    public List<Flock> findAll() {
+    public List<Post> findAll() {
         String query =
-                "SELECT * FROM Flock;";
+                "SELECT * FROM Post;";
 
-        List<Flock> flocks = new ArrayList<Flock>();
+        List<Post> posts = new ArrayList<Post>();
 
         try {
             List<Map<String, Object>> rows = jdbc.queryForList(query);
 
             for (Map row : rows) {
-                Flock flock = new Flock.Builder()
+                /*Post post = new Post.Builder()
                         .id((int)row.get("id"))
                         .authorid((int) row.get("authorid"))
                         .name((String) row.get("name"))
@@ -52,31 +52,32 @@ public class PostDAOImpl implements FlockDAO {
                         .expireTime((LocalDateTime) row.get("expireTime"))
                         .build();
 
-                flocks.add(flock);
+                posts.add(post);*/
             }
 
-            return flocks;
+            return posts;
         } catch (EmptyResultDataAccessException e) {
-            logger.warn("Flock: findAll returns no rows");
+            logger.warn("Post: findAll returns no rows");
             return null;
         }
     }
 
     @Override
-    public Flock findOne(final int flockId) {
+    public Post findOne(final int postId) {
         String query =
-                "SELECT * FROM Flock " +
+                "SELECT * FROM Post " +
                         "WHERE id = ?;";
 
         try {
-            return jdbc.queryForObject(query, new Object[]{flockId}, new RowMapper<Flock>() {
+            return jdbc.queryForObject(query, new Object[]{postId}, new RowMapper<Post>() {
                 @Override
-                public Flock mapRow(ResultSet rs, int rowNum) throws SQLException {
+                public Post mapRow(ResultSet rs, int rowNum) throws SQLException {
 
                     if (rs.getRow() < 1) {
                         return null;
                     } else {
-                        return new Flock.Builder()
+                        return null;
+                        /*return new Post.Builder()
                                 .id(rs.getInt("id"))
                                 .authorid(rs.getInt("authorid"))
                                 .name(rs.getString("name"))
@@ -87,62 +88,57 @@ public class PostDAOImpl implements FlockDAO {
                                 .score(rs.getInt("score"))
                                 .createdTime(TimeHelper.fromDB(rs.getTimestamp("createdTime")))
                                 .expireTime(TimeHelper.fromDB(rs.getTimestamp("expireTime")))
-                                .build();
+                                .build();*/
                     }
                 }
             });
         } catch (EmptyResultDataAccessException e) {
-            logger.warn("Flock: findOne returns no rows");
+            logger.warn("Post: findOne returns no rows");
             return null;
         }
     }
 
     @Override
-    public int update(final Flock updatedFlock) {
-        String query =
-                "UPDATE Flock " +
+    public int update(final Post updatedPost) {
+        /*String query =
+                "UPDATE Post " +
                         "SET authorid = ?, name = ?, description = ?, latitude = ?," +
                         "longitude = ?, radius = ?, score = ?, createdTime = ?, expireTime = ?" +
                         "WHERE id = ?";
 
         return jdbc.update(query,
-                updatedFlock.getAuthorid(),
-                updatedFlock.getName(),
-                updatedFlock.getDescription(),
-                updatedFlock.getLatitude(),
-                updatedFlock.getLongitude(),
-                updatedFlock.getRadius(),
-                updatedFlock.getScore(),
-                TimeHelper.toDB(updatedFlock.getCreatedTime()),
-                TimeHelper.toDB(updatedFlock.getExpireTime()),
-                updatedFlock.getId());
+                updatedPost.getAuthorid(),
+                updatedPost.getName(),
+                updatedPost.getDescription(),
+                updatedPost.getLatitude(),
+                updatedPost.getLongitude(),
+                updatedPost.getRadius(),
+                updatedPost.getScore(),
+                TimeHelper.toDB(updatedPost.getCreatedTime()),
+                TimeHelper.toDB(updatedPost.getExpireTime()),
+                updatedPost.getId());
+                */
+        return 0;
     }
 
     @Override
-    public int delete(final int flockId) {
+    public int delete(final int postId) {
         String query =
-                "DELETE FROM Flock " +
+                "DELETE FROM Post " +
                         "WHERE id = ?";
 
-        return jdbc.update(query, flockId);
+        return jdbc.update(query, postId);
     }
 
     @Override
-    public int create(final Flock created) {
-        String query = "INSERT INTO Flock " +
+    public int create(final Post created) {
+        /*String query = "INSERT INTO Post " +
                 "(authorid, name, description, latitude, longitude, radius, score, createdTime, expireTime)" +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         return jdbc.update(query,
-                created.getAuthorid(),
-                created.getName(),
-                created.getDescription(),
-                created.getLatitude(),
-                created.getLongitude(),
-                created.getRadius(),
-                created.getScore(),
-                TimeHelper.toDB(created.getCreatedTime()), //TODO use client or server version? Timestamp.valueOf(LocalDateTime.now(ZoneId.ofOffset("", ZoneOffset.UTC)))
-                TimeHelper.toDB(created.getExpireTime())
-        );
+                created.getAuthorid());
+        );*/
+        return 0;
     }
 }

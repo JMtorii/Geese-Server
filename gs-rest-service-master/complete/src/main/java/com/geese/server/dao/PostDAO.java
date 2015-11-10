@@ -1,6 +1,6 @@
 package com.geese.server.dao;
 
-import com.geese.server.domain.Flock;
+import com.geese.server.domain.Post;
 
 import java.util.List;
 
@@ -10,35 +10,35 @@ import java.util.List;
 public interface PostDAO {
 
     /**
-     * Deletes a Flock entry from the database.
-     * @param flockId   The id of the flock entry to delete
+     * Deletes a Post entry from the database.
+     * @param postId   The id of the post entry to delete
      */
-    int delete(final int flockId);
+    int delete(final int postId);
 
     /**
-     * Finds all Flock entries from the database.
-     * @return  The information of all Flock entries that are found from the database.
+     * Finds all Post entries from the database.
+     * @return  The information of all Post entries that are found from the database.
      */
-    List<Flock> findAll();
+    List<Post> findAll();
 
     /**
-     * Finds the information of a single Flock entry.
-     * @param flockId    The id of the requested Flock entry.
-     * @return      The information of the found Flock entry.
+     * Finds the information of a single Post entry.
+     * @param postId    The id of the requested Post entry.
+     * @return      The information of the found Post entry.
      */
-    Flock findOne(final int flockId);
+    Post findOne(final int postId);
 
     /**
-     * Saves a new Flock entry to the database.
-     * @param created   The information of the created Flock entry.
-     * @return          The number of created Flocks
+     * Saves a new Post entry to the database.
+     * @param created   The information of the created Post entry.
+     * @return          The number of created Posts
      */
-    int create(final Flock created);
+    int create(final Post created);
 
     /**
-     * Update an existing Flock entry in the database.
-     * @param updated   The information of the saved Flock entry.
+     * Update an existing Post entry in the database.
+     * @param updated   The information of the saved Post entry.
      * @return          The number of updated entries
      */
-    int update(final Flock updated);
+    int update(final Post updated);
 }
