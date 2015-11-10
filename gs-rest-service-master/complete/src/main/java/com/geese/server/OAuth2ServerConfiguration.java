@@ -36,7 +36,6 @@ public class OAuth2ServerConfiguration {
     }
 
     @Order(ManagementServerProperties.ACCESS_OVERRIDE_ORDER)
-    @Configuration
     protected static class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
         @Override
@@ -103,13 +102,13 @@ public class OAuth2ServerConfiguration {
                     .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
                     .scopes("read", "write", "trust")
                     .accessTokenValiditySeconds(60)
-                .and()
+                    .and()
                     .withClient("my-client-with-registered-redirect")
                     .authorizedGrantTypes("authorization_code")
                     .authorities("ROLE_CLIENT")
                     .scopes("read", "trust")
                     .redirectUris("http://anywhere?key=value")
-                .and()
+                    .and()
                     .withClient("my-client-with-secret")
                     .authorizedGrantTypes("client_credentials", "password")
                     .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")

@@ -1,8 +1,8 @@
 package com.geese.server.dao.impl;
 
-import com.geese.server.dao.FlockDAO;
+import com.geese.server.dao.EventDAO;
 import com.geese.server.dao.util.TimeHelper;
-import com.geese.server.domain.Flock;
+import com.geese.server.domain.Event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,27 +19,27 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by ecrothers on 2015-10-06.
+ * Created by ecrothers on 2015-11-08.
  */
 @Repository
-public class EventDAOImpl implements FlockDAO {
+public class EventDAOImpl implements EventDAO {
     private static final Logger logger = LoggerFactory.getLogger(EventDAOImpl.class);
 
     @Autowired
     protected JdbcTemplate jdbc;
 
     @Override
-    public List<Flock> findAll() {
+    public List<Event> findAll() {
         String query =
-                "SELECT * FROM Flock;";
+                "SELECT * FROM Event;";
 
-        List<Flock> flocks = new ArrayList<Flock>();
+        List<Event> events = new ArrayList<Event>();
 
         try {
             List<Map<String, Object>> rows = jdbc.queryForList(query);
 
             for (Map row : rows) {
-                Flock flock = new Flock.Builder()
+                Event event = new Event.Builder()
                         .id((int)row.get("id"))
                         .authorid((int) row.get("authorid"))
                         .name((String) row.get("name"))
@@ -52,31 +52,31 @@ public class EventDAOImpl implements FlockDAO {
                         .expireTime((LocalDateTime) row.get("expireTime"))
                         .build();
 
-                flocks.add(flock);
+                events.add(event);
             }
 
-            return flocks;
+            return events;
         } catch (EmptyResultDataAccessException e) {
-            logger.warn("Flock: findAll returns no rows");
+            logger.warn("Event: findAll returns no rows");
             return null;
         }
     }
 
     @Override
-    public Flock findOne(final int flockId) {
+    public Event findOne(final int eventId) {
         String query =
-                "SELECT * FROM Flock " +
+                "SELECT * FROM Event " +
                         "WHERE id = ?;";
 
         try {
-            return jdbc.queryForObject(query, new Object[]{flockId}, new RowMapper<Flock>() {
+            return jdbc.queryForObject(query, new Object[]{eventId}, new RowMapper<Event>() {
                 @Override
-                public Flock mapRow(ResultSet rs, int rowNum) throws SQLException {
+                public Event mapRow(ResultSet rs, int rowNum) throws SQLException {
 
                     if (rs.getRow() < 1) {
                         return null;
                     } else {
-                        return new Flock.Builder()
+                        return new Event.Builder()
                                 .id(rs.getInt("id"))
                                 .authorid(rs.getInt("authorid"))
                                 .name(rs.getString("name"))
@@ -92,44 +92,44 @@ public class EventDAOImpl implements FlockDAO {
                 }
             });
         } catch (EmptyResultDataAccessException e) {
-            logger.warn("Flock: findOne returns no rows");
+            logger.warn("Event: findOne returns no rows");
             return null;
         }
     }
 
     @Override
-    public int update(final Flock updatedFlock) {
+    public int update(final Event updatedEvent) {
         String query =
-                "UPDATE Flock " +
+                "UPDATE Event " +
                         "SET authorid = ?, name = ?, description = ?, latitude = ?," +
                         "longitude = ?, radius = ?, score = ?, createdTime = ?, expireTime = ?" +
                         "WHERE id = ?";
 
         return jdbc.update(query,
-                updatedFlock.getAuthorid(),
-                updatedFlock.getName(),
-                updatedFlock.getDescription(),
-                updatedFlock.getLatitude(),
-                updatedFlock.getLongitude(),
-                updatedFlock.getRadius(),
-                updatedFlock.getScore(),
-                TimeHelper.toDB(updatedFlock.getCreatedTime()),
-                TimeHelper.toDB(updatedFlock.getExpireTime()),
-                updatedFlock.getId());
+                updatedEvent.getAuthorid(),
+                updatedEvent.getName(),
+                updatedEvent.getDescription(),
+                updatedEvent.getLatitude(),
+                updatedEvent.getLongitude(),
+                updatedEvent.getRadius(),
+                updatedEvent.getScore(),
+                TimeHelper.toDB(updatedEvent.getCreatedTime()),
+                TimeHelper.toDB(updatedEvent.getExpireTime()),
+                updatedEvent.getId());
     }
 
     @Override
-    public int delete(final int flockId) {
+    public int delete(final int eventId) {
         String query =
-                "DELETE FROM Flock " +
+                "DELETE FROM Event " +
                         "WHERE id = ?";
 
-        return jdbc.update(query, flockId);
+        return jdbc.update(query, eventId);
     }
 
     @Override
-    public int create(final Flock created) {
-        String query = "INSERT INTO Flock " +
+    public int create(final Event created) {
+        String query = "INSERT INTO Event " +
                 "(authorid, name, description, latitude, longitude, radius, score, createdTime, expireTime)" +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 

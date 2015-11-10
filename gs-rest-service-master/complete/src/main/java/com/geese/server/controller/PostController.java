@@ -1,7 +1,7 @@
 package com.geese.server.controller;
 
-import com.geese.server.domain.Flock;
-import com.geese.server.service.FlockService;
+import com.geese.server.domain.Post;
+import com.geese.server.service.PostService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,50 +12,50 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-/**
- * Created by JMtorii on 2015-10-06.
+/*
+ * Created by ecrothers on 2015-11-08.
  */
 @RestController
-@RequestMapping(value = "/flock")
+@RequestMapping(value = "/post")
 public class PostController {
     private static Logger LOGGER = LoggerFactory.getLogger(PostController.class);
 
     @Autowired
-    private FlockService flockService;
+    private PostService postService;
 
-    /*FlockController(FlockService flockService) {
-        this.flockService = flockService;
+    /*PostController(PostService postService) {
+        this.postService = postService;
     }*/
 
     /*@RequestMapping(value="/", method= RequestMethod.POST)
-    public Flock createFlock(@RequestBody Flock flock) {
-        Flock created = flockService.save(flock);
+    public Post createPost(@RequestBody Post post) {
+        Post created = postService.save(post);
         return created;
     }*/
 
     /**
-     * Gets a Flock by id
-     * @param flockId   Identifier for Flock
-     * @return          If Flock is found, return the Flock object and HTTP status 302; otherwise, 404
+     * Gets a Post by id
+     * @param postId   Identifier for Post
+     * @return          If Post is found, return the Post object and HTTP status 302; otherwise, 404
      */
-    @RequestMapping(value = "/{flockId}", method = RequestMethod.GET)
-    public ResponseEntity<Flock> getFlock(@PathVariable String flockId) {
-        Flock foundFlock = flockService.findOne(flockId);
+    @RequestMapping(value = "/{postId}", method = RequestMethod.GET)
+    public ResponseEntity<Post> getPost(@PathVariable String postId) {
+        Post foundPost = postService.findOne(postId);
 
-        if (foundFlock != null) {
-            return new ResponseEntity<>(foundFlock, HttpStatus.FOUND);
+        if (foundPost != null) {
+            return new ResponseEntity<>(foundPost, HttpStatus.FOUND);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     /**
-     * Gets all Flocks in database
+     * Gets all Posts in database
      * @return      If Geese exist, return list of Geese and HTTP status 302; otherwise, 404
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<List<Flock>> getAllFlocks() {
-        List<Flock> geese = flockService.findAll();
+    public ResponseEntity<List<Post>> getAllPosts() {
+        List<Post> geese = postService.findAll();
 
         if (geese != null) {
             return new ResponseEntity<>(geese, HttpStatus.FOUND);
@@ -65,15 +65,15 @@ public class PostController {
     }
 
     /**
-     * Creates a new Flock if the flock does not already exist
-     * @param flock Flock to persist in server
-     * @return      If Flock is successfully created, return HTTP status 201; otherwise, 400
+     * Creates a new Post if the post does not already exist
+     * @param post Post to persist in server
+     * @return      If Post is successfully created, return HTTP status 201; otherwise, 400
      */
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<Flock> createFlock(@RequestBody Flock flock) {
-        int numCreatedFlock = flockService.create(flock);
+    public ResponseEntity<Post> createPost(@RequestBody Post post) {
+        int numCreatedPost = postService.create(post);
 
-        if (numCreatedFlock > 0) {
+        if (numCreatedPost > 0) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
             // TODO: choose better HTTP status
@@ -82,16 +82,16 @@ public class PostController {
     }
 
     /**
-     * Updates an existing Flock
-     * @param flockId   Identifier for Flock
-     * @param flock     Flock to persist in server
-     * @return          If the Flock exists and is changed, return HTTP status 202; otherwise 404.
+     * Updates an existing Post
+     * @param postId   Identifier for Post
+     * @param post     Post to persist in server
+     * @return          If the Post exists and is changed, return HTTP status 202; otherwise 404.
      */
-    @RequestMapping(value = "/{flockId}", method = RequestMethod.PUT)
-    public ResponseEntity<Flock> updateFlock(@PathVariable String flockId, @RequestBody Flock flock) {
-        int numUpdatedFlock = flockService.update(flockId, flock);
+    @RequestMapping(value = "/{postId}", method = RequestMethod.PUT)
+    public ResponseEntity<Post> updatePost(@PathVariable String postId, @RequestBody Post post) {
+        int numUpdatedPost = postService.update(postId, post);
 
-        if (numUpdatedFlock > 0) {
+        if (numUpdatedPost > 0) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -99,15 +99,15 @@ public class PostController {
     }
 
     /**
-     * Deletes an existing Flock
-     * @param flockId   Identifier for the Flock
-     * @return          If the Flock exists and is deleted, return HTTP status 202; otherwise 404.
+     * Deletes an existing Post
+     * @param postId   Identifier for the Post
+     * @return          If the Post exists and is deleted, return HTTP status 202; otherwise 404.
      */
-    @RequestMapping(value = "/{flockId}", method = RequestMethod.DELETE)
-    public ResponseEntity<Flock> deleteFlock(@PathVariable String flockId) {
-        int numDeletedFlock = flockService.delete(flockId);
+    @RequestMapping(value = "/{postId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Post> deletePost(@PathVariable String postId) {
+        int numDeletedPost = postService.delete(postId);
 
-        if (numDeletedFlock > 0) {
+        if (numDeletedPost > 0) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
