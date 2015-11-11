@@ -28,10 +28,16 @@ import java.time.ZoneOffset;
  */
 public class TimeHelper {
     public static Timestamp toDB(LocalDateTime time) {
+        if (time == null) {
+            return null;
+        }
         return Timestamp.from(time.toInstant(ZoneOffset.UTC));
     }
 
     public static LocalDateTime fromDB(Timestamp timestamp) {
+        if (timestamp == null) {
+            return null;
+        }
         return timestamp.toLocalDateTime();
     }
 }
