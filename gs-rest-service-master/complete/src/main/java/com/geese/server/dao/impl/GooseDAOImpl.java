@@ -96,10 +96,12 @@ public class GooseDAOImpl implements GooseDAO {
                 "INSERT INTO Goose (name, email, verified)" +
                 "VALUES (?, ?, ?);";
 
-        return jdbc.update(sqlString,
+        return jdbc.update(
+                sqlString,
                 createdGoose.getName(),
                 createdGoose.getEmail(),
-                createdGoose.getVerified());
+                createdGoose.getVerified()
+        );
     }
 
     @Override
@@ -109,11 +111,13 @@ public class GooseDAOImpl implements GooseDAO {
                 "SET name = ?, email = ?, verified = ?" +
                 "WHERE id = ?";
 
-        return jdbc.update(sqlString,
+        return jdbc.update(
+                sqlString,
                 updatedGoose.getName(),
                 updatedGoose.getEmail(),
                 updatedGoose.getVerified(),
-                updatedGoose.getId());
+                updatedGoose.getId()
+        );
     }
 
     @Override

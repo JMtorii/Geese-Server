@@ -19,26 +19,26 @@ public interface GooseDAO {
      * @param gooseId   The id of the requested Goose entry.
      * @return          The found Goose.
      */
-    Goose findOne(final int gooseId);
+    Goose findOne(int gooseId);
 
     /**
      * Creates a new User entry to the database.
      * @param createdGoose      The information of the new User entry.
      * @return                  The number of created Goose objects.
      */
-    int create(final Goose createdGoose);
+    int create(Goose createdGoose);
 
     /**
      * Updates an existing Goose entry in the database.
      * @param updatedGoose  The information of the updated Goose entry.
      * @return              The number of updated Goose objects.
      */
-    int update(final Goose updatedGoose);
+    int update(Goose updatedGoose);
 
     /**
      * Deletes a Goose from the database.
      * @param gooseId   The id of the requested Goose entry.
      * @return          The number of deleted Goose objects.
      */
-    int delete(final int gooseId);
+    int delete(int gooseId);
 }
