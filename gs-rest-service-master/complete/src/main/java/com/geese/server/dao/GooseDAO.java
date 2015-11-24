@@ -22,6 +22,13 @@ public interface GooseDAO {
     Goose findOne(final int gooseId);
 
     /**
+     * Finds the a single Goose.
+     * @param email     The email.
+     * @return          The found Goose.
+     */
+    Goose findByEmail(String email);
+
+    /**
      * Creates a new User entry to the database.
      * @param createdGoose      The information of the new User entry.
      * @return                  The number of created Goose objects.

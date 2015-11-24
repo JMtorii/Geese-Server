@@ -4,6 +4,8 @@ import com.geese.server.dao.GooseDAO;
 import com.geese.server.domain.Goose;
 import com.geese.server.service.GooseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.List;
  */
 @Service
 @SuppressWarnings("unused")
-public class GooseServiceImpl implements GooseService {
+public class GooseServiceImpl implements GooseService, UserDetailsService {
 
     @Autowired
     GooseDAO gooseDAO;
@@ -26,6 +28,16 @@ public class GooseServiceImpl implements GooseService {
     @Override
     public Goose findOne(String gooseId) {
         return gooseDAO.findOne(Integer.valueOf(gooseId));
+    }
+
+    @Override
+    public Goose findByEmail(String email) {
+        return gooseDAO.findByEmail(email);
+    }
+
+    @Override
+    public Goose loadUserByUsername(String username) throws UsernameNotFoundException {
+        return findByEmail(username);
     }
 
     @Override

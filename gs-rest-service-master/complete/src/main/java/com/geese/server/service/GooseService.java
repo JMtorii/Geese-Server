@@ -22,6 +22,13 @@ public interface GooseService {
     Goose findOne(String gooseId);
 
     /**
+     * Finds the a single Goose.
+     * @param email     The email.
+     * @return          The found Goose.
+     */
+    Goose findByEmail(String email);
+
+    /**
      * Creates a new Goose entry to the database.
      * @param createdGoose      The information of the new Goose entry.
      * @return                  The number of created Goose objects.

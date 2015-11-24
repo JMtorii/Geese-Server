@@ -91,6 +91,38 @@ public class GooseDAOImpl implements GooseDAO {
     }
 
     @Override
+    public Goose findByEmail(final String email) {
+        String sqlString =
+                "SELECT * FROM Goose " +
+                        "WHERE email = ?;";
+
+        try {
+            return jdbc.queryForObject(sqlString, new Object[]{email}, new RowMapper<Goose>() {
+                @Override
+                public Goose mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+                    if (rs.getRow() < 1) {
+                        return null;
+                    } else {
+                        return new Goose.Builder(
+                                rs.getInt("id"),
+                                rs.getString("name"),
+                                rs.getString("email"),
+                                rs.getBoolean("verified")
+                        )
+                                .password(rs.getString("password"))
+                                .salt(rs.getString("salt"))
+                                .build();
+                    }
+                }
+            });
+        } catch (EmptyResultDataAccessException e) {
+            logger.warn("Goose: findOne returns no rows");
+            return null;
+        }
+    }
+
+    @Override
     public int create(final Goose createdGoose) {
         String sqlString =
                 "INSERT INTO Goose (name, email, verified)" +
