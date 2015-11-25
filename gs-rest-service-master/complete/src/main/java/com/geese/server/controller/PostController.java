@@ -50,8 +50,10 @@ public class PostController {
     }
 
     /**
+     * TODO: Is this necessary?
+     *
      * Gets all Posts in database
-     * @return      If Geese exist, return list of Geese and HTTP status 302; otherwise, 404
+     * @return      If posts exist, return list of Geese and HTTP status 302; otherwise, 404
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<Post>> getAllPosts() {

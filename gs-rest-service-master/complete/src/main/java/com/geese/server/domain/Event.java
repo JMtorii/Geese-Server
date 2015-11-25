@@ -3,20 +3,20 @@ package com.geese.server.domain;
 import java.time.LocalDateTime;
 
 /**
+ * (Topic but with start/end time)
  * Created by ecrothers on 2015-11-08.
  */
-
 public class Event {
     private int id;
+    private int flockid;
     private int authorid;
-    private String name;
+    private String title;
     private String description;
-    private float latitude;
-    private float longitude;
-    private double radius;
+    private int pinned;
     private int score;
     private LocalDateTime createdTime;
-    private LocalDateTime expireTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     public Event() {}
 
@@ -30,94 +30,54 @@ public class Event {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getAuthorid() {
         return authorid;
-    }
-
-    public void setAuthorid(int authorid) {
-        this.authorid = authorid;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public float getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(float latitude) {
-        this.latitude = latitude;
-    }
-
-    public float getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(float longitude) {
-        this.longitude = longitude;
-    }
-
-    public double getRadius() {
-        return radius;
-    }
-
-    public void setRadius(double radius) {
-        this.radius = radius;
-    }
-
     public int getScore() {
         return score;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+
+    public int getFlockid() {
+        return flockid;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public int getPinned() {
+        return pinned;
     }
 
     public LocalDateTime getCreatedTime() {
         return createdTime;
     }
 
-    public void setCreatedTime(LocalDateTime createdTime) {
-        this.createdTime = createdTime;
+    public LocalDateTime getStartTime() {
+        return startTime;
     }
 
-    public LocalDateTime getExpireTime() {
-        return expireTime;
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
-
-    public void setExpireTime(LocalDateTime expireTime) {
-        this.expireTime = expireTime;
-    }
-
 
     public static class Builder {
         private int id;
+        private int flockid;
         private int authorid;
-        private String name;
+        private String title;
         private String description;
-        private float latitude;
-        private float longitude;
-        private double radius;
+        private int pinned;
         private int score;
         private LocalDateTime createdTime;
-        private LocalDateTime expireTime;
+        private LocalDateTime startTime;
+        private LocalDateTime endTime;
 
         public Builder() {}
 
@@ -126,13 +86,18 @@ public class Event {
             return this;
         }
 
+        public Builder flockid(int flockid) {
+            this.flockid = flockid;
+            return this;
+        }
+
         public Builder authorid(int authorid) {
             this.authorid = authorid;
             return this;
         }
 
-        public Builder name(String name) {
-            this.name = name;
+        public Builder title(String title) {
+            this.title = title;
             return this;
         }
 
@@ -141,18 +106,8 @@ public class Event {
             return this;
         }
 
-        public Builder latitude(float latitude) {
-            this.latitude = latitude;
-            return this;
-        }
-
-        public Builder longitude(float longitude) {
-            this.longitude = longitude;
-            return this;
-        }
-
-        public Builder radius(double radius) {
-            this.radius = radius;
+        public Builder pinned(int pinned) {
+            this.pinned = pinned;
             return this;
         }
 
@@ -166,12 +121,16 @@ public class Event {
             return this;
         }
 
-        public Builder expireTime(LocalDateTime expireTime) {
-            this.expireTime = expireTime;
+        public Builder startTime(LocalDateTime startTime) {
+            this.startTime = startTime;
             return this;
         }
 
-        // TODO: potentially check for non-null values
+        public Builder endTime(LocalDateTime endTime) {
+            this.endTime = endTime;
+            return this;
+        }
+
         public Event build() {
             return new Event(this);
         }

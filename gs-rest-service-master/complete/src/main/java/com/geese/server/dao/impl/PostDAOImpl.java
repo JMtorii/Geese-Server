@@ -39,20 +39,16 @@ public class PostDAOImpl implements PostDAO {
             List<Map<String, Object>> rows = jdbc.queryForList(query);
 
             for (Map row : rows) {
-                /*Post post = new Post.Builder()
+                Post post = new Post.Builder()
                         .id((int)row.get("id"))
+                        .topicid((int) row.get("topicid"))
                         .authorid((int) row.get("authorid"))
-                        .name((String) row.get("name"))
-                        .description((String) row.get("description"))
-                        .latitude((float) row.get("latitude"))
-                        .longitude((float) row.get("longitude"))
-                        .radius((double) row.get("radius"))
+                        .text((String) row.get("text"))
                         .score((int) row.get("score"))
                         .createdTime((LocalDateTime) row.get("createdTime"))
-                        .expireTime((LocalDateTime) row.get("expireTime"))
                         .build();
 
-                posts.add(post);*/
+                posts.add(post);
             }
 
             return posts;
@@ -76,19 +72,14 @@ public class PostDAOImpl implements PostDAO {
                     if (rs.getRow() < 1) {
                         return null;
                     } else {
-                        return null;
-                        /*return new Post.Builder()
+                        return new Post.Builder()
                                 .id(rs.getInt("id"))
+                                .topicid(rs.getInt("topicid"))
                                 .authorid(rs.getInt("authorid"))
-                                .name(rs.getString("name"))
-                                .description(rs.getString("description"))
-                                .latitude(rs.getFloat("latitude"))
-                                .longitude(rs.getFloat("longitude"))
-                                .radius(rs.getDouble("radius"))
+                                .text(rs.getString("text"))
                                 .score(rs.getInt("score"))
                                 .createdTime(TimeHelper.fromDB(rs.getTimestamp("createdTime")))
-                                .expireTime(TimeHelper.fromDB(rs.getTimestamp("expireTime")))
-                                .build();*/
+                                .build();
                     }
                 }
             });
@@ -100,25 +91,18 @@ public class PostDAOImpl implements PostDAO {
 
     @Override
     public int update(final Post updatedPost) {
-        /*String query =
+        String query =
                 "UPDATE Post " +
-                        "SET authorid = ?, name = ?, description = ?, latitude = ?," +
-                        "longitude = ?, radius = ?, score = ?, createdTime = ?, expireTime = ?" +
+                        "topicid = ?, authorid = ?, text = ?," +
+                        "score = ?, createdTime = ?" +
                         "WHERE id = ?";
 
         return jdbc.update(query,
+                updatedPost.getTopicid(),
                 updatedPost.getAuthorid(),
-                updatedPost.getName(),
-                updatedPost.getDescription(),
-                updatedPost.getLatitude(),
-                updatedPost.getLongitude(),
-                updatedPost.getRadius(),
+                updatedPost.getText(),
                 updatedPost.getScore(),
-                TimeHelper.toDB(updatedPost.getCreatedTime()),
-                TimeHelper.toDB(updatedPost.getExpireTime()),
-                updatedPost.getId());
-                */
-        return 0;
+                TimeHelper.toDB(updatedPost.getCreatedTime()));
     }
 
     @Override
@@ -132,13 +116,11 @@ public class PostDAOImpl implements PostDAO {
 
     @Override
     public int create(final Post created) {
-        /*String query = "INSERT INTO Post " +
+        String query = "INSERT INTO Post " +
                 "(authorid, name, description, latitude, longitude, radius, score, createdTime, expireTime)" +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         return jdbc.update(query,
                 created.getAuthorid());
-        );*/
-        return 0;
     }
 }

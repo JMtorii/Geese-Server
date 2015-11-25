@@ -18,20 +18,10 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/flock")
 public class FlockController {
-    private static Logger LOGGER = LoggerFactory.getLogger(FlockController.class);
+    private static final Logger logger = LoggerFactory.getLogger(FlockController.class);
 
     @Autowired
     private FlockService flockService;
-
-    /*FlockController(FlockService flockService) {
-        this.flockService = flockService;
-    }*/
-
-    /*@RequestMapping(value="/", method= RequestMethod.POST)
-    public Flock createFlock(@RequestBody Flock flock) {
-        Flock created = flockService.save(flock);
-        return created;
-    }*/
 
     /**
      * Gets a Flock by id

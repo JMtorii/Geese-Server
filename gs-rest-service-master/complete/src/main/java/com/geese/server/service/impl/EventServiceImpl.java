@@ -31,7 +31,6 @@ public class EventServiceImpl implements EventService {
         return eventDAO.findOne(Integer.valueOf(eventId));
     }
 
-
     @Override
     public int create(Event saved) {
         return eventDAO.create(saved);

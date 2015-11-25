@@ -18,20 +18,10 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/event")
 public class EventController {
-    private static Logger LOGGER = LoggerFactory.getLogger(EventController.class);
+    private static final Logger logger = LoggerFactory.getLogger(EventController.class);
 
     @Autowired
     private EventService eventService;
-
-    /*EventController(EventService eventService) {
-        this.eventService = eventService;
-    }*/
-
-    /*@RequestMapping(value="/", method= RequestMethod.POST)
-    public Event createEvent(@RequestBody Event event) {
-        Event created = eventService.save(event);
-        return created;
-    }*/
 
     /**
      * Gets a Event by id

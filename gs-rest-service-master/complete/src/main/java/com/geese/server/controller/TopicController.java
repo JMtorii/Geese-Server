@@ -18,20 +18,10 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/topic")
 public class TopicController {
-    private static Logger LOGGER = LoggerFactory.getLogger(TopicController.class);
+    private static final Logger logger = LoggerFactory.getLogger(TopicController.class);
 
     @Autowired
     private TopicService topicService;
-
-    /*TopicController(TopicService topicService) {
-        this.topicService = topicService;
-    }*/
-
-    /*@RequestMapping(value="/", method= RequestMethod.POST)
-    public Topic createTopic(@RequestBody Topic topic) {
-        Topic created = topicService.save(topic);
-        return created;
-    }*/
 
     /**
      * Gets a Topic by id

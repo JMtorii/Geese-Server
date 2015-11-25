@@ -24,6 +24,7 @@ import java.util.Map;
 @Repository
 public class EventDAOImpl implements EventDAO {
     private static final Logger logger = LoggerFactory.getLogger(EventDAOImpl.class);
+    private static final String TABLE_NAME = "Topic"; // NOTE: This is likely to change
 
     @Autowired
     protected JdbcTemplate jdbc;
@@ -31,31 +32,30 @@ public class EventDAOImpl implements EventDAO {
     @Override
     public List<Event> findAll() {
         String query =
-                "SELECT * FROM Event;";
+                "SELECT * FROM " + TABLE_NAME + ";";
 
-        List<Event> events = new ArrayList<Event>();
+        List<Event> topics = new ArrayList<Event>();
 
         try {
             List<Map<String, Object>> rows = jdbc.queryForList(query);
 
             for (Map row : rows) {
-                Event event = new Event.Builder()
+                Event topic = new Event.Builder()
                         .id((int)row.get("id"))
                         .authorid((int) row.get("authorid"))
-                        .name((String) row.get("name"))
+                        .title((String) row.get("title"))
                         .description((String) row.get("description"))
-                        .latitude((float) row.get("latitude"))
-                        .longitude((float) row.get("longitude"))
-                        .radius((double) row.get("radius"))
+                        .pinned((int) row.get("pinned"))
                         .score((int) row.get("score"))
                         .createdTime((LocalDateTime) row.get("createdTime"))
-                        .expireTime((LocalDateTime) row.get("expireTime"))
+                        .startTime((LocalDateTime) row.get("startTime"))
+                        .endTime((LocalDateTime) row.get("endTime"))
                         .build();
 
-                events.add(event);
+                topics.add(topic);
             }
 
-            return events;
+            return topics;
         } catch (EmptyResultDataAccessException e) {
             logger.warn("Event: findAll returns no rows");
             return null;
@@ -63,13 +63,13 @@ public class EventDAOImpl implements EventDAO {
     }
 
     @Override
-    public Event findOne(final int eventId) {
+    public Event findOne(final int topicId) {
         String query =
-                "SELECT * FROM Event " +
+                "SELECT * FROM " + TABLE_NAME + " " +
                         "WHERE id = ?;";
 
         try {
-            return jdbc.queryForObject(query, new Object[]{eventId}, new RowMapper<Event>() {
+            return jdbc.queryForObject(query, new Object[]{topicId}, new RowMapper<Event>() {
                 @Override
                 public Event mapRow(ResultSet rs, int rowNum) throws SQLException {
 
@@ -79,14 +79,13 @@ public class EventDAOImpl implements EventDAO {
                         return new Event.Builder()
                                 .id(rs.getInt("id"))
                                 .authorid(rs.getInt("authorid"))
-                                .name(rs.getString("name"))
+                                .title(rs.getString("title"))
                                 .description(rs.getString("description"))
-                                .latitude(rs.getFloat("latitude"))
-                                .longitude(rs.getFloat("longitude"))
-                                .radius(rs.getDouble("radius"))
+                                .pinned(rs.getInt("pinned"))
                                 .score(rs.getInt("score"))
                                 .createdTime(TimeHelper.fromDB(rs.getTimestamp("createdTime")))
-                                .expireTime(TimeHelper.fromDB(rs.getTimestamp("expireTime")))
+                                .startTime(TimeHelper.fromDB(rs.getTimestamp("startTime")))
+                                .endTime(TimeHelper.fromDB(rs.getTimestamp("endTime")))
                                 .build();
                     }
                 }
@@ -100,49 +99,51 @@ public class EventDAOImpl implements EventDAO {
     @Override
     public int update(final Event updatedEvent) {
         String query =
-                "UPDATE Event " +
-                        "SET authorid = ?, name = ?, description = ?, latitude = ?," +
-                        "longitude = ?, radius = ?, score = ?, createdTime = ?, expireTime = ?" +
+                "UPDATE " + TABLE_NAME + " " +
+                        "SET flockid = ?, authorid = ?, title = ?," +
+                        "description = ?, pinned = ?, score = ?, createdTime = ?, " +
+                        "startTime = ?, endTime = ? " +
                         "WHERE id = ?";
 
         return jdbc.update(query,
+                updatedEvent.getFlockid(),
                 updatedEvent.getAuthorid(),
-                updatedEvent.getName(),
+                updatedEvent.getTitle(),
                 updatedEvent.getDescription(),
-                updatedEvent.getLatitude(),
-                updatedEvent.getLongitude(),
-                updatedEvent.getRadius(),
+                updatedEvent.getPinned(),
                 updatedEvent.getScore(),
                 TimeHelper.toDB(updatedEvent.getCreatedTime()),
-                TimeHelper.toDB(updatedEvent.getExpireTime()),
-                updatedEvent.getId());
+                TimeHelper.toDB(updatedEvent.getStartTime()),
+                TimeHelper.toDB(updatedEvent.getEndTime()),
+                updatedEvent.getId()
+        );
     }
 
     @Override
-    public int delete(final int eventId) {
+    public int delete(final int topicId) {
         String query =
-                "DELETE FROM Event " +
+                "DELETE FROM " + TABLE_NAME + " " +
                         "WHERE id = ?";
 
-        return jdbc.update(query, eventId);
+        return jdbc.update(query, topicId);
     }
 
     @Override
     public int create(final Event created) {
-        String query = "INSERT INTO Event " +
-                "(authorid, name, description, latitude, longitude, radius, score, createdTime, expireTime)" +
+        String query = "INSERT INTO " + TABLE_NAME + " " +
+                "(flockid, authorid, title, description, pinned, score, createdTime, startTime, endTime)" +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         return jdbc.update(query,
+                created.getFlockid(),
                 created.getAuthorid(),
-                created.getName(),
+                created.getTitle(),
                 created.getDescription(),
-                created.getLatitude(),
-                created.getLongitude(),
-                created.getRadius(),
+                created.getPinned(),
                 created.getScore(),
-                TimeHelper.toDB(created.getCreatedTime()), //TODO use client or server version? Timestamp.valueOf(LocalDateTime.now(ZoneId.ofOffset("", ZoneOffset.UTC)))
-                TimeHelper.toDB(created.getExpireTime())
+                TimeHelper.toDB(created.getCreatedTime()),
+                TimeHelper.toDB(created.getStartTime()),
+                TimeHelper.toDB(created.getEndTime())
         );
     }
 }

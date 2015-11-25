@@ -24,6 +24,7 @@ import java.util.Map;
 @Repository
 public class TopicDAOImpl implements TopicDAO {
     private static final Logger logger = LoggerFactory.getLogger(TopicDAOImpl.class);
+    private static final String TABLE_NAME = "Topic";
 
     @Autowired
     protected JdbcTemplate jdbc;
@@ -31,7 +32,7 @@ public class TopicDAOImpl implements TopicDAO {
     @Override
     public List<Topic> findAll() {
         String query =
-                "SELECT * FROM Topic;";
+                "SELECT * FROM " + " TABLE_NAME " + ";";
 
         List<Topic> topics = new ArrayList<Topic>();
 
@@ -42,14 +43,11 @@ public class TopicDAOImpl implements TopicDAO {
                 Topic topic = new Topic.Builder()
                         .id((int)row.get("id"))
                         .authorid((int) row.get("authorid"))
-                        .name((String) row.get("name"))
+                        .title((String) row.get("title"))
                         .description((String) row.get("description"))
-                        .latitude((float) row.get("latitude"))
-                        .longitude((float) row.get("longitude"))
-                        .radius((double) row.get("radius"))
+                        .pinned((int) row.get("pinned"))
                         .score((int) row.get("score"))
                         .createdTime((LocalDateTime) row.get("createdTime"))
-                        .expireTime((LocalDateTime) row.get("expireTime"))
                         .build();
 
                 topics.add(topic);
@@ -65,7 +63,7 @@ public class TopicDAOImpl implements TopicDAO {
     @Override
     public Topic findOne(final int topicId) {
         String query =
-                "SELECT * FROM Topic " +
+                "SELECT * FROM " + TABLE_NAME + " " +
                         "WHERE id = ?;";
 
         try {
@@ -79,14 +77,11 @@ public class TopicDAOImpl implements TopicDAO {
                         return new Topic.Builder()
                                 .id(rs.getInt("id"))
                                 .authorid(rs.getInt("authorid"))
-                                .name(rs.getString("name"))
+                                .title(rs.getString("title"))
                                 .description(rs.getString("description"))
-                                .latitude(rs.getFloat("latitude"))
-                                .longitude(rs.getFloat("longitude"))
-                                .radius(rs.getDouble("radius"))
+                                .pinned(rs.getInt("pinned"))
                                 .score(rs.getInt("score"))
                                 .createdTime(TimeHelper.fromDB(rs.getTimestamp("createdTime")))
-                                .expireTime(TimeHelper.fromDB(rs.getTimestamp("expireTime")))
                                 .build();
                     }
                 }
@@ -100,28 +95,27 @@ public class TopicDAOImpl implements TopicDAO {
     @Override
     public int update(final Topic updatedTopic) {
         String query =
-                "UPDATE Topic " +
-                        "SET authorid = ?, name = ?, description = ?, latitude = ?," +
-                        "longitude = ?, radius = ?, score = ?, createdTime = ?, expireTime = ?" +
+                "UPDATE " + TABLE_NAME + " " +
+                        "SET flockid = ?, authorid = ?, title = ?," +
+                        "description = ?, pinned = ?, score = ?, createdTime = ? " +
                         "WHERE id = ?";
 
         return jdbc.update(query,
+                updatedTopic.getFlockid(),
                 updatedTopic.getAuthorid(),
-                updatedTopic.getName(),
+                updatedTopic.getTitle(),
                 updatedTopic.getDescription(),
-                updatedTopic.getLatitude(),
-                updatedTopic.getLongitude(),
-                updatedTopic.getRadius(),
+                updatedTopic.getPinned(),
                 updatedTopic.getScore(),
                 TimeHelper.toDB(updatedTopic.getCreatedTime()),
-                TimeHelper.toDB(updatedTopic.getExpireTime()),
-                updatedTopic.getId());
+                updatedTopic.getId()
+        );
     }
 
     @Override
     public int delete(final int topicId) {
         String query =
-                "DELETE FROM Topic " +
+                "DELETE FROM " + TABLE_NAME + " " +
                         "WHERE id = ?";
 
         return jdbc.update(query, topicId);
@@ -129,20 +123,18 @@ public class TopicDAOImpl implements TopicDAO {
 
     @Override
     public int create(final Topic created) {
-        String query = "INSERT INTO Topic " +
-                "(authorid, name, description, latitude, longitude, radius, score, createdTime, expireTime)" +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO " + TABLE_NAME + " " +
+                "(flockid, authorid, title, description, pinned, score, createdTime) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         return jdbc.update(query,
+                created.getFlockid(),
                 created.getAuthorid(),
-                created.getName(),
+                created.getTitle(),
                 created.getDescription(),
-                created.getLatitude(),
-                created.getLongitude(),
-                created.getRadius(),
+                created.getPinned(),
                 created.getScore(),
-                TimeHelper.toDB(created.getCreatedTime()), //TODO use client or server version? Timestamp.valueOf(LocalDateTime.now(ZoneId.ofOffset("", ZoneOffset.UTC)))
-                TimeHelper.toDB(created.getExpireTime())
+                TimeHelper.toDB(created.getCreatedTime())
         );
     }
 }
