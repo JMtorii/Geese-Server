@@ -7,12 +7,9 @@ buildscript {
     }
 }
 
-
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
-
-mainClassName = 'com.geese.server.Application'
 
 version = '0.1-SNAPSHOT'
 
@@ -20,22 +17,36 @@ repositories {
     mavenCentral()
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceSets {
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/integration-test/java')
+        }
+        resources {
+            srcDir file('src/integration-test/resources')
+        }
+    }
+}
+
+configurations {
+    integrationTestCompile.extendsFrom testCompile
+    integrationTestRuntime.extendsFrom testRuntime
+}
 
 dependencies {
-    def springBootVersion = '1.2.6.RELEASE'
+    def springBootVersion = '1.3.0.RELEASE'
 
     compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
     compile("org.springframework.boot:spring-boot-starter-jdbc:$springBootVersion")
-
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.1")
     compile("mysql:mysql-connector-java:5.1.34")
+    compile("ch.qos.logback:logback-classic:1.0.13")
 
-    compile 'ch.qos.logback:logback-classic:1.0.13'
-    compile 'org.springframework.security:spring-security-web:4.0.3.RELEASE'
-    compile 'org.springframework.security.oauth:spring-security-oauth2:2.0.7.RELEASE'
-    //compile 'org.springframework.security:spring-security-config:4.0.2.RELEASE'
-    testCompile 'junit:junit'
+    testCompile("junit:junit:4.12")
+    testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
+    testCompile("org.springframework:spring-test:4.2.3.RELEASE")
 }
 
 jar {
@@ -45,4 +56,23 @@ jar {
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.7'
+}
+
+task integrationTest(type: Test) {
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    outputs.upToDateWhen { false }
+}
+
+check {
+    dependsOn integrationTest
+}
+
+[test, integrationTest].each { task ->
+    task.testLogging {
+        events "passed", "skipped", "failed", "standardError"
+        showCauses = true
+        showExceptions = true
+        showStandardStreams = true
+    }
 }
