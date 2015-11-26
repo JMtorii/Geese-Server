@@ -41,4 +41,12 @@ public interface FlockDAO {
      * @return          The number of updated entries
      */
     int update(final Flock updated);
+
+    /**
+     * Finds all nearby Flocks
+     * @param latitude  Latitude of the client
+     * @param longitude Longitude of the client
+     * @return          A list of nearby flocks
+     */
+    List<Flock> getNearbyFlocks(float latitude, float longitude);
 }

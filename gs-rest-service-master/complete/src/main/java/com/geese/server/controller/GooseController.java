@@ -31,7 +31,7 @@ public class GooseController {
         if (foundGoose != null) {
             return new ResponseEntity<>(foundGoose, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -46,7 +46,7 @@ public class GooseController {
         if (geese != null) {
             return new ResponseEntity<>(geese, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -62,7 +62,6 @@ public class GooseController {
         if (numCreatedGoose > 0) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
-            // TODO: choose better HTTP status
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -80,7 +79,7 @@ public class GooseController {
         if (numUpdatedGoose > 0) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -96,7 +95,7 @@ public class GooseController {
         if (numDeletedGoose > 0) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }

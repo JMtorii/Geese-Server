@@ -26,7 +26,7 @@ public class FlockController {
     /**
      * Gets a Flock by id
      * @param flockId   Identifier for Flock
-     * @return          If Flock is found, return the Flock object and HTTP status 302; otherwise, 404
+     * @return          If Flock is found, return the Flock object and HTTP status 302; otherwise, 400
      */
     @RequestMapping(value = "/{flockId}", method = RequestMethod.GET)
     public ResponseEntity<Flock> getFlock(@PathVariable String flockId) {
@@ -35,13 +35,13 @@ public class FlockController {
         if (foundFlock != null) {
             return new ResponseEntity<>(foundFlock, HttpStatus.FOUND);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     /**
      * Gets all Flocks in database
-     * @return      If Geese exist, return list of Geese and HTTP status 302; otherwise, 404
+     * @return      If Geese exist, return list of Geese and HTTP status 302; otherwise, 400
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<Flock>> getAllFlocks() {
@@ -50,7 +50,7 @@ public class FlockController {
         if (geese != null) {
             return new ResponseEntity<>(geese, HttpStatus.FOUND);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -75,7 +75,7 @@ public class FlockController {
      * Updates an existing Flock
      * @param flockId   Identifier for Flock
      * @param flock     Flock to persist in server
-     * @return          If the Flock exists and is changed, return HTTP status 202; otherwise 404.
+     * @return          If the Flock exists and is changed, return HTTP status 202; otherwise 400.
      */
     @RequestMapping(value = "/{flockId}", method = RequestMethod.PUT)
     public ResponseEntity<Flock> updateFlock(@PathVariable String flockId, @RequestBody Flock flock) {
@@ -84,14 +84,14 @@ public class FlockController {
         if (numUpdatedFlock > 0) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     /**
      * Deletes an existing Flock
      * @param flockId   Identifier for the Flock
-     * @return          If the Flock exists and is deleted, return HTTP status 202; otherwise 404.
+     * @return          If the Flock exists and is deleted, return HTTP status 202; otherwise 400.
      */
     @RequestMapping(value = "/{flockId}", method = RequestMethod.DELETE)
     public ResponseEntity<Flock> deleteFlock(@PathVariable String flockId) {
@@ -100,7 +100,28 @@ public class FlockController {
         if (numDeletedFlock > 0) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * Find 15 nearby flocks within 100km of the provided latitude and longitude
+     * @param latitude Latitude of the client
+     * @param longitude Longitude of the client
+     * @return If there isn't an error return HTTP status 200; otherwise 400.
+     */
+    @RequestMapping(value="/getNearbyFlocks", method = RequestMethod.GET)
+    public ResponseEntity<List<Flock>> getNearbyFlocks(@RequestParam float latitude, @RequestParam float longitude) {
+        if (latitude > 90.0 || latitude < -90.0 || longitude > 180.0 || longitude < -180.0) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        List<Flock> flocks = flockService.getNearbyFlocks(latitude, longitude);
+
+        if (flocks != null) {
+            return new ResponseEntity<>(flocks, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }

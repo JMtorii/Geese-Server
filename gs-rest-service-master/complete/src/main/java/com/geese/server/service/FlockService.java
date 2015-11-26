@@ -42,4 +42,12 @@ public interface FlockService {
      * @return              The number of updated Flock objects.
      */
     int update(String flockId, Flock updatedFlock);
+
+    /**
+     * Finds all nearby Flocks
+     * @param latitude      Latitude of the client
+     * @param longitude     Longitude of the client
+     * @return              List of nearby flocks
+     */
+    List<Flock> getNearbyFlocks(float latitude, float longitude);
 }

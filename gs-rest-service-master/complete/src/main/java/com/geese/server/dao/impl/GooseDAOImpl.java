@@ -32,7 +32,7 @@ public class GooseDAOImpl implements GooseDAO {
         String sqlString =
                 "SELECT * FROM Goose;";
 
-        List<Goose> geese = new ArrayList<Goose>();
+        List<Goose> geese = new ArrayList<>();
 
         try {
             List<Map<String, Object>> rows = jdbc.queryForList(sqlString);

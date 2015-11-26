@@ -5,6 +5,7 @@ import com.geese.server.Application;
 import com.geese.server.dao.GooseDAO;
 import com.geese.server.dao.impl.GooseDAOImpl;
 import com.geese.server.domain.Goose;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,11 +18,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import static org.junit.Assert.assertEquals;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Created by JMtorii on 2015-11-16.
@@ -59,7 +58,7 @@ public class GooseControllerTest {
         MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/goose")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(goose1)))
-                .andExpect(status().is(HttpStatus.CREATED.value()))
+                .andExpect(MockMvcResultMatchers.status().is(HttpStatus.CREATED.value()))
                 .andReturn();
     }
 
@@ -68,11 +67,11 @@ public class GooseControllerTest {
         setUpGeese();
 
         MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/goose/1000"))
-                .andExpect(status().is(HttpStatus.OK.value()))
+                .andExpect(MockMvcResultMatchers.status().is(HttpStatus.OK.value()))
                 .andReturn();
 
         Goose goose = objectMapper.readValue(result.getResponse().getContentAsString(), Goose.class);
-        assertEquals(1000, goose.getId());
+        Assert.assertEquals(1000, goose.getId());
     }
 
     // this is kind of stupid, but it should work

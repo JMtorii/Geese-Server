@@ -20,10 +20,17 @@ public class Flock {
 
     public Flock() {}
 
-    private Flock(Builder builder) {}
-
-    static Builder getBuilder() {
-        return new Builder();
+    private Flock(Builder builder) {
+        this.id = builder.id;
+        this.authorid = builder.authorid;
+        this.name = builder.name;
+        this.description = builder.description;
+        this.latitude = builder.latitude;
+        this.longitude = builder.longitude;
+        this.radius = builder.radius;
+        this.score = builder.score;
+        this.createdTime = builder.createdTime;
+        this.expireTime = builder.expireTime;
     }
 
     public int getId() {
@@ -105,7 +112,6 @@ public class Flock {
     public void setExpireTime(LocalDateTime expireTime) {
         this.expireTime = expireTime;
     }
-
 
     public static class Builder {
         private int id;

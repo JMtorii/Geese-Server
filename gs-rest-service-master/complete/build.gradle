@@ -40,9 +40,6 @@ dependencies {
 
     compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
     compile("org.springframework.boot:spring-boot-starter-jdbc:$springBootVersion")
-    compile 'org.springframework.security:spring-security-web:4.0.3.RELEASE'
-    compile 'org.springframework.security.oauth:spring-security-oauth2:2.0.7.RELEASE'
-
     compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.1")
     compile("mysql:mysql-connector-java:5.1.34")
 

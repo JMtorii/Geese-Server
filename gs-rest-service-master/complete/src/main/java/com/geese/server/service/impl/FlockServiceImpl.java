@@ -42,4 +42,9 @@ public class FlockServiceImpl implements FlockService {
     public int update(String flockId, Flock updatedFlock) {
         return flockDAO.update(updatedFlock);
     }
+
+    @Override
+    public List<Flock> getNearbyFlocks(float latitude, float longitude) {
+        return flockDAO.getNearbyFlocks(latitude, longitude);
+    }
 }
