@@ -1,7 +1,7 @@
 package com.geese.server;
 
 import com.geese.server.domain.Goose;
-import com.geese.server.service.impl.GooseServiceImpl;
+import com.geese.server.service.GooseService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -11,9 +11,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public final class TokenHandler {
 
     private final String secret;
-    private final GooseServiceImpl gooseService;
+    private final GooseService gooseService;
 
-    public TokenHandler(String secret, GooseServiceImpl gooseService) {
+    public TokenHandler(String secret, GooseService gooseService) {
         this.secret = secret;
         this.gooseService = gooseService;
     }

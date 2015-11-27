@@ -4,7 +4,9 @@ package com.geese.server;
  * Created by Ni on 2015-11-16.
  */
 
+import com.geese.server.service.GooseService;
 import com.geese.server.service.impl.GooseServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -21,12 +23,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @Order(2)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
-    private final GooseServiceImpl gooseService;
+    private final GooseService gooseService;
     private final TokenAuthenticationService tokenAuthenticationService;
 
-    public SpringSecurityConfig() {
+    @Autowired
+    public SpringSecurityConfig(GooseService gooseService) {
         super(true);
-        this.gooseService = new GooseServiceImpl();
+        this.gooseService = gooseService;
         tokenAuthenticationService = new TokenAuthenticationService("tooManySecrets", gooseService);
         }
 

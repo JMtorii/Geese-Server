@@ -4,6 +4,7 @@ import com.geese.server.dao.GooseDAO;
 import com.geese.server.domain.Goose;
 import com.geese.server.service.GooseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import java.util.List;
  */
 @Service
 @SuppressWarnings("unused")
-public class GooseServiceImpl implements GooseService, UserDetailsService {
+public class GooseServiceImpl implements GooseService {
 
     @Autowired
     GooseDAO gooseDAO;
