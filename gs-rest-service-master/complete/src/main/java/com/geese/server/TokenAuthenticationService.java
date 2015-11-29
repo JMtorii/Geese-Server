@@ -16,7 +16,7 @@ public class TokenAuthenticationService {
 
     private final TokenHandler tokenHandler;
 
-    public TokenAuthenticationService(String secret, GooseService gooseService) {
+    public TokenAuthenticationService(String secret, GooseServiceImpl gooseService) {
     tokenHandler = new TokenHandler(secret, gooseService);
     }
 

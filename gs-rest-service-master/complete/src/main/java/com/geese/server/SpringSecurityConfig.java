@@ -4,6 +4,7 @@ package com.geese.server;
  * Created by Ni on 2015-11-16.
  */
 
+import com.fasterxml.jackson.annotation.JacksonInject;
 import com.geese.server.service.GooseService;
 import com.geese.server.service.impl.GooseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +24,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @Order(2)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
-    private final GooseService gooseService;
-    private final TokenAuthenticationService tokenAuthenticationService;
 
     @Autowired
-    public SpringSecurityConfig(GooseService gooseService) {
+    private GooseServiceImpl gooseServiceImpl;
+
+    private final TokenAuthenticationService tokenAuthenticationService;
+
+
+    public SpringSecurityConfig() {
         super(true);
-        this.gooseService = gooseService;
-        tokenAuthenticationService = new TokenAuthenticationService("tooManySecrets", gooseService);
-        }
+        tokenAuthenticationService = new TokenAuthenticationService("tooManySecrets", gooseServiceImpl);
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -76,7 +79,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     @Override
     public UserDetailsService userDetailsService() {
-        return gooseService;
+        return gooseServiceImpl;
     }
 
     @Bean

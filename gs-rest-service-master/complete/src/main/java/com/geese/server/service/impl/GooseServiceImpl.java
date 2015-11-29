@@ -16,22 +16,19 @@ import java.util.List;
  */
 @Service
 @SuppressWarnings("unused")
-public class GooseServiceImpl implements GooseService {
+public class GooseServiceImpl implements UserDetailsService {
 
     @Autowired
     GooseDAO gooseDAO;
 
-    @Override
     public List<Goose> findAll() {
         return gooseDAO.findAll();
     }
 
-    @Override
     public Goose findOne(String gooseId) {
         return gooseDAO.findOne(Integer.valueOf(gooseId));
     }
 
-    @Override
     public Goose findByEmail(String email) {
         return gooseDAO.findByEmail(email);
     }
@@ -41,18 +38,15 @@ public class GooseServiceImpl implements GooseService {
         return findByEmail(username);
     }
 
-    @Override
     public int create(Goose createdGoose) {
         return gooseDAO.create(createdGoose);
     }
 
-    @Override
     public int update(String gooseId, Goose updatedGoose) {
         // TODO: check whether gooseId matches updatedGoose.gooseId
         return gooseDAO.update(updatedGoose);
     }
 
-    @Override
     public int delete(String gooseId) {
         return gooseDAO.delete(Integer.valueOf(gooseId));
     }
