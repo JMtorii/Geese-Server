@@ -45,10 +45,10 @@ public class FlockController {
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<Flock>> getAllFlocks() {
-        List<Flock> geese = flockService.findAll();
+        List<Flock> flocks = flockService.findAll();
 
-        if (geese != null) {
-            return new ResponseEntity<>(geese, HttpStatus.FOUND);
+        if (flocks != null) {
+            return new ResponseEntity<>(flocks, HttpStatus.FOUND);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

@@ -7,6 +7,7 @@ import com.geese.server.domain.Flock;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -87,6 +88,7 @@ public class FlockControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
+    @Ignore
     @Test
     public void getNearbyFlocksFindsAllNearbyFlocks() throws Exception {
         float validLatitude = 43.46519f;
