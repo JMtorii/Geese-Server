@@ -1,9 +1,13 @@
 package com.geese.server.service.impl;
 
+import com.geese.server.GooseAuthentication;
+import com.geese.server.TokenAuthenticationService;
 import com.geese.server.dao.GooseDAO;
 import com.geese.server.domain.Goose;
 import com.geese.server.service.GooseService;
+import com.geese.server.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -14,38 +18,23 @@ import java.util.List;
  */
 @Service
 @SuppressWarnings("unused")
-public class LoginServiceImpl implements GooseService {
+public class LoginServiceImpl implements LoginService {
 
     @Autowired
-    GooseDAO gooseDAO;
+    @Qualifier("gooseServiceImpl")
+    private GooseService gooseService;
 
-    public List<Goose> findAll() {
-        return gooseDAO.findAll();
+    @Autowired
+    private TokenAuthenticationService tokenAuthenticationService;
+
+    public String Login(String email, String password) {
+        // Make sure we added actual authentication here
+
+        GooseAuthentication auth = new GooseAuthentication(gooseService.loadUserByUsername(email));
+        return tokenAuthenticationService.getToken(auth);
     }
 
-    public Goose findOne(String gooseId) {
-        return gooseDAO.findOne(Integer.valueOf(gooseId));
-    }
-
-    public Goose findByEmail(String email) {
-        return gooseDAO.findByEmail(email);
-    }
-
-    @Override
-    public Goose loadUserByUsername(String username) throws UsernameNotFoundException {
-        return findByEmail(username);
-    }
-
-    public int create(Goose createdGoose) {
-        return gooseDAO.create(createdGoose);
-    }
-
-    public int update(String gooseId, Goose updatedGoose) {
-        // TODO: check whether gooseId matches updatedGoose.gooseId
-        return gooseDAO.update(updatedGoose);
-    }
-
-    public int delete(String gooseId) {
-        return gooseDAO.delete(Integer.valueOf(gooseId));
-    }
+    public String LoginFromFacebook(String token) {
+        return "";
+    };
 }

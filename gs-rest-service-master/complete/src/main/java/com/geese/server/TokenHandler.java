@@ -5,18 +5,30 @@ import com.geese.server.service.GooseService;
 import com.geese.server.service.impl.GooseServiceImpl;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Ni on 2015-11-18.
  */
+@Component
 public final class TokenHandler {
 
     private final String secret;
-    private final GooseServiceImpl gooseService;
 
-    public TokenHandler(String secret, GooseServiceImpl gooseService) {
+    @Autowired
+    @Qualifier("gooseServiceImpl")
+    private GooseService gooseService;
+
+    public TokenHandler() {
+        super();
+        this.secret = "someSecret";
+    }
+
+    public TokenHandler(String secret) {
+        super();
         this.secret = secret;
-        this.gooseService = gooseService;
     }
 
     public Goose parseUserFromToken(String token) {

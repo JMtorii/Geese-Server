@@ -4,10 +4,10 @@ package com.geese.server;
  * Created by Ni on 2015-11-16.
  */
 
-import com.fasterxml.jackson.annotation.JacksonInject;
 import com.geese.server.service.GooseService;
 import com.geese.server.service.impl.GooseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -20,20 +20,22 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.annotation.Resource;
+
 @Configuration
 @EnableWebSecurity
 @Order(2)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private GooseServiceImpl gooseServiceImpl;
+    @Resource(name="gooseServiceImpl")
+    private GooseService gooseService;
 
     private final TokenAuthenticationService tokenAuthenticationService;
 
-
     public SpringSecurityConfig() {
         super(true);
-        tokenAuthenticationService = new TokenAuthenticationService("tooManySecrets", gooseServiceImpl);
+        this.gooseService = new GooseServiceImpl();
+        tokenAuthenticationService = new TokenAuthenticationService("tooManySecrets");
     }
 
     @Override
@@ -55,14 +57,18 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     .antMatchers("**/*.js").permitAll()
 
     // Allow anonymous logins
-    .antMatchers("/auth/**").permitAll()
+    .antMatchers("/login/**").permitAll()
 
     // All other request need to be authenticated
-    .anyRequest().authenticated().and()
+            .anyRequest().authenticated().and()
+
+    // Create / pass Token upon login
+//    .addFilterBefore(new StatelessLoginFilter(tokenAuthenticationService),
+//            UsernamePasswordAuthenticationFilter.class)
 
     // Custom Token based authentication based on the header previously given to the client
-    .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService),
-            UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService),
+                    UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
@@ -79,7 +85,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     @Override
     public UserDetailsService userDetailsService() {
-        return gooseServiceImpl;
+        return gooseService;
     }
 
     @Bean

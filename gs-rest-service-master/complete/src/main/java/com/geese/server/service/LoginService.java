@@ -1,58 +1,22 @@
 package com.geese.server.service;
 
-import com.geese.server.domain.Goose;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
-import java.util.List;
-
 /**
  * Created by JMtorii on 2015-10-12.
  */
 
-public interface LoginService extends UserDetailsService{
+public interface LoginService {
     /**
-     * Finds all Goose entries from the database.
-     * @return  All existing Geese.
+     * Authenticates user
+     * @param email
+     * @param password
+     * @return SessionToken
      */
-    List<Goose> findAll();
+    String Login(String email, String password);
 
     /**
-     * Finds the a single Goose.
-     * @param gooseId   The gooseId of the requested Goose entry.
-     * @return          The found Goose.
+     * Authenticates user from Facebook
+     * @param token
+     * @return        SessionToken
      */
-    Goose findOne(String gooseId);
-
-    /**
-     * Finds the a single Goose.
-     * @param email     The email.
-     * @return          The found Goose.
-     */
-    Goose findByEmail(String email);
-
-    @Override
-    Goose loadUserByUsername(String username) throws UsernameNotFoundException;
-
-    /**
-     * Creates a new Goose entry to the database.
-     * @param createdGoose      The information of the new Goose entry.
-     * @return                  The number of created Goose objects.
-     */
-    int create(Goose createdGoose);
-
-    /**
-     * Updates an existing Goose entry in the database.
-     * @param gooseId       The gooseId of the requested Goose entry.
-     * @param updatedGoose  The information of the updated Goose entry.
-     * @return              The number of updated Goose objects.
-     */
-    int update(String gooseId, Goose updatedGoose);
-
-    /**
-     * Deletes a Goose from the database.
-     * @param gooseId   ID to delete from database.
-     * @return          The number of deleted Goose objects.
-     */
-    int delete(String gooseId);
+    String LoginFromFacebook(String token);
 }

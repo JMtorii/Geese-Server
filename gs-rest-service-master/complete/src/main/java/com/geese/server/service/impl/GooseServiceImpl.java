@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Service
 @SuppressWarnings("unused")
-public class GooseServiceImpl implements UserDetailsService {
+public class GooseServiceImpl implements GooseService {
 
     @Autowired
     GooseDAO gooseDAO;

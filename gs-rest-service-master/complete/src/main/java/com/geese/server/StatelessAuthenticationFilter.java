@@ -32,5 +32,5 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             filterChain.doFilter(request, response);
             SecurityContextHolder.getContext().setAuthentication(null);
-        }
     }
+}

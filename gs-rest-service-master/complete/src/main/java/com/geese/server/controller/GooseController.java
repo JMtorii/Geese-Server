@@ -20,7 +20,7 @@ public class GooseController {
 
     @Autowired
     @Qualifier("gooseServiceImpl")
-    private GooseServiceImpl gooseService;
+    private GooseService gooseService;
 
     /**
      * Gets a Goose by id
