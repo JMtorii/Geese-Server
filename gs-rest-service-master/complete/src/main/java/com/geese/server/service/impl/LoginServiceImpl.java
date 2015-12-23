@@ -1,17 +1,12 @@
 package com.geese.server.service.impl;
 
 import com.geese.server.GooseAuthentication;
-import com.geese.server.TokenAuthenticationService;
-import com.geese.server.dao.GooseDAO;
-import com.geese.server.domain.Goose;
+import com.geese.server.service.TokenService;
 import com.geese.server.service.GooseService;
 import com.geese.server.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * Created by JMtorii on 2015-10-12.
@@ -25,15 +20,17 @@ public class LoginServiceImpl implements LoginService {
     private GooseService gooseService;
 
     @Autowired
-    private TokenAuthenticationService tokenAuthenticationService;
+    private TokenService tokenService;
 
+    @Override
     public String Login(String email, String password) {
         // Make sure we added actual authentication here
 
         GooseAuthentication auth = new GooseAuthentication(gooseService.loadUserByUsername(email));
-        return tokenAuthenticationService.getToken(auth);
+        return tokenService.getToken(auth);
     }
 
+    @Override
     public String LoginFromFacebook(String token) {
         return "";
     };

@@ -117,7 +117,7 @@ public class GooseDAOImpl implements GooseDAO {
                 }
             });
         } catch (EmptyResultDataAccessException e) {
-            logger.warn("Goose: findOne returns no rows");
+            logger.warn("Goose: findByEmail returns no rows");
             return null;
         }
     }
