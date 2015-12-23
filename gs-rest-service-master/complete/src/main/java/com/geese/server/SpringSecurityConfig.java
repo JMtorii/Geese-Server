@@ -5,10 +5,11 @@ package com.geese.server;
  */
 
 import com.geese.server.service.GooseService;
-import com.geese.server.service.impl.GooseServiceImpl;
+import com.geese.server.service.LoginService;
+import com.geese.server.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,17 +26,17 @@ import javax.annotation.Resource;
 @Configuration
 @EnableWebSecurity
 @Order(2)
+@ComponentScan(basePackages = {"com.geese.server"})
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Resource(name="gooseServiceImpl")
     private GooseService gooseService;
 
-    private final TokenAuthenticationService tokenAuthenticationService;
+    @Autowired
+    private TokenService tokenService;
 
     public SpringSecurityConfig() {
-        super(true);
-        this.gooseService = new GooseServiceImpl();
-        tokenAuthenticationService = new TokenAuthenticationService("tooManySecrets");
+        super(true); // Fixes CSRF error
     }
 
     @Override
@@ -63,11 +64,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             .anyRequest().authenticated().and()
 
     // Create / pass Token upon login
-//    .addFilterBefore(new StatelessLoginFilter(tokenAuthenticationService),
+//    .addFilterBefore(new StatelessLoginFilter(tokenService),
 //            UsernamePasswordAuthenticationFilter.class)
 
     // Custom Token based authentication based on the header previously given to the client
-            .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService),
+            .addFilterBefore(new StatelessAuthenticationFilter(tokenService),
                     UsernamePasswordAuthenticationFilter.class);
     }
 
@@ -89,7 +90,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public TokenAuthenticationService tokenAuthenticationService() {
-        return tokenAuthenticationService;
+    public TokenService tokenService() {
+        return tokenService;
         }
     }
