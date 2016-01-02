@@ -24,7 +24,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public String Login(String email, String password) {
-        // Make sure we added actual authentication here
+        //TODO Make sure we added actual authentication here
 
         GooseAuthentication auth = new GooseAuthentication(gooseService.loadUserByUsername(email));
         return tokenService.getToken(auth);

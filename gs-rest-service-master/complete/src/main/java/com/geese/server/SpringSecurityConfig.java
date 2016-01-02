@@ -59,6 +59,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     // Allow anonymous logins
     .antMatchers("/login/**").permitAll()
+    // Allow anonymous account creation
+    .antMatchers("/goose/**").permitAll()
 
     // All other request need to be authenticated
             .anyRequest().authenticated().and()
