@@ -1,13 +1,16 @@
 package com.geese.server.service;
 
 import com.geese.server.domain.Goose;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 
 /**
  * Created by JMtorii on 2015-10-12.
  */
-public interface GooseService {
+
+public interface GooseService extends UserDetailsService{
     /**
      * Finds all Goose entries from the database.
      * @return  All existing Geese.
@@ -20,6 +23,16 @@ public interface GooseService {
      * @return          The found Goose.
      */
     Goose findOne(String gooseId);
+
+    /**
+     * Finds the a single Goose.
+     * @param email     The email.
+     * @return          The found Goose.
+     */
+    Goose findByEmail(String email);
+
+    @Override
+    Goose loadUserByUsername(String username) throws UsernameNotFoundException;
 
     /**
      * Creates a new Goose entry to the database.

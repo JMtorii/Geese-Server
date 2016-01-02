@@ -2,7 +2,9 @@ package com.geese.server.controller;
 
 import com.geese.server.domain.Goose;
 import com.geese.server.service.GooseService;
+import com.geese.server.service.impl.GooseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,7 @@ import java.util.List;
 public class GooseController {
 
     @Autowired
+    @Qualifier("gooseServiceImpl")
     private GooseService gooseService;
 
     /**
