@@ -76,6 +76,7 @@ CREATE TABLE IF NOT EXISTS Post
 	text TEXT NOT NULL, -- Content of post
 	score INT(16) NOT NULL, -- Up/down votes
 	createdTime DATETIME NOT NULL, -- Time of post creation
+	expireTime DATETIME NOT NULL, -- Time of post expiry
 	CONSTRAINT Post_pk PRIMARY KEY (id),
 	CONSTRAINT Post_Topic_fk FOREIGN KEY (topicid) REFERENCES Topic (id),
 	CONSTRAINT Post_Author_fk FOREIGN KEY (authorid) REFERENCES Goose (id)
