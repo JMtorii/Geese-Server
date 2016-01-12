@@ -125,14 +125,16 @@ public class GooseDAOImpl implements GooseDAO {
     @Override
     public int create(final Goose createdGoose) {
         String sqlString =
-                "INSERT INTO Goose (name, email, verified)" +
-                "VALUES (?, ?, ?);";
+                "INSERT INTO Goose (name, email, verified, password, salt)" +
+                "VALUES (?, ?, ?, ?, ?);";
 
         return jdbc.update(
                 sqlString,
                 createdGoose.getName(),
                 createdGoose.getEmail(),
-                createdGoose.getVerified()
+                createdGoose.getVerified(),
+                createdGoose.getPassword(),
+                createdGoose.getSalt()
         );
     }
 

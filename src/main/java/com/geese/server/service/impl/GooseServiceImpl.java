@@ -3,12 +3,21 @@ package com.geese.server.service.impl;
 import com.geese.server.dao.GooseDAO;
 import com.geese.server.domain.Goose;
 import com.geese.server.service.GooseService;
+import com.geese.server.service.TokenService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.xml.bind.DatatypeConverter;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.List;
 
 /**
@@ -17,6 +26,8 @@ import java.util.List;
 @Service
 @SuppressWarnings("unused")
 public class GooseServiceImpl implements GooseService {
+
+    private static final Logger logger = LoggerFactory.getLogger(GooseService.class);
 
     @Autowired
     GooseDAO gooseDAO;
@@ -38,8 +49,37 @@ public class GooseServiceImpl implements GooseService {
         return findByEmail(username);
     }
 
+    public String sha256(String hexString) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(DatatypeConverter.parseHexBinary(hexString));
+        return DatatypeConverter.printHexBinary(md.digest());
+    }
+
+    public String sha256(byte[] rawBytes) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(rawBytes);
+        return DatatypeConverter.printHexBinary(md.digest());
+    }
+
     public int create(Goose createdGoose) {
-        return gooseDAO.create(createdGoose);
+        SecureRandom random = new SecureRandom();
+        byte randomBytes[] = new byte[32];
+        random.nextBytes(randomBytes);
+        Goose.Builder newGoose = new Goose.Builder(0, createdGoose.getName(), createdGoose.getEmail(), false);
+
+        try {
+            String salt = sha256(randomBytes);
+            newGoose.salt(salt);
+            byte[] saltBytes = DatatypeConverter.parseHexBinary(salt);
+            byte[] passwordBytes = createdGoose.getPassword().getBytes("UTF-8"); // UTF-8 or 16?
+            byte[] saltedPasswordBytes = ByteBuffer.allocate(saltBytes.length + passwordBytes.length).put(saltBytes).put(passwordBytes).array();
+            String password = sha256(saltedPasswordBytes);
+            newGoose.password(password);
+            logger.debug(password);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return gooseDAO.create(newGoose.build());
     }
 
     public int update(String gooseId, Goose updatedGoose) {

@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS Goose
 	verified BOOLEAN NOT NULL, -- Whether the email is verified
 	password CHAR(64), -- 32 byte hash (sha256)
 	salt CHAR(64), -- random 32 bytes
-	CONSTRAINT Goose_pk PRIMARY KEY (id)
+	CONSTRAINT Goose_pk PRIMARY KEY (id),
+	CONSTRAINT Goose_Email_unique UNIQUE (email)
 );
 
 -- Table for Groups in the app
