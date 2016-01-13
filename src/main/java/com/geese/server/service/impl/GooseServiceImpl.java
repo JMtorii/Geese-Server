@@ -4,6 +4,7 @@ import com.geese.server.dao.GooseDAO;
 import com.geese.server.domain.Goose;
 import com.geese.server.service.GooseService;
 import com.geese.server.service.TokenService;
+import com.geese.server.service.util.HashingAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,18 +50,6 @@ public class GooseServiceImpl implements GooseService {
         return findByEmail(username);
     }
 
-    public String sha256(String hexString) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        md.update(DatatypeConverter.parseHexBinary(hexString));
-        return DatatypeConverter.printHexBinary(md.digest());
-    }
-
-    public String sha256(byte[] rawBytes) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        md.update(rawBytes);
-        return DatatypeConverter.printHexBinary(md.digest());
-    }
-
     public int create(Goose createdGoose) {
         SecureRandom random = new SecureRandom();
         byte randomBytes[] = new byte[32];
@@ -68,12 +57,12 @@ public class GooseServiceImpl implements GooseService {
         Goose.Builder newGoose = new Goose.Builder(0, createdGoose.getName(), createdGoose.getEmail(), false);
 
         try {
-            String salt = sha256(randomBytes);
+            String salt = HashingAlgorithm.sha256(randomBytes);
             newGoose.salt(salt);
             byte[] saltBytes = DatatypeConverter.parseHexBinary(salt);
             byte[] passwordBytes = createdGoose.getPassword().getBytes("UTF-8"); // UTF-8 or 16?
             byte[] saltedPasswordBytes = ByteBuffer.allocate(saltBytes.length + passwordBytes.length).put(saltBytes).put(passwordBytes).array();
-            String password = sha256(saltedPasswordBytes);
+            String password = HashingAlgorithm.sha256(saltedPasswordBytes);
             newGoose.password(password);
             logger.debug(password);
         } catch (Exception e) {

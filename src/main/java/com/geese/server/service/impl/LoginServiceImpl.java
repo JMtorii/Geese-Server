@@ -5,6 +5,7 @@ import com.geese.server.domain.Goose;
 import com.geese.server.service.TokenService;
 import com.geese.server.service.GooseService;
 import com.geese.server.service.LoginService;
+import com.geese.server.service.util.HashingAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,18 +34,6 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private TokenService tokenService;
 
-    public String sha256(String hexString) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        md.update(DatatypeConverter.parseHexBinary(hexString));
-        return DatatypeConverter.printHexBinary(md.digest());
-    }
-
-    public String sha256(byte[] rawBytes) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        md.update(rawBytes);
-        return DatatypeConverter.printHexBinary(md.digest());
-    }
-
     @Override
     public String Login(String email, String password) {
         // TODO : Tighten up authentication?
@@ -59,8 +48,7 @@ public class LoginServiceImpl implements LoginService {
             byte[] saltBytes = DatatypeConverter.parseHexBinary(goose.getSalt());
             byte[] passwordBytes = password.getBytes("UTF-8"); // UTF-8 or 16?
             byte[] saltedPasswordBytes = ByteBuffer.allocate(saltBytes.length + passwordBytes.length).put(saltBytes).put(passwordBytes).array();
-            passwordAttempt = sha256(saltedPasswordBytes);
-            logger.debug(passwordAttempt);
+            passwordAttempt = HashingAlgorithm.sha256(saltedPasswordBytes);
         } catch (Exception e) {
             e.printStackTrace();
         }
