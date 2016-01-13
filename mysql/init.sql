@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS Flock
 	CONSTRAINT Flock_Author_fk FOREIGN KEY (authorid) REFERENCES Goose (id)
 );
 
--- Table mapping Users to Groups they belong to
+-- Table mapping Users to Flocks they belong to
 CREATE TABLE IF NOT EXISTS Membership
 (
 	gooseid INT(16) NOT NULL,
@@ -52,11 +52,21 @@ CREATE TABLE IF NOT EXISTS Topic
 	pinned BOOLEAN NOT NULL, -- Display topic at the top of the list
 	score INT(16) NOT NULL, -- Up/down votes
 	createdTime DATETIME NOT NULL, -- Time of topic creation
+	startTime DATETIME NOT NULL, -- Start of event (if relevant)
+	endTime DATETIME NOT NULL, -- End of event (if relevant)
 	CONSTRAINT Topic_pk PRIMARY KEY (id),
 	CONSTRAINT Topic_Flock_fk FOREIGN KEY (flockid) REFERENCES Flock (id),
 	CONSTRAINT Topic_Author_fk FOREIGN KEY (authorid) REFERENCES Goose (id)
 );
 
+-- Table mapping Users to Events they belong to
+CREATE TABLE IF NOT EXISTS EventMembership
+(
+	gooseid INT(16) NOT NULL,
+	topicid INT(16) NOT NULL,
+	CONSTRAINT EventMembership_Goose_fk FOREIGN KEY (gooseid) REFERENCES Goose (id),
+	CONSTRAINT EventMembership_Event_fk FOREIGN KEY (topicid) REFERENCES Topic (id)
+);
 
 -- Table for posts of a topic
 CREATE TABLE IF NOT EXISTS Post
@@ -67,9 +77,24 @@ CREATE TABLE IF NOT EXISTS Post
 	text TEXT NOT NULL, -- Content of post
 	score INT(16) NOT NULL, -- Up/down votes
 	createdTime DATETIME NOT NULL, -- Time of post creation
+	expireTime DATETIME NOT NULL, -- Time of post expiry
 	CONSTRAINT Post_pk PRIMARY KEY (id),
 	CONSTRAINT Post_Topic_fk FOREIGN KEY (topicid) REFERENCES Topic (id),
 	CONSTRAINT Post_Author_fk FOREIGN KEY (authorid) REFERENCES Goose (id)
+);
+
+-- Table for comments on a post
+CREATE TABLE IF NOT EXISTS Comment
+(
+	id INT(16) NOT NULL AUTO_INCREMENT,
+	postid INT(16) NOT NULL,
+	authorid INT(16) NOT NULL,
+	text TEXT NOT NULL, -- Content of post
+	score INT(16) NOT NULL, -- Up/down votes
+	createdTime DATETIME NOT NULL, -- Time of post creation
+	CONSTRAINT Comment_pk PRIMARY KEY (id),
+	CONSTRAINT Comment_Post_fk FOREIGN KEY (postid) REFERENCES Post (id),
+	CONSTRAINT Comment_Author_fk FOREIGN KEY (authorid) REFERENCES Goose (id)
 );
 
 -- Table for Flock votes

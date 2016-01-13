@@ -5,18 +5,17 @@ import java.time.LocalDateTime;
 /**
  * Created by ecrothers on 2015-11-08.
  */
-public class Post {
+public class Comment {
     private int id;
-    private int topicid;
+    private int postid;
     private int authorid;
     private String text;
     private int score;
     private LocalDateTime createdTime;
-    private LocalDateTime expireTime;
 
-    public Post() {}
+    public Comment() {}
 
-    private Post(Builder builder) {}
+    private Comment(Builder builder) {}
 
     static Builder getBuilder() {
         return new Builder();
@@ -26,8 +25,8 @@ public class Post {
         return id;
     }
 
-    public int getTopicid() {
-        return topicid;
+    public int getPostid() {
+        return postid;
     }
 
     public int getAuthorid() {
@@ -46,18 +45,13 @@ public class Post {
         return createdTime;
     }
 
-    public LocalDateTime getExpireTime() {
-        return expireTime;
-    }
-
     public static class Builder {
         private int id;
-        private int topicid;
+        private int postid;
         private int authorid;
         private String text;
         private int score;
         private LocalDateTime createdTime;
-        private LocalDateTime expireTime;
 
         public Builder() {}
 
@@ -66,8 +60,8 @@ public class Post {
             return this;
         }
 
-        public Builder topicid(int topicid) {
-            this.topicid = topicid;
+        public Builder postid(int postid) {
+            this.postid = postid;
             return this;
         }
 
@@ -91,13 +85,8 @@ public class Post {
             return this;
         }
 
-        public Builder expireTime(LocalDateTime expireTime) {
-            this.expireTime = expireTime;
-            return this;
-        }
-
-        public Post build() {
-            return new Post(this);
+        public Comment build() {
+            return new Comment(this);
         }
     }
 }
