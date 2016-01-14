@@ -124,3 +124,11 @@ CREATE TABLE IF NOT EXISTS PostVote
 	CONSTRAINT PostVote_Post_fk FOREIGN KEY (postid) REFERENCES Post (id)
 );
 
+-- Table for FavouritedFlocks
+CREATE TABLE IF NOT EXISTS FavouritedFlocks
+(
+	gooseid INT(16) NOT NULL,
+	flockid INT(16) NOT NULL,
+	CONSTRAINT FavouritedFlocks_Goose_fk FOREIGN KEY (gooseid) REFERENCES Goose (id),
+	CONSTRAINT FavouritedFlocks_Flock_fk FOREIGN KEY (flockid) REFERENCES Flock (id)
+);
