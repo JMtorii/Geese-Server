@@ -34,3 +34,24 @@ VALUES (1, 1);
 
 INSERT INTO PostVote (gooseid, postid)
 VALUES (1, 1);
+
+insert into Goose(name, email, verified, password, salt)
+  values("JMtorii", "test@test.com", true, "password", "salt");
+
+insert into Flock(authorid, name, description, latitude, longitude, radius, score, createdTime, expireTime)
+  values(2, 'Waterloo Soccer', 'Description for Soccer', 43.472036, -80.544965, 2, 1, '2000-01-01 00:00:00', '2010-01-01 00:00:00');
+
+insert into Flock(authorid, name, description, latitude, longitude, radius, score, createdTime, expireTime)
+  values(2, 'Waterloo Basketball', 'Description for Basketball', 43.474637, -80.548055, 2, 1, '2000-01-01 00:00:00', '2010-01-01 00:00:00');
+
+insert into Flock(authorid, name, description, latitude, longitude, radius, score, createdTime, expireTime)
+  values(2, 'Waterloo Football', 'Description for Football', 43.474364, -80.543280, 2, 1, '2000-01-01 00:00:00', '2010-01-01 00:00:00');
+
+insert into Flock(authorid, name, description, latitude, longitude, radius, score, createdTime, expireTime)
+  values(2, 'Waterloo Book Lovers', 'Description for Book Lovers', 43.470642, -80.534404, 2, 1, '2000-01-01 00:00:00', '2010-01-01 00:00:00');
+
+insert into Flock(authorid, name, description, latitude, longitude, radius, score, createdTime, expireTime)
+  values(2, 'Waterloo Science Lovers', 'Description for Science Lovers', 43.481466, -80.548964, 2, 1, '2000-01-01 00:00:00', '2010-01-01 00:00:00');
+
+insert into Flock(authorid, name, description, latitude, longitude, radius, score, createdTime, expireTime)
+  values(2, 'Waterloo Losers', 'Description for Losers', 43.472031, -80.544965, 2, 1, '2000-01-01 00:00:00', '2010-01-01 00:00:00');
