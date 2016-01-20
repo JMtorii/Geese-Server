@@ -1,8 +1,8 @@
 package com.geese.server.dao.impl;
 
-import com.geese.server.dao.PostDAO;
+import com.geese.server.dao.TopicDAO;
 import com.geese.server.dao.util.TimeHelper;
-import com.geese.server.domain.Post;
+import com.geese.server.domain.Topic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,107 +22,119 @@ import java.util.Map;
  * Created by ecrothers on 2015-11-08.
  */
 @Repository
-public class PostDAOImpl implements PostDAO {
+public class PostDAOImpl implements TopicDAO {
     private static final Logger logger = LoggerFactory.getLogger(PostDAOImpl.class);
+    private static final String TABLE_NAME = "Topic";
 
     @Autowired
     protected JdbcTemplate jdbc;
 
     @Override
-    public List<Post> findAll() {
+    public List<Topic> findAll() {
         String query =
-                "SELECT * FROM Post;";
+                "SELECT * FROM " + " TABLE_NAME " + ";";
 
-        List<Post> posts = new ArrayList<Post>();
+        List<Topic> topics = new ArrayList<Topic>();
 
         try {
             List<Map<String, Object>> rows = jdbc.queryForList(query);
 
             for (Map row : rows) {
-                Post post = new Post.Builder()
+                Topic topic = new Topic.Builder()
                         .id((int)row.get("id"))
-                        .topicid((int) row.get("topicid"))
                         .authorid((int) row.get("authorid"))
-                        .text((String) row.get("text"))
+                        .title((String) row.get("title"))
+                        .description((String) row.get("description"))
+                        .pinned((int) row.get("pinned"))
                         .score((int) row.get("score"))
                         .createdTime((LocalDateTime) row.get("createdTime"))
-                        .createdTime((LocalDateTime) row.get("expireTime"))
                         .build();
 
-                posts.add(post);
+                topics.add(topic);
             }
 
-            return posts;
+            return topics;
         } catch (EmptyResultDataAccessException e) {
-            logger.warn("Post: findAll returns no rows");
+            logger.warn("Topic: findAll returns no rows");
             return null;
         }
     }
 
     @Override
-    public Post findOne(final int postId) {
+    public Topic findOne(final int topicId) {
         String query =
-                "SELECT * FROM Post " +
+                "SELECT * FROM " + TABLE_NAME + " " +
                         "WHERE id = ?;";
 
         try {
-            return jdbc.queryForObject(query, new Object[]{postId}, new RowMapper<Post>() {
+            return jdbc.queryForObject(query, new Object[]{topicId}, new RowMapper<Topic>() {
                 @Override
-                public Post mapRow(ResultSet rs, int rowNum) throws SQLException {
+                public Topic mapRow(ResultSet rs, int rowNum) throws SQLException {
 
                     if (rs.getRow() < 1) {
                         return null;
                     } else {
-                        return new Post.Builder()
+                        return new Topic.Builder()
                                 .id(rs.getInt("id"))
-                                .topicid(rs.getInt("topicid"))
                                 .authorid(rs.getInt("authorid"))
-                                .text(rs.getString("text"))
+                                .title(rs.getString("title"))
+                                .description(rs.getString("description"))
+                                .pinned(rs.getInt("pinned"))
                                 .score(rs.getInt("score"))
                                 .createdTime(TimeHelper.fromDB(rs.getTimestamp("createdTime")))
-                                .expireTime(TimeHelper.fromDB(rs.getTimestamp("expireTime")))
                                 .build();
                     }
                 }
             });
         } catch (EmptyResultDataAccessException e) {
-            logger.warn("Post: findOne returns no rows");
+            logger.warn("Topic: findOne returns no rows");
             return null;
         }
     }
 
     @Override
-    public int update(final Post updatedPost) {
+    public int update(final Topic updatedTopic) {
         String query =
-                "UPDATE Post " +
-                        "topicid = ?, authorid = ?, text = ?," +
-                        "score = ?, createdTime = ?, expireTime=?" +
+                "UPDATE " + TABLE_NAME + " " +
+                        "SET flockid = ?, authorid = ?, title = ?," +
+                        "description = ?, pinned = ?, score = ?, createdTime = ? " +
                         "WHERE id = ?";
 
         return jdbc.update(query,
-                updatedPost.getTopicid(),
-                updatedPost.getAuthorid(),
-                updatedPost.getText(),
-                updatedPost.getScore(),
-                TimeHelper.toDB(updatedPost.getCreatedTime()));
+                updatedTopic.getFlockid(),
+                updatedTopic.getAuthorid(),
+                updatedTopic.getTitle(),
+                updatedTopic.getDescription(),
+                updatedTopic.getPinned(),
+                updatedTopic.getScore(),
+                TimeHelper.toDB(updatedTopic.getCreatedTime()),
+                updatedTopic.getId()
+        );
     }
 
     @Override
-    public int delete(final int postId) {
+    public int delete(final int topicId) {
         String query =
-                "DELETE FROM Post " +
+                "DELETE FROM " + TABLE_NAME + " " +
                         "WHERE id = ?";
 
-        return jdbc.update(query, postId);
+        return jdbc.update(query, topicId);
     }
 
     @Override
-    public int create(final Post created) {
-        String query = "INSERT INTO Post " +
-                "(authorid, name, description, latitude, longitude, radius, score, createdTime, expireTime)" +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public int create(final Topic created) {
+        String query = "INSERT INTO " + TABLE_NAME + " " +
+                "(flockid, authorid, title, description, pinned, score, createdTime) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         return jdbc.update(query,
-                created.getAuthorid());
+                created.getFlockid(),
+                created.getAuthorid(),
+                created.getTitle(),
+                created.getDescription(),
+                created.getPinned(),
+                created.getScore(),
+                TimeHelper.toDB(created.getCreatedTime())
+        );
     }
 }

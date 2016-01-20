@@ -1,6 +1,6 @@
 package com.geese.server.service;
 
-import com.geese.server.domain.Comment;
+import com.geese.server.domain.Post;
 
 import java.util.List;
 
@@ -9,37 +9,37 @@ import java.util.List;
  */
 public interface CommentService {
     /**
-     * Deletes a Comment entry from the database.
-     * @param commentId   The id of the Comment to delete from the database
-     * @return  The number of deleted Comments
+     * Deletes a Post entry from the database.
+     * @param postId   The id of the Post to delete from the database
+     * @return  The number of deleted Posts
      */
-    int delete(String commentId);
+    int delete(String postId);
 
     /**
-     * Finds all Comment entries from the database.
-     * @return  The information of all Comment entries that are found from the database.
+     * Finds all Post entries from the database.
+     * @return  The information of all Post entries that are found from the database.
      */
-    List<Comment> findAll();
+    List<Post> findAll();
 
     /**
-     * Finds the information of a single Comment entry.
-     * @param commentId    The id of the requested Comment entry.
-     * @return      The information of the found Comment entry.
+     * Finds the information of a single Post entry.
+     * @param postId    The id of the requested Post entry.
+     * @return      The information of the found Post entry.
      */
-    Comment findOne(String commentId);
+    Post findOne(String postId);
 
     /**
-     * Saves a new Comment entry to the database.
-     * @param saved     The information of the saved Comment entry.
+     * Saves a new Post entry to the database.
+     * @param saved     The information of the saved Post entry.
      * @return          Number of created entries
      */
-    int create(Comment saved);
+    int create(Post saved);
 
     /**
-     * Updates an existing Comment entry in the database.
-     * @param commentId       The commentId of the requested Comment entry.
-     * @param updatedComment  The information of the updated Comment entry.
-     * @return              The number of updated Comment objects.
+     * Updates an existing Post entry in the database.
+     * @param postId       The postId of the requested Post entry.
+     * @param updatedPost  The information of the updated Post entry.
+     * @return              The number of updated Post objects.
      */
-    int update(String commentId, Comment updatedComment);
+    int update(String postId, Post updatedPost);
 }

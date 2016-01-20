@@ -7,11 +7,12 @@ import java.time.LocalDateTime;
  */
 public class Comment {
     private int id;
-    private int postid;
+    private int topicid;
     private int authorid;
     private String text;
     private int score;
     private LocalDateTime createdTime;
+    private LocalDateTime expireTime;
 
     public Comment() {}
 
@@ -25,8 +26,8 @@ public class Comment {
         return id;
     }
 
-    public int getPostid() {
-        return postid;
+    public int getTopicid() {
+        return topicid;
     }
 
     public int getAuthorid() {
@@ -45,13 +46,18 @@ public class Comment {
         return createdTime;
     }
 
+    public LocalDateTime getExpireTime() {
+        return expireTime;
+    }
+
     public static class Builder {
         private int id;
-        private int postid;
+        private int topicid;
         private int authorid;
         private String text;
         private int score;
         private LocalDateTime createdTime;
+        private LocalDateTime expireTime;
 
         public Builder() {}
 
@@ -60,8 +66,8 @@ public class Comment {
             return this;
         }
 
-        public Builder postid(int postid) {
-            this.postid = postid;
+        public Builder topicid(int topicid) {
+            this.topicid = topicid;
             return this;
         }
 
@@ -82,6 +88,11 @@ public class Comment {
 
         public Builder createdTime(LocalDateTime createdTime) {
             this.createdTime = createdTime;
+            return this;
+        }
+
+        public Builder expireTime(LocalDateTime expireTime) {
+            this.expireTime = expireTime;
             return this;
         }
 

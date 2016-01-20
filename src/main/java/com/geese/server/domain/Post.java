@@ -7,12 +7,13 @@ import java.time.LocalDateTime;
  */
 public class Post {
     private int id;
-    private int topicid;
+    private int flockid;
     private int authorid;
-    private String text;
+    private String title;
+    private String description;
+    private int pinned;
     private int score;
     private LocalDateTime createdTime;
-    private LocalDateTime expireTime;
 
     public Post() {}
 
@@ -26,16 +27,24 @@ public class Post {
         return id;
     }
 
-    public int getTopicid() {
-        return topicid;
-    }
-
     public int getAuthorid() {
         return authorid;
     }
 
-    public String getText() {
-        return text;
+    public int getFlockid() {
+        return flockid;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getPinned() {
+        return pinned;
     }
 
     public int getScore() {
@@ -46,18 +55,15 @@ public class Post {
         return createdTime;
     }
 
-    public LocalDateTime getExpireTime() {
-        return expireTime;
-    }
-
     public static class Builder {
         private int id;
-        private int topicid;
+        private int flockid;
         private int authorid;
-        private String text;
+        private String title;
+        private String description;
+        private int pinned;
         private int score;
         private LocalDateTime createdTime;
-        private LocalDateTime expireTime;
 
         public Builder() {}
 
@@ -66,18 +72,28 @@ public class Post {
             return this;
         }
 
-        public Builder topicid(int topicid) {
-            this.topicid = topicid;
-            return this;
-        }
-
         public Builder authorid(int authorid) {
             this.authorid = authorid;
             return this;
         }
 
-        public Builder text(String text) {
-            this.text = text;
+        public Builder flockid(int flockid) {
+            this.flockid = flockid;
+            return this;
+        }
+
+        public Builder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder pinned(int pinned) {
+            this.pinned = pinned;
             return this;
         }
 
@@ -88,11 +104,6 @@ public class Post {
 
         public Builder createdTime(LocalDateTime createdTime) {
             this.createdTime = createdTime;
-            return this;
-        }
-
-        public Builder expireTime(LocalDateTime expireTime) {
-            this.expireTime = expireTime;
             return this;
         }
 

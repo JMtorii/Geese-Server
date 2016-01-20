@@ -1,6 +1,6 @@
 package com.geese.server.dao;
 
-import com.geese.server.domain.Post;
+import com.geese.server.domain.Topic;
 
 import java.util.List;
 
@@ -10,35 +10,35 @@ import java.util.List;
 public interface PostDAO {
 
     /**
-     * Deletes a Post entry from the database.
-     * @param postId   The id of the post entry to delete
+     * Deletes a Topic entry from the database.
+     * @param topicId   The id of the topic entry to delete
      */
-    int delete(final int postId);
+    int delete(final int topicId);
 
     /**
-     * Finds all Post entries from the database.
-     * @return  The information of all Post entries that are found from the database.
+     * Finds all Topic entries from the database.
+     * @return  The information of all Topic entries that are found from the database.
      */
-    List<Post> findAll();
+    List<Topic> findAll();
 
     /**
-     * Finds the information of a single Post entry.
-     * @param postId    The id of the requested Post entry.
-     * @return      The information of the found Post entry.
+     * Finds the information of a single Topic entry.
+     * @param topicId    The id of the requested Topic entry.
+     * @return      The information of the found Topic entry.
      */
-    Post findOne(final int postId);
+    Topic findOne(final int topicId);
 
     /**
-     * Saves a new Post entry to the database.
-     * @param created   The information of the created Post entry.
-     * @return          The number of created Posts
+     * Saves a new Topic entry to the database.
+     * @param created   The information of the created Topic entry.
+     * @return          The number of created Topics
      */
-    int create(final Post created);
+    int create(final Topic created);
 
     /**
-     * Update an existing Post entry in the database.
-     * @param updated   The information of the saved Post entry.
+     * Update an existing Topic entry in the database.
+     * @param updated   The information of the saved Topic entry.
      * @return          The number of updated entries
      */
-    int update(final Post updated);
+    int update(final Topic updated);
 }

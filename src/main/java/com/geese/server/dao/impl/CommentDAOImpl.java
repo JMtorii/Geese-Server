@@ -1,8 +1,8 @@
 package com.geese.server.dao.impl;
 
-import com.geese.server.dao.CommentDAO;
+import com.geese.server.dao.PostDAO;
 import com.geese.server.dao.util.TimeHelper;
-import com.geese.server.domain.Comment;
+import com.geese.server.domain.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,103 +22,105 @@ import java.util.Map;
  * Created by ecrothers on 2015-11-08.
  */
 @Repository
-public class CommentDAOImpl implements CommentDAO {
+public class CommentDAOImpl implements PostDAO {
     private static final Logger logger = LoggerFactory.getLogger(CommentDAOImpl.class);
 
     @Autowired
     protected JdbcTemplate jdbc;
 
     @Override
-    public List<Comment> findAll() {
+    public List<Post> findAll() {
         String query =
-                "SELECT * FROM Comment;";
+                "SELECT * FROM Post;";
 
-        List<Comment> comments = new ArrayList<Comment>();
+        List<Post> posts = new ArrayList<Post>();
 
         try {
             List<Map<String, Object>> rows = jdbc.queryForList(query);
 
             for (Map row : rows) {
-                Comment comment = new Comment.Builder()
+                Post post = new Post.Builder()
                         .id((int)row.get("id"))
-                        .postid((int) row.get("postid"))
+                        .topicid((int) row.get("topicid"))
                         .authorid((int) row.get("authorid"))
                         .text((String) row.get("text"))
                         .score((int) row.get("score"))
                         .createdTime((LocalDateTime) row.get("createdTime"))
+                        .createdTime((LocalDateTime) row.get("expireTime"))
                         .build();
 
-                comments.add(comment);
+                posts.add(post);
             }
 
-            return comments;
+            return posts;
         } catch (EmptyResultDataAccessException e) {
-            logger.warn("Comment: findAll returns no rows");
+            logger.warn("Post: findAll returns no rows");
             return null;
         }
     }
 
     @Override
-    public Comment findOne(final int commentId) {
+    public Post findOne(final int postId) {
         String query =
-                "SELECT * FROM Comment " +
+                "SELECT * FROM Post " +
                         "WHERE id = ?;";
 
         try {
-            return jdbc.queryForObject(query, new Object[]{commentId}, new RowMapper<Comment>() {
+            return jdbc.queryForObject(query, new Object[]{postId}, new RowMapper<Post>() {
                 @Override
-                public Comment mapRow(ResultSet rs, int rowNum) throws SQLException {
+                public Post mapRow(ResultSet rs, int rowNum) throws SQLException {
 
                     if (rs.getRow() < 1) {
                         return null;
                     } else {
-                        return new Comment.Builder()
+                        return new Post.Builder()
                                 .id(rs.getInt("id"))
-                                .postid(rs.getInt("postid"))
+                                .topicid(rs.getInt("topicid"))
                                 .authorid(rs.getInt("authorid"))
                                 .text(rs.getString("text"))
                                 .score(rs.getInt("score"))
                                 .createdTime(TimeHelper.fromDB(rs.getTimestamp("createdTime")))
+                                .expireTime(TimeHelper.fromDB(rs.getTimestamp("expireTime")))
                                 .build();
                     }
                 }
             });
         } catch (EmptyResultDataAccessException e) {
-            logger.warn("Comment: findOne returns no rows");
+            logger.warn("Post: findOne returns no rows");
             return null;
         }
     }
 
     @Override
-    public int update(final Comment updatedComment) {
+    public int update(final Post updatedPost) {
         String query =
-                "UPDATE Comment " +
-                        "postid = ?, authorid = ?, text = ?," +
-                        "score = ?, createdTime = ?" +
+                "UPDATE Post " +
+                        "topicid = ?, authorid = ?, text = ?," +
+                        "score = ?, createdTime = ?, expireTime=?" +
                         "WHERE id = ?";
 
         return jdbc.update(query,
-                updatedComment.getPostid(),
-                updatedComment.getAuthorid(),
-                updatedComment.getText(),
-                updatedComment.getScore(),
-                TimeHelper.toDB(updatedComment.getCreatedTime()));
+                updatedPost.getTopicid(),
+                updatedPost.getAuthorid(),
+                updatedPost.getText(),
+                updatedPost.getScore(),
+                TimeHelper.toDB(updatedPost.getCreatedTime()));
     }
 
     @Override
-    public int delete(final int commentId) {
+    public int delete(final int postId) {
         String query =
-                "DELETE FROM Comment " +
+                "DELETE FROM Post " +
                         "WHERE id = ?";
 
-        return jdbc.update(query, commentId);
+        return jdbc.update(query, postId);
     }
 
     @Override
-    public int create(final Comment created) {
-        String query = "INSERT INTO Comment " +
-                "(authorid, name, description, latitude, longitude, radius, score, createdTime)" +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    public int create(final Post created) {
+        String query = "INSERT INTO Post " +
+                "(authorid, name, description, latitude, longitude, radius, score, createdTime, expireTime)" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         return jdbc.update(query,
                 created.getAuthorid());

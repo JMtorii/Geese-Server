@@ -41,59 +41,45 @@ CREATE TABLE IF NOT EXISTS Membership
 	CONSTRAINT Membership_Flock_fk FOREIGN KEY (flockid) REFERENCES Flock (id)
 );
 
--- Table for a topic or thread within a Flock
-CREATE TABLE IF NOT EXISTS Topic
+-- Table for a comment or thread within a Flock
+CREATE TABLE IF NOT EXISTS Post
 (
 	id INT(16) NOT NULL AUTO_INCREMENT,
 	flockid INT(16) NOT NULL,
 	authorid INT(16) NOT NULL,
 	title VARCHAR(32) NOT NULL, -- Title to be displayed
-	description VARCHAR(255) NOT NULL, -- Short description of topic
-	pinned BOOLEAN NOT NULL, -- Display topic at the top of the list
+	description VARCHAR(255) NOT NULL, -- Short description of comment
+	pinned BOOLEAN NOT NULL, -- Display comment at the top of the list
 	score INT(16) NOT NULL, -- Up/down votes
-	createdTime DATETIME NOT NULL, -- Time of topic creation
+	createdTime DATETIME NOT NULL, -- Time of comment creation
 	startTime DATETIME NOT NULL, -- Start of event (if relevant)
 	endTime DATETIME NOT NULL, -- End of event (if relevant)
-	CONSTRAINT Topic_pk PRIMARY KEY (id),
-	CONSTRAINT Topic_Flock_fk FOREIGN KEY (flockid) REFERENCES Flock (id),
-	CONSTRAINT Topic_Author_fk FOREIGN KEY (authorid) REFERENCES Goose (id)
+	CONSTRAINT Post_pk PRIMARY KEY (id),
+	CONSTRAINT Post_Flock_fk FOREIGN KEY (flockid) REFERENCES Flock (id),
+	CONSTRAINT Post_Author_fk FOREIGN KEY (authorid) REFERENCES Goose (id)
 );
 
 -- Table mapping Users to Events they belong to
 CREATE TABLE IF NOT EXISTS EventMembership
 (
 	gooseid INT(16) NOT NULL,
-	topicid INT(16) NOT NULL,
+	Postid INT(16) NOT NULL,
 	CONSTRAINT EventMembership_Goose_fk FOREIGN KEY (gooseid) REFERENCES Goose (id),
-	CONSTRAINT EventMembership_Event_fk FOREIGN KEY (topicid) REFERENCES Topic (id)
+	CONSTRAINT EventMembership_Event_fk FOREIGN KEY (commentid) REFERENCES Post (id)
 );
 
--- Table for posts of a topic
-CREATE TABLE IF NOT EXISTS Post
-(
-	id INT(16) NOT NULL AUTO_INCREMENT,
-	topicid INT(16) NOT NULL,
-	authorid INT(16) NOT NULL,
-	text TEXT NOT NULL, -- Content of post
-	score INT(16) NOT NULL, -- Up/down votes
-	createdTime DATETIME NOT NULL, -- Time of post creation
-	expireTime DATETIME NOT NULL, -- Time of post expiry
-	CONSTRAINT Post_pk PRIMARY KEY (id),
-	CONSTRAINT Post_Topic_fk FOREIGN KEY (topicid) REFERENCES Topic (id),
-	CONSTRAINT Post_Author_fk FOREIGN KEY (authorid) REFERENCES Goose (id)
-);
-
--- Table for comments on a post
+-- Table for comment of a comment
 CREATE TABLE IF NOT EXISTS Comment
 (
 	id INT(16) NOT NULL AUTO_INCREMENT,
-	postid INT(16) NOT NULL,
+	commentid INT(16) NOT NULL,
 	authorid INT(16) NOT NULL,
-	text TEXT NOT NULL, -- Content of post
+	text TEXT NOT NULL, -- Content of comment
 	score INT(16) NOT NULL, -- Up/down votes
-	createdTime DATETIME NOT NULL, -- Time of post creation
+	createdTime DATETIME NOT NULL, -- Time of comment creation
+	expireTime DATETIME NOT NULL, -- Time of comment expiry
 	CONSTRAINT Comment_pk PRIMARY KEY (id),
-	CONSTRAINT Comment_Post_fk FOREIGN KEY (postid) REFERENCES Post (id),
+	CONSTRAINT Comment_Post_fk FOREIGN KEY (commentid) REFERENCES Post (id),
 	CONSTRAINT Comment_Author_fk FOREIGN KEY (authorid) REFERENCES Goose (id)
 );
 
@@ -106,21 +92,20 @@ CREATE TABLE IF NOT EXISTS FlockVote
 	CONSTRAINT FlockVote_Flock_fk FOREIGN KEY (flockid) REFERENCES Flock (id)
 );
 
--- Table for Topic votes
-CREATE TABLE IF NOT EXISTS TopicVote
-(
-	gooseid INT(16) NOT NULL,
-	topicid INT(16) NOT NULL,
-	CONSTRAINT TopicVote_Goose_fk FOREIGN KEY (gooseid) REFERENCES Goose (id),
-	CONSTRAINT TopicVote_Topic_fk FOREIGN KEY (topicid) REFERENCES Topic (id)
-);
-
 -- Table for Post votes
 CREATE TABLE IF NOT EXISTS PostVote
 (
 	gooseid INT(16) NOT NULL,
-	postid INT(16) NOT NULL,
+	commentid INT(16) NOT NULL,
 	CONSTRAINT PostVote_Goose_fk FOREIGN KEY (gooseid) REFERENCES Goose (id),
-	CONSTRAINT PostVote_Post_fk FOREIGN KEY (postid) REFERENCES Post (id)
+	CONSTRAINT PostVote_Post_fk FOREIGN KEY (commentid) REFERENCES Post (id)
 );
 
+-- Table for Comment votes
+CREATE TABLE IF NOT EXISTS CommentVote
+(
+	gooseid INT(16) NOT NULL,
+	commentid INT(16) NOT NULL,
+	CONSTRAINT CommentVote_Goose_fk FOREIGN KEY (gooseid) REFERENCES Goose (id),
+	CONSTRAINT CommentVote_Comment_fk FOREIGN KEY (commentid) REFERENCES Comment (id)
+);
