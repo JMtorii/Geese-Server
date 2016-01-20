@@ -41,19 +41,19 @@ CREATE TABLE IF NOT EXISTS Membership
 	CONSTRAINT Membership_Flock_fk FOREIGN KEY (flockid) REFERENCES Flock (id)
 );
 
--- Table for a comment or thread within a Flock
+-- Table for a post within a Flock
 CREATE TABLE IF NOT EXISTS Post
 (
 	id INT(16) NOT NULL AUTO_INCREMENT,
 	flockid INT(16) NOT NULL,
 	authorid INT(16) NOT NULL,
 	title VARCHAR(32) NOT NULL, -- Title to be displayed
-	description VARCHAR(255) NOT NULL, -- Short description of comment
-	pinned BOOLEAN NOT NULL, -- Display comment at the top of the list
+	description VARCHAR(255) NOT NULL, -- Short description of post
+	pinned BOOLEAN NOT NULL, -- Display post at the top of the list
 	score INT(16) NOT NULL, -- Up/down votes
-	createdTime DATETIME NOT NULL, -- Time of comment creation
-	startTime DATETIME NOT NULL, -- Start of event (if relevant)
-	endTime DATETIME NOT NULL, -- End of event (if relevant)
+	createdTime DATETIME NOT NULL, -- Time of post creation
+	startTime DATETIME, -- Start of event (if relevant)
+	endTime DATETIME, -- End of event (if relevant)
 	CONSTRAINT Post_pk PRIMARY KEY (id),
 	CONSTRAINT Post_Flock_fk FOREIGN KEY (flockid) REFERENCES Flock (id),
 	CONSTRAINT Post_Author_fk FOREIGN KEY (authorid) REFERENCES Goose (id)
@@ -63,9 +63,9 @@ CREATE TABLE IF NOT EXISTS Post
 CREATE TABLE IF NOT EXISTS EventMembership
 (
 	gooseid INT(16) NOT NULL,
-	Postid INT(16) NOT NULL,
+	postid INT(16) NOT NULL,
 	CONSTRAINT EventMembership_Goose_fk FOREIGN KEY (gooseid) REFERENCES Goose (id),
-	CONSTRAINT EventMembership_Event_fk FOREIGN KEY (commentid) REFERENCES Post (id)
+	CONSTRAINT EventMembership_Event_fk FOREIGN KEY (postid) REFERENCES Post (id)
 );
 
 -- Table for comment of a comment
@@ -83,22 +83,13 @@ CREATE TABLE IF NOT EXISTS Comment
 	CONSTRAINT Comment_Author_fk FOREIGN KEY (authorid) REFERENCES Goose (id)
 );
 
--- Table for Flock votes
-CREATE TABLE IF NOT EXISTS FlockVote
-(
-	gooseid INT(16) NOT NULL,
-	flockid INT(16) NOT NULL,
-	CONSTRAINT FlockVote_Goose_fk FOREIGN KEY (gooseid) REFERENCES Goose (id),
-	CONSTRAINT FlockVote_Flock_fk FOREIGN KEY (flockid) REFERENCES Flock (id)
-);
-
 -- Table for Post votes
 CREATE TABLE IF NOT EXISTS PostVote
 (
 	gooseid INT(16) NOT NULL,
-	commentid INT(16) NOT NULL,
+	postid INT(16) NOT NULL,
 	CONSTRAINT PostVote_Goose_fk FOREIGN KEY (gooseid) REFERENCES Goose (id),
-	CONSTRAINT PostVote_Post_fk FOREIGN KEY (commentid) REFERENCES Post (id)
+	CONSTRAINT PostVote_Post_fk FOREIGN KEY (postid) REFERENCES Post (id)
 );
 
 -- Table for Comment votes
@@ -108,4 +99,13 @@ CREATE TABLE IF NOT EXISTS CommentVote
 	commentid INT(16) NOT NULL,
 	CONSTRAINT CommentVote_Goose_fk FOREIGN KEY (gooseid) REFERENCES Goose (id),
 	CONSTRAINT CommentVote_Comment_fk FOREIGN KEY (commentid) REFERENCES Comment (id)
+);
+
+-- Table for FavouritedFlocks
+CREATE TABLE IF NOT EXISTS FavouritedFlocks
+(
+	gooseid INT(16) NOT NULL,
+	flockid INT(16) NOT NULL,
+	CONSTRAINT FavouritedFlocks_Goose_fk FOREIGN KEY (gooseid) REFERENCES Goose (id),
+	CONSTRAINT FavouritedFlocks_Flock_fk FOREIGN KEY (flockid) REFERENCES Flock (id)
 );
