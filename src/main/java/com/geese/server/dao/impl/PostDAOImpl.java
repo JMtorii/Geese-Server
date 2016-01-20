@@ -1,8 +1,8 @@
 package com.geese.server.dao.impl;
 
-import com.geese.server.dao.TopicDAO;
+import com.geese.server.dao.PostDAO;
 import com.geese.server.dao.util.TimeHelper;
-import com.geese.server.domain.Topic;
+import com.geese.server.domain.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,25 +22,25 @@ import java.util.Map;
  * Created by ecrothers on 2015-11-08.
  */
 @Repository
-public class PostDAOImpl implements TopicDAO {
+public class PostDAOImpl implements PostDAO {
     private static final Logger logger = LoggerFactory.getLogger(PostDAOImpl.class);
-    private static final String TABLE_NAME = "Topic";
+    private static final String TABLE_NAME = "Post";
 
     @Autowired
     protected JdbcTemplate jdbc;
 
     @Override
-    public List<Topic> findAll() {
+    public List<Post> findAll() {
         String query =
                 "SELECT * FROM " + " TABLE_NAME " + ";";
 
-        List<Topic> topics = new ArrayList<Topic>();
+        List<Post> posts = new ArrayList<Post>();
 
         try {
             List<Map<String, Object>> rows = jdbc.queryForList(query);
 
             for (Map row : rows) {
-                Topic topic = new Topic.Builder()
+                Post post = new Post.Builder()
                         .id((int)row.get("id"))
                         .authorid((int) row.get("authorid"))
                         .title((String) row.get("title"))
@@ -50,31 +50,31 @@ public class PostDAOImpl implements TopicDAO {
                         .createdTime((LocalDateTime) row.get("createdTime"))
                         .build();
 
-                topics.add(topic);
+                posts.add(post);
             }
 
-            return topics;
+            return posts;
         } catch (EmptyResultDataAccessException e) {
-            logger.warn("Topic: findAll returns no rows");
+            logger.warn("Post: findAll returns no rows");
             return null;
         }
     }
 
     @Override
-    public Topic findOne(final int topicId) {
+    public Post findOne(final int postId) {
         String query =
                 "SELECT * FROM " + TABLE_NAME + " " +
                         "WHERE id = ?;";
 
         try {
-            return jdbc.queryForObject(query, new Object[]{topicId}, new RowMapper<Topic>() {
+            return jdbc.queryForObject(query, new Object[]{postId}, new RowMapper<Post>() {
                 @Override
-                public Topic mapRow(ResultSet rs, int rowNum) throws SQLException {
+                public Post mapRow(ResultSet rs, int rowNum) throws SQLException {
 
                     if (rs.getRow() < 1) {
                         return null;
                     } else {
-                        return new Topic.Builder()
+                        return new Post.Builder()
                                 .id(rs.getInt("id"))
                                 .authorid(rs.getInt("authorid"))
                                 .title(rs.getString("title"))
@@ -87,13 +87,13 @@ public class PostDAOImpl implements TopicDAO {
                 }
             });
         } catch (EmptyResultDataAccessException e) {
-            logger.warn("Topic: findOne returns no rows");
+            logger.warn("Post: findOne returns no rows");
             return null;
         }
     }
 
     @Override
-    public int update(final Topic updatedTopic) {
+    public int update(final Post updatedPost) {
         String query =
                 "UPDATE " + TABLE_NAME + " " +
                         "SET flockid = ?, authorid = ?, title = ?," +
@@ -101,28 +101,28 @@ public class PostDAOImpl implements TopicDAO {
                         "WHERE id = ?";
 
         return jdbc.update(query,
-                updatedTopic.getFlockid(),
-                updatedTopic.getAuthorid(),
-                updatedTopic.getTitle(),
-                updatedTopic.getDescription(),
-                updatedTopic.getPinned(),
-                updatedTopic.getScore(),
-                TimeHelper.toDB(updatedTopic.getCreatedTime()),
-                updatedTopic.getId()
+                updatedPost.getFlockid(),
+                updatedPost.getAuthorid(),
+                updatedPost.getTitle(),
+                updatedPost.getDescription(),
+                updatedPost.getPinned(),
+                updatedPost.getScore(),
+                TimeHelper.toDB(updatedPost.getCreatedTime()),
+                updatedPost.getId()
         );
     }
 
     @Override
-    public int delete(final int topicId) {
+    public int delete(final int postId) {
         String query =
                 "DELETE FROM " + TABLE_NAME + " " +
                         "WHERE id = ?";
 
-        return jdbc.update(query, topicId);
+        return jdbc.update(query, postId);
     }
 
     @Override
-    public int create(final Topic created) {
+    public int create(final Post created) {
         String query = "INSERT INTO " + TABLE_NAME + " " +
                 "(flockid, authorid, title, description, pinned, score, createdTime) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";

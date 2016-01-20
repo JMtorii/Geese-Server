@@ -1,9 +1,15 @@
 package com.geese.server.service.impl;
 
+import com.geese.server.GooseAuthentication;
 import com.geese.server.dao.FlockDAO;
 import com.geese.server.domain.Flock;
+import com.geese.server.domain.Goose;
 import com.geese.server.service.FlockService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +19,9 @@ import java.util.List;
  */
 @Service
 public class FlockServiceImpl implements FlockService {
+
+    private static final Logger logger = LoggerFactory.getLogger(FlockService.class);
+
     @Autowired
     private FlockDAO flockDAO;
 
@@ -40,6 +49,7 @@ public class FlockServiceImpl implements FlockService {
     @Override
     // TODO: Why are we sending the flockId
     public int update(String flockId, Flock updatedFlock) {
+        //GooseAuthentication auth = SecurityContextHolder.getContext().getAuthentication();
         return flockDAO.update(updatedFlock);
     }
 

@@ -3,7 +3,7 @@ package com.geese.server.domain;
 import java.time.LocalDateTime;
 
 /**
- * (Topic but with start/end time)
+ * (Post but with start/end time)
  * Created by ecrothers on 2015-11-08.
  */
 public class Event {

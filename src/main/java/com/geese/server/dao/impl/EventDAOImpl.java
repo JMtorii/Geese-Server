@@ -24,7 +24,7 @@ import java.util.Map;
 @Repository
 public class EventDAOImpl implements EventDAO {
     private static final Logger logger = LoggerFactory.getLogger(EventDAOImpl.class);
-    private static final String TABLE_NAME = "Topic"; // NOTE: This is likely to change
+    private static final String TABLE_NAME = "Post"; // NOTE: This is likely to change
 
     @Autowired
     protected JdbcTemplate jdbc;

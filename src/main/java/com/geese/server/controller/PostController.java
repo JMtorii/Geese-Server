@@ -1,7 +1,7 @@
 package com.geese.server.controller;
 
-import com.geese.server.domain.Topic;
-import com.geese.server.service.TopicService;
+import com.geese.server.domain.Post;
+import com.geese.server.service.PostService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,36 +16,36 @@ import java.util.List;
  * Created by ecrothers on 2015-11-08.
  */
 @RestController
-@RequestMapping(value = "/topic")
+@RequestMapping(value = "/post")
 public class PostController {
     private static final Logger logger = LoggerFactory.getLogger(PostController.class);
 
     @Autowired
-    private TopicService topicService;
+    private PostService postService;
 
     /**
-     * Gets a Topic by id
-     * @param topicId   Identifier for Topic
-     * @return          If Topic is found, return the Topic object and HTTP status 302; otherwise, 404
+     * Gets a Post by id
+     * @param postId   Identifier for Post
+     * @return          If Post is found, return the Post object and HTTP status 302; otherwise, 404
      */
-    @RequestMapping(value = "/{topicId}", method = RequestMethod.GET)
-    public ResponseEntity<Topic> getTopic(@PathVariable String topicId) {
-        Topic foundTopic = topicService.findOne(topicId);
+    @RequestMapping(value = "/{postId}", method = RequestMethod.GET)
+    public ResponseEntity<Post> getPost(@PathVariable String postId) {
+        Post foundPost = postService.findOne(postId);
 
-        if (foundTopic != null) {
-            return new ResponseEntity<>(foundTopic, HttpStatus.FOUND);
+        if (foundPost != null) {
+            return new ResponseEntity<>(foundPost, HttpStatus.FOUND);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     /**
-     * Gets all Topics in database
+     * Gets all Posts in database
      * @return      If Geese exist, return list of Geese and HTTP status 302; otherwise, 404
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<List<Topic>> getAllTopics() {
-        List<Topic> geese = topicService.findAll();
+    public ResponseEntity<List<Post>> getAllPosts() {
+        List<Post> geese = postService.findAll();
 
         if (geese != null) {
             return new ResponseEntity<>(geese, HttpStatus.FOUND);
@@ -55,15 +55,15 @@ public class PostController {
     }
 
     /**
-     * Creates a new Topic if the topic does not already exist
-     * @param topic Topic to persist in server
-     * @return      If Topic is successfully created, return HTTP status 201; otherwise, 400
+     * Creates a new Post if the post does not already exist
+     * @param post Post to persist in server
+     * @return      If Post is successfully created, return HTTP status 201; otherwise, 400
      */
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<Topic> createTopic(@RequestBody Topic topic) {
-        int numCreatedTopic = topicService.create(topic);
+    public ResponseEntity<Post> createPost(@RequestBody Post post) {
+        int numCreatedPost = postService.create(post);
 
-        if (numCreatedTopic > 0) {
+        if (numCreatedPost > 0) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
             // TODO: choose better HTTP status
@@ -72,16 +72,16 @@ public class PostController {
     }
 
     /**
-     * Updates an existing Topic
-     * @param topicId   Identifier for Topic
-     * @param topic     Topic to persist in server
-     * @return          If the Topic exists and is changed, return HTTP status 202; otherwise 404.
+     * Updates an existing Post
+     * @param postId   Identifier for Post
+     * @param post     Post to persist in server
+     * @return          If the Post exists and is changed, return HTTP status 202; otherwise 404.
      */
-    @RequestMapping(value = "/{topicId}", method = RequestMethod.PUT)
-    public ResponseEntity<Topic> updateTopic(@PathVariable String topicId, @RequestBody Topic topic) {
-        int numUpdatedTopic = topicService.update(topicId, topic);
+    @RequestMapping(value = "/{postId}", method = RequestMethod.PUT)
+    public ResponseEntity<Post> updatePost(@PathVariable String postId, @RequestBody Post post) {
+        int numUpdatedPost = postService.update(postId, post);
 
-        if (numUpdatedTopic > 0) {
+        if (numUpdatedPost > 0) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -89,15 +89,15 @@ public class PostController {
     }
 
     /**
-     * Deletes an existing Topic
-     * @param topicId   Identifier for the Topic
-     * @return          If the Topic exists and is deleted, return HTTP status 202; otherwise 404.
+     * Deletes an existing Post
+     * @param postId   Identifier for the Post
+     * @return          If the Post exists and is deleted, return HTTP status 202; otherwise 404.
      */
-    @RequestMapping(value = "/{topicId}", method = RequestMethod.DELETE)
-    public ResponseEntity<Topic> deleteTopic(@PathVariable String topicId) {
-        int numDeletedTopic = topicService.delete(topicId);
+    @RequestMapping(value = "/{postId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Post> deletePost(@PathVariable String postId) {
+        int numDeletedPost = postService.delete(postId);
 
-        if (numDeletedTopic > 0) {
+        if (numDeletedPost > 0) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -1,7 +1,7 @@
 package com.geese.server.controller;
 
-import com.geese.server.domain.Post;
-import com.geese.server.service.PostService;
+import com.geese.server.domain.Comment;
+import com.geese.server.service.CommentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,34 +16,34 @@ import java.util.List;
  * Created by ecrothers on 2015-11-08.
  */
 @RestController
-@RequestMapping(value = "/post")
+@RequestMapping(value = "/comment")
 public class CommentController {
     private static Logger LOGGER = LoggerFactory.getLogger(CommentController.class);
 
     @Autowired
-    private PostService postService;
+    private CommentService commentService;
 
-    /*CommentController(PostService postService) {
-        this.postService = postService;
+    /*CommentController(CommentService commentService) {
+        this.commentService = commentService;
     }*/
 
     /*@RequestMapping(value="/", method= RequestMethod.POST)
-    public Post createPost(@RequestBody Post post) {
-        Post created = postService.save(post);
+    public Comment createComment(@RequestBody Comment comment) {
+        Comment created = commentService.save(comment);
         return created;
     }*/
 
     /**
-     * Gets a Post by id
-     * @param postId   Identifier for Post
-     * @return          If Post is found, return the Post object and HTTP status 302; otherwise, 404
+     * Gets a Comment by id
+     * @param commentId   Identifier for Comment
+     * @return          If Comment is found, return the Comment object and HTTP status 302; otherwise, 404
      */
-    @RequestMapping(value = "/{postId}", method = RequestMethod.GET)
-    public ResponseEntity<Post> getPost(@PathVariable String postId) {
-        Post foundPost = postService.findOne(postId);
+    @RequestMapping(value = "/{commentId}", method = RequestMethod.GET)
+    public ResponseEntity<Comment> getComment(@PathVariable String commentId) {
+        Comment foundComment = commentService.findOne(commentId);
 
-        if (foundPost != null) {
-            return new ResponseEntity<>(foundPost, HttpStatus.FOUND);
+        if (foundComment != null) {
+            return new ResponseEntity<>(foundComment, HttpStatus.FOUND);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -52,12 +52,12 @@ public class CommentController {
     /**
      * TODO: Is this necessary?
      *
-     * Gets all Posts in database
-     * @return      If posts exist, return list of Geese and HTTP status 302; otherwise, 404
+     * Gets all Comments in database
+     * @return      If comments exist, return list of Geese and HTTP status 302; otherwise, 404
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<List<Post>> getAllPosts() {
-        List<Post> geese = postService.findAll();
+    public ResponseEntity<List<Comment>> getAllComments() {
+        List<Comment> geese = commentService.findAll();
 
         if (geese != null) {
             return new ResponseEntity<>(geese, HttpStatus.FOUND);
@@ -67,15 +67,15 @@ public class CommentController {
     }
 
     /**
-     * Creates a new Post if the post does not already exist
-     * @param post Post to persist in server
-     * @return      If Post is successfully created, return HTTP status 201; otherwise, 400
+     * Creates a new Comment if the comment does not already exist
+     * @param comment Comment to persist in server
+     * @return      If Comment is successfully created, return HTTP status 201; otherwise, 400
      */
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<Post> createPost(@RequestBody Post post) {
-        int numCreatedPost = postService.create(post);
+    public ResponseEntity<Comment> createComment(@RequestBody Comment comment) {
+        int numCreatedComment = commentService.create(comment);
 
-        if (numCreatedPost > 0) {
+        if (numCreatedComment > 0) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
             // TODO: choose better HTTP status
@@ -84,16 +84,16 @@ public class CommentController {
     }
 
     /**
-     * Updates an existing Post
-     * @param postId   Identifier for Post
-     * @param post     Post to persist in server
-     * @return          If the Post exists and is changed, return HTTP status 202; otherwise 404.
+     * Updates an existing Comment
+     * @param commentId   Identifier for Comment
+     * @param comment     Comment to persist in server
+     * @return          If the Comment exists and is changed, return HTTP status 202; otherwise 404.
      */
-    @RequestMapping(value = "/{postId}", method = RequestMethod.PUT)
-    public ResponseEntity<Post> updatePost(@PathVariable String postId, @RequestBody Post post) {
-        int numUpdatedPost = postService.update(postId, post);
+    @RequestMapping(value = "/{commentId}", method = RequestMethod.PUT)
+    public ResponseEntity<Comment> updateComment(@PathVariable String commentId, @RequestBody Comment comment) {
+        int numUpdatedComment = commentService.update(commentId, comment);
 
-        if (numUpdatedPost > 0) {
+        if (numUpdatedComment > 0) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -101,15 +101,15 @@ public class CommentController {
     }
 
     /**
-     * Deletes an existing Post
-     * @param postId   Identifier for the Post
-     * @return          If the Post exists and is deleted, return HTTP status 202; otherwise 404.
+     * Deletes an existing Comment
+     * @param commentId   Identifier for the Comment
+     * @return          If the Comment exists and is deleted, return HTTP status 202; otherwise 404.
      */
-    @RequestMapping(value = "/{postId}", method = RequestMethod.DELETE)
-    public ResponseEntity<Post> deletePost(@PathVariable String postId) {
-        int numDeletedPost = postService.delete(postId);
+    @RequestMapping(value = "/{commentId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Comment> deleteComment(@PathVariable String commentId) {
+        int numDeletedComment = commentService.delete(commentId);
 
-        if (numDeletedPost > 0) {
+        if (numDeletedComment > 0) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

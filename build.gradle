@@ -1,4 +1,4 @@
-import org.apache.tools.ant.filters.ReplaceTokens
+    import org.apache.tools.ant.filters.ReplaceTokens
 
 def environment = hasProperty('env') ? env : 'ci'
 def ver = hasProperty('ver') ? ver : ''

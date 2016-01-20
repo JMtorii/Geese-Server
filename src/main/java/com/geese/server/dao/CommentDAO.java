@@ -1,6 +1,6 @@
 package com.geese.server.dao;
 
-import com.geese.server.domain.Post;
+import com.geese.server.domain.Comment;
 
 import java.util.List;
 
@@ -10,35 +10,35 @@ import java.util.List;
 public interface CommentDAO {
 
     /**
-     * Deletes a Post entry from the database.
-     * @param postId   The id of the post entry to delete
+     * Deletes a Comment entry from the database.
+     * @param commentId   The id of the comment entry to delete
      */
-    int delete(final int postId);
+    int delete(final int commentId);
 
     /**
-     * Finds all Post entries from the database.
-     * @return  The information of all Post entries that are found from the database.
+     * Finds all Comment entries from the database.
+     * @return  The information of all Comment entries that are found from the database.
      */
-    List<Post> findAll();
+    List<Comment> findAll();
 
     /**
-     * Finds the information of a single Post entry.
-     * @param postId    The id of the requested Post entry.
-     * @return      The information of the found Post entry.
+     * Finds the information of a single Comment entry.
+     * @param commentId    The id of the requested Comment entry.
+     * @return      The information of the found Comment entry.
      */
-    Post findOne(final int postId);
+    Comment findOne(final int commentId);
 
     /**
-     * Saves a new Post entry to the database.
-     * @param created   The information of the created Post entry.
-     * @return          The number of created Posts
+     * Saves a new Comment entry to the database.
+     * @param created   The information of the created Comment entry.
+     * @return          The number of created Comments
      */
-    int create(final Post created);
+    int create(final Comment created);
 
     /**
-     * Update an existing Post entry in the database.
-     * @param updated   The information of the saved Post entry.
+     * Update an existing Comment entry in the database.
+     * @param updated   The information of the saved Comment entry.
      * @return          The number of updated entries
      */
-    int update(final Post updated);
+    int update(final Comment updated);
 }

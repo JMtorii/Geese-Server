@@ -25,7 +25,7 @@ import java.security.NoSuchAlgorithmException;
 @SuppressWarnings("unused")
 public class LoginServiceImpl implements LoginService {
 
-    private static final Logger logger = LoggerFactory.getLogger(TokenService.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoginService.class);
 
     @Autowired
     @Qualifier("gooseServiceImpl")

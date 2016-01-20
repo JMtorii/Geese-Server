@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
  */
 public class Comment {
     private int id;
-    private int topicid;
+    private int commentid;
     private int authorid;
     private String text;
     private int score;
@@ -26,8 +26,8 @@ public class Comment {
         return id;
     }
 
-    public int getTopicid() {
-        return topicid;
+    public int getCommentid() {
+        return commentid;
     }
 
     public int getAuthorid() {
@@ -52,7 +52,7 @@ public class Comment {
 
     public static class Builder {
         private int id;
-        private int topicid;
+        private int commentid;
         private int authorid;
         private String text;
         private int score;
@@ -66,8 +66,8 @@ public class Comment {
             return this;
         }
 
-        public Builder topicid(int topicid) {
-            this.topicid = topicid;
+        public Builder commentid(int commentid) {
+            this.commentid = commentid;
             return this;
         }
 
