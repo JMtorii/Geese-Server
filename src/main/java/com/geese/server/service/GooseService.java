@@ -1,5 +1,6 @@
 package com.geese.server.service;
 
+import com.geese.server.domain.Flock;
 import com.geese.server.domain.Goose;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,7 +11,7 @@ import java.util.List;
  * Created by JMtorii on 2015-10-12.
  */
 
-public interface GooseService extends UserDetailsService{
+public interface GooseService extends UserDetailsService {
     /**
      * Finds all Goose entries from the database.
      * @return  All existing Geese.
@@ -25,12 +26,33 @@ public interface GooseService extends UserDetailsService{
     Goose findOne(String gooseId);
 
     /**
+     * Favourite a flock for a Goose.
+     * @param gooseId   The gooseId of the requested Goose entry.
+     * @param flockId   The flockId of the favourite flock
+     * @return          The number of updated entries
+     */
+    int favouriteFlock(String gooseId, String flockId);
+
+    /**
+     * Get favourited flocks for a Goose.
+     * @param gooseId   The gooseId of the requested Goose entry.
+     * @return          A list of favourited flocks
+     */
+    List<Flock> getFavourited(String gooseId);
+
+    /**
      * Finds the a single Goose.
      * @param email     The email.
      * @return          The found Goose.
      */
     Goose findByEmail(String email);
 
+    /**
+     * Loads user based on username
+     * @param username User's username
+     * @return The found Goose
+     * @throws UsernameNotFoundException
+     */
     @Override
     Goose loadUserByUsername(String username) throws UsernameNotFoundException;
 

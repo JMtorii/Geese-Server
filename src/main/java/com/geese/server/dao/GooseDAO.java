@@ -1,5 +1,6 @@
 package com.geese.server.dao;
 
+import com.geese.server.domain.Flock;
 import com.geese.server.domain.Goose;
 
 import java.util.List;
@@ -20,6 +21,21 @@ public interface GooseDAO {
      * @return          The found Goose.
      */
     Goose findOne(int gooseId);
+
+    /**
+     * Favourite a flock for a Goose.
+     * @param gooseId   The gooseId of the requested Goose entry.
+     * @param flockId   The flockId of the favourite flock
+     * @return          The number of updated entries
+     */
+    int favouriteFlock(String gooseId, String flockId);
+
+    /**
+     * Get favourited flocks for a Goose.
+     * @param gooseId   The gooseId of the requested Goose entry.
+     * @return          A list of favourited flocks
+     */
+    List<Flock> getFavourited(String gooseId);
 
     /**
      * Finds the a single Goose.
