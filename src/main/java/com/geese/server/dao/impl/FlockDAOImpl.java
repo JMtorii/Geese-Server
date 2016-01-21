@@ -13,7 +13,10 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +43,7 @@ public class FlockDAOImpl implements FlockDAO {
 
             for (Map row : rows) {
                 Flock flock = new Flock.Builder()
-                        .id((int)row.get("id"))
+                        .id((int) row.get("id"))
                         .authorid((int) row.get("authorid"))
                         .name((String) row.get("name"))
                         .description((String) row.get("description"))
@@ -48,8 +51,8 @@ public class FlockDAOImpl implements FlockDAO {
                         .longitude((float) row.get("longitude"))
                         .radius((double) row.get("radius"))
                         .score((int) row.get("score"))
-                        .createdTime((LocalDateTime) row.get("createdTime"))
-                        .expireTime((LocalDateTime) row.get("expireTime"))
+                        .createdTime(TimeHelper.fromDB((Timestamp) row.get("createdTime")))
+                        .expireTime(TimeHelper.fromDB((Timestamp) row.get("expireTire")))
                         .build();
 
                 flocks.add(flock);
@@ -113,7 +116,7 @@ public class FlockDAOImpl implements FlockDAO {
                 updatedFlock.getLongitude(),
                 updatedFlock.getRadius(),
                 updatedFlock.getScore(),
-                TimeHelper.toDB(updatedFlock.getCreatedTime()),
+                TimeHelper.toDB(updatedFlock.getCreatedTime()), // don't allow change to createdTime, add lastModifiedTime?
                 TimeHelper.toDB(updatedFlock.getExpireTime()),
                 updatedFlock.getId());
     }
@@ -141,7 +144,7 @@ public class FlockDAOImpl implements FlockDAO {
                 created.getLongitude(),
                 created.getRadius(),
                 created.getScore(),
-                TimeHelper.toDB(created.getCreatedTime()), //TODO use client or server version? Timestamp.valueOf(LocalDateTime.now(ZoneId.ofOffset("", ZoneOffset.UTC)))
+                TimeHelper.toDB(LocalDateTime.now()),
                 TimeHelper.toDB(created.getExpireTime())
         );
     }
@@ -199,8 +202,8 @@ public class FlockDAOImpl implements FlockDAO {
                         .longitude((float) row.get("longitude"))
                         .radius((double) row.get("radius"))
                         .score((int) row.get("score"))
-//                        .createdTime((LocalDateTime) row.get("createdTime"))
-//                        .expireTime((LocalDateTime) row.get("expiredTime"))
+                        .createdTime(TimeHelper.fromDB((Timestamp) row.get("createdTime")))
+                        .expireTime(TimeHelper.fromDB((Timestamp) row.get("expiredTime")))
                         .build();
 
                 flocks.add(flock);

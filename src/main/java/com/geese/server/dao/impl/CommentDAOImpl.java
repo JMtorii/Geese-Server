@@ -47,7 +47,7 @@ public class CommentDAOImpl implements CommentDAO {
                         .text((String) row.get("text"))
                         .score((int) row.get("score"))
                         .createdTime(TimeHelper.fromDB((Timestamp)row.get("createdTime")))
-                        .createdTime(TimeHelper.fromDB((Timestamp) row.get("expireTime")))
+                        .createdTime(TimeHelper.fromDB((Timestamp)row.get("expireTime")))
                         .build();
 
                 comments.add(comment);
