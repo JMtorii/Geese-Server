@@ -11,6 +11,13 @@ VALUES ('Johnny', 'n37zhang@uwaterloo.ca', 'true',
  '24BFD740FFBFEF5353A2188EC34F921203AEBB60B33C32914311B3D05525F104'
 );
 
+-- TestGoose to allow our hardcoded token to work -- password: password
+INSERT INTO Goose (name, email, verified, password, salt)
+VALUES ('TestGoose', 'test@email.com', 'true',
+ '9AC8B977DD2543D505B2C5DBC9553F6E09DEAA7F3282916EDA447AE71D6E7D92', 
+ 'B8DFC6E2C7FECA05A2CEB47190ABD337C0015987472D4CDC478E52D4970617AD'
+);
+
 INSERT INTO Flock (authorid, name, description, latitude, longitude, radius, score, createdTime)
 VALUES (1, 'New Flock', 'POST test', 12.34567, -1.123456, 1, -222, NOW());
 
