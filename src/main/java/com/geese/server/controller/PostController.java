@@ -44,7 +44,7 @@ public class PostController {
      * @return      If Geese exist, return list of Geese and HTTP status 302; otherwise, 404
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<List<Post>> getAllPosts(@PathVariable String flockId) {
+    public ResponseEntity<List<Post>> getAllPosts(@RequestParam String flockId) {
         List<Post> geese = postService.findAll(flockId);
 
         if (geese != null) {

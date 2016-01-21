@@ -47,7 +47,7 @@ public class PostDAOImpl implements PostDAO {
                         .authorid((int) row.get("authorid"))
                         .title((String) row.get("title"))
                         .description((String) row.get("description"))
-                        .pinned((int) row.get("pinned"))
+                        .pinned((boolean) row.get("pinned"))
                         .score((int) row.get("score"))
                         .createdTime(TimeHelper.fromDB((Timestamp)row.get("createdTime")))
                         .startTime(TimeHelper.fromDB((Timestamp)row.get("startTime")))
@@ -83,7 +83,7 @@ public class PostDAOImpl implements PostDAO {
                                 .authorid(rs.getInt("authorid"))
                                 .title(rs.getString("title"))
                                 .description(rs.getString("description"))
-                                .pinned(rs.getInt("pinned"))
+                                .pinned(rs.getBoolean("pinned"))
                                 .score(rs.getInt("score"))
                                 .createdTime(TimeHelper.fromDB(rs.getTimestamp("createdTime")))
                                 .build();

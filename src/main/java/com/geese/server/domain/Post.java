@@ -11,7 +11,7 @@ public class Post {
     private int authorid;
     private String title;
     private String description;
-    private int pinned;
+    private boolean pinned;
     private int score;
     private LocalDateTime createdTime;
     private LocalDateTime startTime;
@@ -45,7 +45,7 @@ public class Post {
         return description;
     }
 
-    public int getPinned() {
+    public boolean getPinned() {
         return pinned;
     }
 
@@ -71,7 +71,7 @@ public class Post {
         private int authorid;
         private String title;
         private String description;
-        private int pinned;
+        private boolean pinned;
         private int score;
         private LocalDateTime createdTime;
         private LocalDateTime startTime;
@@ -104,7 +104,7 @@ public class Post {
             return this;
         }
 
-        public Builder pinned(int pinned) {
+        public Builder pinned(boolean pinned) {
             this.pinned = pinned;
             return this;
         }
