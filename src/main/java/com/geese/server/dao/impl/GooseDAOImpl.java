@@ -1,6 +1,7 @@
 package com.geese.server.dao.impl;
 
 import com.geese.server.dao.GooseDAO;
+import com.geese.server.domain.Flock;
 import com.geese.server.domain.Goose;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,6 +87,52 @@ public class GooseDAOImpl implements GooseDAO {
             });
         } catch (EmptyResultDataAccessException e) {
             logger.warn("Goose: findOne returns no rows");
+            return null;
+        }
+    }
+
+    @Override
+    public int favouriteFlock(String gooseId, String flockId) {
+        String sqlString =
+                "INSERT INTO FavouritedFlocks (gooseId, flockId)" +
+                        "VALUES (?, ?);";
+
+        return jdbc.update(
+                sqlString,
+                gooseId,
+                flockId
+        );
+    }
+
+    // TODO: implement me so I return a list of flock objects associated with the gooseId
+    @Override
+    public List<Flock> getFavourited(String gooseId) {
+        String sqlString =
+                "select * from Flock inner join (select flockid from FavouritedFlocks where gooseId = ?) as A on Flock.id = A.flockid;";
+
+        List<Flock> flocks = new ArrayList<>();
+
+        try {
+            List<Map<String, Object>> rows = jdbc.queryForList(sqlString, gooseId);
+
+            for (Map row : rows) {
+                Flock flock = new Flock.Builder()
+                        .id((int) row.get("id"))
+                        .authorid((int) row.get("authorid"))
+                        .name((String) row.get("name"))
+                        .description((String) row.get("description"))
+                        .latitude((float) row.get("latitude"))
+                        .longitude((float) row.get("longitude"))
+                        .radius((double) row.get("radius)"))
+                        .score((int) row.get("score"))
+                        .build();
+
+                flocks.add(flock);
+            }
+
+            return flocks;
+        } catch (EmptyResultDataAccessException e) {
+            logger.warn("Goose: getFavourited returns no rows");
             return null;
         }
     }

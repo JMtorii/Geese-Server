@@ -1,23 +1,18 @@
 package com.geese.server.service.impl;
 
 import com.geese.server.dao.GooseDAO;
+import com.geese.server.domain.Flock;
 import com.geese.server.domain.Goose;
 import com.geese.server.service.GooseService;
-import com.geese.server.service.TokenService;
 import com.geese.server.service.util.HashingAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.xml.bind.DatatypeConverter;
 import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.List;
 
@@ -33,14 +28,27 @@ public class GooseServiceImpl implements GooseService {
     @Autowired
     GooseDAO gooseDAO;
 
+    @Override
     public List<Goose> findAll() {
         return gooseDAO.findAll();
     }
 
+    @Override
     public Goose findOne(String gooseId) {
         return gooseDAO.findOne(Integer.valueOf(gooseId));
     }
 
+    @Override
+    public int favouriteFlock(String gooseId, String flockId) {
+        return gooseDAO.favouriteFlock(gooseId, flockId);
+    }
+
+    @Override
+    public List<Flock> getFavourited(String gooseId) {
+        return gooseDAO.getFavourited(gooseId);
+    }
+
+    @Override
     public Goose findByEmail(String email) {
         return gooseDAO.findByEmail(email);
     }
@@ -50,6 +58,7 @@ public class GooseServiceImpl implements GooseService {
         return findByEmail(username);
     }
 
+    @Override
     public int create(Goose createdGoose) {
         SecureRandom random = new SecureRandom();
         byte randomBytes[] = new byte[32];
@@ -71,11 +80,13 @@ public class GooseServiceImpl implements GooseService {
         return gooseDAO.create(newGoose.build());
     }
 
+    @Override
     public int update(String gooseId, Goose updatedGoose) {
         // TODO: check whether gooseId matches updatedGoose.gooseId
         return gooseDAO.update(updatedGoose);
     }
 
+    @Override
     public int delete(String gooseId) {
         return gooseDAO.delete(Integer.valueOf(gooseId));
     }

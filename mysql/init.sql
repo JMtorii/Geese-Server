@@ -116,5 +116,6 @@ CREATE TABLE IF NOT EXISTS FavouritedFlocks
 	gooseid INT(16) NOT NULL,
 	flockid INT(16) NOT NULL,
 	CONSTRAINT FavouritedFlocks_Goose_fk FOREIGN KEY (gooseid) REFERENCES Goose (id),
-	CONSTRAINT FavouritedFlocks_Flock_fk FOREIGN KEY (flockid) REFERENCES Flock (id)
+	CONSTRAINT FavouritedFlocks_Flock_fk FOREIGN KEY (flockid) REFERENCES Flock (id),
+	PRIMARY KEY (gooseid, flockid)
 );

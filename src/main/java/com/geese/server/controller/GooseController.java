@@ -1,8 +1,8 @@
 package com.geese.server.controller;
 
+import com.geese.server.domain.Flock;
 import com.geese.server.domain.Goose;
 import com.geese.server.service.GooseService;
-import com.geese.server.service.impl.GooseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -48,6 +48,39 @@ public class GooseController {
 
         if (geese != null) {
             return new ResponseEntity<>(geese, HttpStatus.OK);
+    } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * Get favourited flocks
+     * @param gooseId   Identifier for the Goose
+     * @param flockId   Identifier for the Flock that is being favourited
+     * @return          If the Goose exists and is deleted, return HTTP status 202; otherwise 404.
+     */
+    @RequestMapping(value = "/{gooseId}/favouritedFlock/{flockId}", method = RequestMethod.POST)
+    public ResponseEntity<?> favouriteFlock(@PathVariable String gooseId, @PathVariable String flockId) {
+        int numUpdated = gooseService.favouriteFlock(gooseId, flockId);
+
+        if (numUpdated > 0) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * Get favourited flocks
+     * @param gooseId   Identifier for the Goose
+     * @return          If the Goose exists and is deleted, return HTTP status 202; otherwise 404.
+     */
+    @RequestMapping(value = "/{gooseId}/getFavourited", method = RequestMethod.GET)
+    public ResponseEntity<List<Flock>> getFavourited(@PathVariable String gooseId) {
+        List<Flock> favourited = gooseService.getFavourited(gooseId);
+
+        if (favourited != null) {
+            return new ResponseEntity<>(favourited, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
