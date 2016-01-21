@@ -31,24 +31,27 @@ public class PostDAOImpl implements PostDAO {
     protected JdbcTemplate jdbc;
 
     @Override
-    public List<Post> findAll() {
+    public List<Post> findAll(final int flockid) {
         String query =
-                "SELECT * FROM " + " TABLE_NAME " + ";";
+                "SELECT * FROM " + TABLE_NAME + " WHERE flockid = ?";
 
         List<Post> posts = new ArrayList<Post>();
 
         try {
-            List<Map<String, Object>> rows = jdbc.queryForList(query);
+            List<Map<String, Object>> rows = jdbc.queryForList(query, flockid);
 
             for (Map row : rows) {
                 Post post = new Post.Builder()
                         .id((int)row.get("id"))
+                        .flockid((int) row.get("flockid"))
                         .authorid((int) row.get("authorid"))
                         .title((String) row.get("title"))
                         .description((String) row.get("description"))
                         .pinned((int) row.get("pinned"))
                         .score((int) row.get("score"))
                         .createdTime(TimeHelper.fromDB((Timestamp)row.get("createdTime")))
+                        .startTime(TimeHelper.fromDB((Timestamp)row.get("startTime")))
+                        .endTime(TimeHelper.fromDB((Timestamp)row.get("endTime")))
                         .build();
 
                 posts.add(post);

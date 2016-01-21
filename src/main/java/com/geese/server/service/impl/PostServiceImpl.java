@@ -22,8 +22,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> findAll() {
-        return postDAO.findAll();
+    public List<Post> findAll(String flockId) {
+        return postDAO.findAll(Integer.valueOf(flockId));
     }
 
     @Override

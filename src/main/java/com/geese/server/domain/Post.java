@@ -14,6 +14,8 @@ public class Post {
     private int pinned;
     private int score;
     private LocalDateTime createdTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     public Post() {}
 
@@ -55,6 +57,14 @@ public class Post {
         return createdTime;
     }
 
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
     public static class Builder {
         private int id;
         private int flockid;
@@ -64,6 +74,8 @@ public class Post {
         private int pinned;
         private int score;
         private LocalDateTime createdTime;
+        private LocalDateTime startTime;
+        private LocalDateTime endTime;
 
         public Builder() {}
 
@@ -104,6 +116,16 @@ public class Post {
 
         public Builder createdTime(LocalDateTime createdTime) {
             this.createdTime = createdTime;
+            return this;
+        }
+
+        public Builder startTime(LocalDateTime startTime) {
+            this.startTime = startTime;
+            return this;
+        }
+
+        public Builder endTime(LocalDateTime endTime) {
+            this.endTime = endTime;
             return this;
         }
 

@@ -16,10 +16,11 @@ public interface PostService {
     int delete(String postId);
 
     /**
-     * Finds all Post entries from the database.
+     * Finds all Post entries from the database, that match the passed args
+     * @param flockId   The id of the flock to match (if any)
      * @return  The information of all Post entries that are found from the database.
      */
-    List<Post> findAll();
+    List<Post> findAll(String flockId);
 
     /**
      * Finds the information of a single Post entry.
