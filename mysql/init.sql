@@ -83,6 +83,15 @@ CREATE TABLE IF NOT EXISTS Comment
 	CONSTRAINT Comment_Author_fk FOREIGN KEY (authorid) REFERENCES Goose (id)
 );
 
+-- Table for Flock votes
+CREATE TABLE IF NOT EXISTS FlockVote
+(
+	gooseid INT(16) NOT NULL,
+	flockid INT(16) NOT NULL,	
+	CONSTRAINT PostVote_Goose_fk FOREIGN KEY (gooseid) REFERENCES Goose (id),
+	CONSTRAINT PostVote_Flock_fk FOREIGN KEY (flockid) REFERENCES Flock (id)
+)
+
 -- Table for Post votes
 CREATE TABLE IF NOT EXISTS PostVote
 (
