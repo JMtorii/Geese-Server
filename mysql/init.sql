@@ -97,6 +97,7 @@ CREATE TABLE IF NOT EXISTS PostVote
 (
 	gooseid INT(16) NOT NULL,
 	postid INT(16) NOT NULL,
+	value TINYINT NOT NULL,
 	CONSTRAINT PostVote_Goose_fk FOREIGN KEY (gooseid) REFERENCES Goose (id),
 	CONSTRAINT PostVote_Post_fk FOREIGN KEY (postid) REFERENCES Post (id)
 );
@@ -106,6 +107,7 @@ CREATE TABLE IF NOT EXISTS CommentVote
 (
 	gooseid INT(16) NOT NULL,
 	commentid INT(16) NOT NULL,
+	value TINYINT NOT NULL,
 	CONSTRAINT CommentVote_Goose_fk FOREIGN KEY (gooseid) REFERENCES Goose (id),
 	CONSTRAINT CommentVote_Comment_fk FOREIGN KEY (commentid) REFERENCES Comment (id)
 );
