@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +48,7 @@ public class PostDAOImpl implements PostDAO {
                         .description((String) row.get("description"))
                         .pinned((int) row.get("pinned"))
                         .score((int) row.get("score"))
-                        .createdTime((LocalDateTime) row.get("createdTime"))
+                        .createdTime(TimeHelper.fromDB((Timestamp)row.get("createdTime")))
                         .build();
 
                 posts.add(post);
