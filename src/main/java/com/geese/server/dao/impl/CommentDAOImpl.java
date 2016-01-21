@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +46,8 @@ public class CommentDAOImpl implements CommentDAO {
                         .authorid((int) row.get("authorid"))
                         .text((String) row.get("text"))
                         .score((int) row.get("score"))
-                        .createdTime((LocalDateTime) row.get("createdTime"))
-                        .createdTime((LocalDateTime) row.get("expireTime"))
+                        .createdTime(TimeHelper.fromDB((Timestamp)row.get("createdTime")))
+                        .createdTime(TimeHelper.fromDB((Timestamp) row.get("expireTime")))
                         .build();
 
                 comments.add(comment);

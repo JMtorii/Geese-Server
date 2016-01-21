@@ -85,6 +85,8 @@ public class PostDAOImpl implements PostDAO {
                                 .description(rs.getString("description"))
                                 .pinned(rs.getBoolean("pinned"))
                                 .score(rs.getInt("score"))
+                                .startTime(TimeHelper.fromDB(rs.getTimestamp("startTime")))
+                                .endTime(TimeHelper.fromDB(rs.getTimestamp("endTime")))
                                 .createdTime(TimeHelper.fromDB(rs.getTimestamp("createdTime")))
                                 .build();
                     }
@@ -101,7 +103,7 @@ public class PostDAOImpl implements PostDAO {
         String query =
                 "UPDATE " + TABLE_NAME + " " +
                         "SET flockid = ?, authorid = ?, title = ?," +
-                        "description = ?, pinned = ?, score = ?, createdTime = ? " +
+                        "description = ?, pinned = ?, score = ?, createdTime = ?, startTime = ?, endTime = ? " +
                         "WHERE id = ?";
 
         return jdbc.update(query,
@@ -111,6 +113,8 @@ public class PostDAOImpl implements PostDAO {
                 updatedPost.getDescription(),
                 updatedPost.getPinned(),
                 updatedPost.getScore(),
+                TimeHelper.toDB(updatedPost.getStartTime()),
+                TimeHelper.toDB(updatedPost.getEndTime()),
                 TimeHelper.toDB(updatedPost.getCreatedTime()),
                 updatedPost.getId()
         );
@@ -128,7 +132,7 @@ public class PostDAOImpl implements PostDAO {
     @Override
     public int create(final Post created) {
         String query = "INSERT INTO " + TABLE_NAME + " " +
-                "(flockid, authorid, title, description, pinned, score, createdTime) " +
+                "(flockid, authorid, title, description, pinned, score, startTime, endTime, createdTime) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         return jdbc.update(query,
@@ -138,6 +142,8 @@ public class PostDAOImpl implements PostDAO {
                 created.getDescription(),
                 created.getPinned(),
                 created.getScore(),
+                TimeHelper.toDB(created.getStartTime()),
+                TimeHelper.toDB(created.getEndTime()),
                 TimeHelper.toDB(created.getCreatedTime())
         );
     }

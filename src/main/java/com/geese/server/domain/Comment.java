@@ -16,7 +16,15 @@ public class Comment {
 
     public Comment() {}
 
-    private Comment(Builder builder) {}
+    private Comment(Builder builder) {
+        this.id = builder.id;
+        this.commentid = builder.commentid;
+        this.authorid = builder.authorid;
+        this.text = builder.text;
+        this.score = builder.score;
+        this.createdTime = builder.createdTime;
+        this.expireTime = builder.expireTime;
+    }
 
     static Builder getBuilder() {
         return new Builder();

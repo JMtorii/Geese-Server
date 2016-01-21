@@ -19,7 +19,18 @@ public class Post {
 
     public Post() {}
 
-    private Post(Builder builder) {}
+    private Post(Builder builder) {
+        this.id = builder.id;
+        this.authorid = builder.authorid;
+        this.flockid = builder.flockid;
+        this.title = builder.title;
+        this.pinned = builder.pinned;
+        this.description = builder.description;
+        this.score = builder.score;
+        this.createdTime = builder.createdTime;
+        this.startTime = builder.startTime;
+        this.endTime = builder.endTime;
+    }
 
     static Builder getBuilder() {
         return new Builder();
