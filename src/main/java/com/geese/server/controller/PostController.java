@@ -33,9 +33,9 @@ public class PostController {
         Post foundPost = postService.findOne(postId);
 
         if (foundPost != null) {
-            return new ResponseEntity<>(foundPost, HttpStatus.FOUND);
+            return new ResponseEntity<>(foundPost, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -48,9 +48,9 @@ public class PostController {
         List<Post> geese = postService.findAll(flockId);
 
         if (geese != null) {
-            return new ResponseEntity<>(geese, HttpStatus.FOUND);
+            return new ResponseEntity<>(geese, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -84,7 +84,7 @@ public class PostController {
         if (numUpdatedPost > 0) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -100,7 +100,7 @@ public class PostController {
         if (numDeletedPost > 0) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -43,9 +43,9 @@ public class CommentController {
         Comment foundComment = commentService.findOne(commentId);
 
         if (foundComment != null) {
-            return new ResponseEntity<>(foundComment, HttpStatus.FOUND);
+            return new ResponseEntity<>(foundComment, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -60,9 +60,9 @@ public class CommentController {
         List<Comment> geese = commentService.findAll();
 
         if (geese != null) {
-            return new ResponseEntity<>(geese, HttpStatus.FOUND);
+            return new ResponseEntity<>(geese, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -96,7 +96,7 @@ public class CommentController {
         if (numUpdatedComment > 0) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -112,7 +112,7 @@ public class CommentController {
         if (numDeletedComment > 0) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }

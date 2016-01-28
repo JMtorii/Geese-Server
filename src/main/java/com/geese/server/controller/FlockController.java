@@ -33,7 +33,7 @@ public class FlockController {
         Flock foundFlock = flockService.findOne(flockId);
 
         if (foundFlock != null) {
-            return new ResponseEntity<>(foundFlock, HttpStatus.FOUND);
+            return new ResponseEntity<>(foundFlock, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -48,7 +48,7 @@ public class FlockController {
         List<Flock> flocks = flockService.findAll();
 
         if (flocks != null) {
-            return new ResponseEntity<>(flocks, HttpStatus.FOUND);
+            return new ResponseEntity<>(flocks, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

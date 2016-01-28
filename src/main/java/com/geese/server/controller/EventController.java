@@ -33,9 +33,9 @@ public class EventController {
         Event foundEvent = eventService.findOne(eventId);
 
         if (foundEvent != null) {
-            return new ResponseEntity<>(foundEvent, HttpStatus.FOUND);
+            return new ResponseEntity<>(foundEvent, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -48,9 +48,9 @@ public class EventController {
         List<Event> geese = eventService.findAll();
 
         if (geese != null) {
-            return new ResponseEntity<>(geese, HttpStatus.FOUND);
+            return new ResponseEntity<>(geese, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -84,7 +84,7 @@ public class EventController {
         if (numUpdatedEvent > 0) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -100,7 +100,7 @@ public class EventController {
         if (numDeletedEvent > 0) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }
