@@ -1,10 +1,10 @@
-    import org.apache.tools.ant.filters.ReplaceTokens
+import org.apache.tools.ant.filters.ReplaceTokens
 
 def environment = hasProperty('env') ? env : 'ci'
 def ver = hasProperty('ver') ? ver : ''
 
 tasks.withType(Test) {
-    systemProperty 'spring.profiles.active', 'debug'
+    systemProperty 'spring.profiles.active', 'local'
 }
 
 buildscript {
@@ -128,7 +128,7 @@ check {
 task copyConfig(type: Copy) {
     from 'src/main/resources/.ebextensions'
     into 'docker-ready/.ebextensions'
-    // from 'src/main/resources/application-prod.properties'
+    // from 'src/main/resources/application.properties'
     // into 'docker-ready'
     // Use a closure to map the file name
     // rename { String fileName ->
@@ -169,4 +169,8 @@ task dockerBundle(dependsOn: ['copyConfig', 'copyJar', 'copyDockerfile', 'zipIma
 task buildCleanDockerImage(dependsOn: ['clean', 'build', 'dockerBundle']) {
     build.mustRunAfter clean
     dockerBundle.mustRunAfter build
+}
+
+bootRun {
+    systemProperties System.properties
 }
