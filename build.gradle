@@ -125,14 +125,16 @@ check {
 
 // Below here are deployment-related tasks. They are not meant to be run locally (may change when/if we decide to run Docker locally).
 
-//task copyConfig(type: Copy) {
-//    from 'src/main/resources/application-prod.properties'
-//    into 'docker-ready'
-//    // Use a closure to map the file name
-//    rename { String fileName ->
-//        fileName.replace('-production', '')
-//    }
-//}
+task copyConfig(type: Copy) {
+    from 'src/main/resources/.ebextensions'
+    into 'docker-ready/.ebextensions'
+    // from 'src/main/resources/application-prod.properties'
+    // into 'docker-ready'
+    // Use a closure to map the file name
+    // rename { String fileName ->
+    //    fileName.replace('-production', '')
+    //}
+}
 
 /* Currently, this task expects the jar to be in the top-level folder. Jenkins is responsible for putting the jar there
  * as part of a copy artifact. We could make this look for a local jar in build/libs if we can't find the one that
@@ -162,7 +164,7 @@ task zipImage(type: Zip) {
     destinationDir file('build')
 }
 
-task dockerBundle(dependsOn: [/*'copyConfig', */'copyJar', 'copyDockerfile', 'zipImage']) {}
+task dockerBundle(dependsOn: ['copyConfig', 'copyJar', 'copyDockerfile', 'zipImage']) {}
 
 task buildCleanDockerImage(dependsOn: ['clean', 'build', 'dockerBundle']) {
     build.mustRunAfter clean
