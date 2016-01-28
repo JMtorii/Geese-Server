@@ -34,7 +34,7 @@ public class FlockDAOImpl implements FlockDAO {
     @Override
     public List<Flock> findAll() {
         String query =
-                "SELECT * FROM Flock;";
+                "SELECT * FROM Flock";
 
         List<Flock> flocks = new ArrayList<>();
 
@@ -69,7 +69,7 @@ public class FlockDAOImpl implements FlockDAO {
     public Flock findOne(final int flockId) {
         String query =
                 "SELECT * FROM Flock " +
-                        "WHERE id = ?;";
+                        "WHERE id = ?";
 
         try {
             return jdbc.queryForObject(query, new Object[]{flockId}, new RowMapper<Flock>() {
