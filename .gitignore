@@ -1,6 +1,6 @@
-/.idea
-!/.idea/runConfigurations/
-!/.idea/runConfigurations/*
+/.idea/copyright
+/.idea/*.xml
+/.idea/.name
 
 *.iml
 /.gradle
