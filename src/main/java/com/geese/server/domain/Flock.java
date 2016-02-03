@@ -1,11 +1,14 @@
 package com.geese.server.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.time.LocalDateTime;
 
 /**
  * Created by JMtorii on 2015-10-06.
  */
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Flock {
     private int id;
     private int authorid;
@@ -17,6 +20,9 @@ public class Flock {
     private int score;
     private LocalDateTime createdTime;
     private LocalDateTime expireTime;
+
+    @JsonIgnore
+    private boolean favourited = true;
 
     public Flock() {}
 
@@ -111,6 +117,14 @@ public class Flock {
 
     public void setExpireTime(LocalDateTime expireTime) {
         this.expireTime = expireTime;
+    }
+
+    public boolean getFavourited() {
+        return favourited;
+    }
+
+    public void setFavourited(boolean favourited) {
+        this.favourited = favourited;
     }
 
     public static class Builder {

@@ -49,4 +49,11 @@ public interface FlockDAO {
      * @return          A list of nearby flocks
      */
     List<Flock> getNearbyFlocks(float latitude, float longitude);
+
+    /**
+     * Get favourited flocks for a Goose.
+     * @param gooseId   Goose identifier
+     * @return          A list of favourited flocks
+     */
+    List<Flock> getFavourited(int gooseId);
 }

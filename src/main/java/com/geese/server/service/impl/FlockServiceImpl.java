@@ -3,12 +3,10 @@ package com.geese.server.service.impl;
 import com.geese.server.GooseAuthentication;
 import com.geese.server.dao.FlockDAO;
 import com.geese.server.domain.Flock;
-import com.geese.server.domain.Goose;
 import com.geese.server.service.FlockService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -55,6 +53,26 @@ public class FlockServiceImpl implements FlockService {
 
     @Override
     public List<Flock> getNearbyFlocks(float latitude, float longitude) {
-        return flockDAO.getNearbyFlocks(latitude, longitude);
+        List<Flock> nearbyFlocks = flockDAO.getNearbyFlocks(latitude, longitude);
+        List<Flock> favouritedFlocks = getFavourited();
+
+        // I'm so sorry for this. This is horrible
+        for (Flock favourited : favouritedFlocks) {
+            for (Flock nearbyFlock : nearbyFlocks) {
+                if (favourited.getId() == nearbyFlock.getId()) {
+                    nearbyFlock.setFavourited(true);
+                    break;
+                }
+            }
+        }
+
+        return nearbyFlocks;
+    }
+
+    @Override
+    public List<Flock> getFavourited() {
+        GooseAuthentication auth = (GooseAuthentication) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int gooseId = auth.getDetails().getId();
+        return flockDAO.getFavourited(gooseId);
     }
 }

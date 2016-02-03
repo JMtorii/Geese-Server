@@ -1,7 +1,6 @@
 package com.geese.server.service.impl;
 
 import com.geese.server.dao.GooseDAO;
-import com.geese.server.domain.Flock;
 import com.geese.server.domain.Goose;
 import com.geese.server.service.GooseService;
 import com.geese.server.service.util.HashingAlgorithm;
@@ -41,11 +40,6 @@ public class GooseServiceImpl implements GooseService {
     @Override
     public int favouriteFlock(String gooseId, String flockId) {
         return gooseDAO.favouriteFlock(gooseId, flockId);
-    }
-
-    @Override
-    public List<Flock> getFavourited(String gooseId) {
-        return gooseDAO.getFavourited(gooseId);
     }
 
     @Override

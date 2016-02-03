@@ -124,4 +124,19 @@ public class FlockController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    /**
+     * Get favourited flocks
+     * @return          If the Goose exists and is deleted, return HTTP status 202; otherwise 404.
+     */
+    @RequestMapping(value = "/getFavourited", method = RequestMethod.GET)
+    public ResponseEntity<List<Flock>> getFavourited() {
+        List<Flock> favourited = flockService.getFavourited();
+
+        if (favourited != null) {
+            return new ResponseEntity<>(favourited, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

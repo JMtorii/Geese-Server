@@ -1,6 +1,4 @@
-/.idea/copyright
-/.idea/*.xml
-/.idea/.name
+/.idea
 
 *.iml
 /.gradle

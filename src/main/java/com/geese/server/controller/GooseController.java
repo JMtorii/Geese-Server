@@ -1,6 +1,5 @@
 package com.geese.server.controller;
 
-import com.geese.server.domain.Flock;
 import com.geese.server.domain.Goose;
 import com.geese.server.service.GooseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,22 +64,6 @@ public class GooseController {
 
         if (numUpdated > 0) {
             return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    /**
-     * Get favourited flocks
-     * @param gooseId   Identifier for the Goose
-     * @return          If the Goose exists and is deleted, return HTTP status 202; otherwise 404.
-     */
-    @RequestMapping(value = "/{gooseId}/getFavourited", method = RequestMethod.GET)
-    public ResponseEntity<List<Flock>> getFavourited(@PathVariable String gooseId) {
-        List<Flock> favourited = gooseService.getFavourited(gooseId);
-
-        if (favourited != null) {
-            return new ResponseEntity<>(favourited, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

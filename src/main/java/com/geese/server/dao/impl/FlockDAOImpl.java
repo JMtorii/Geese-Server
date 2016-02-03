@@ -215,4 +215,37 @@ public class FlockDAOImpl implements FlockDAO {
             return null;
         }
     }
+
+    // TODO: implement me so I return a list of flock objects associated with the gooseId
+    @Override
+    public List<Flock> getFavourited(int gooseId) {
+        String sqlString =
+                "select * from Flock inner join (select flockid from FavouritedFlocks where gooseId = ?) as A on Flock.id = A.flockid;";
+
+        List<Flock> flocks = new ArrayList<>();
+
+        try {
+            List<Map<String, Object>> rows = jdbc.queryForList(sqlString, gooseId);
+
+            for (Map row : rows) {
+                Flock flock = new Flock.Builder()
+                        .id((int) row.get("id"))
+                        .authorid((int) row.get("authorid"))
+                        .name((String) row.get("name"))
+                        .description((String) row.get("description"))
+                        .latitude((float) row.get("latitude"))
+                        .longitude((float) row.get("longitude"))
+                        .radius((double) row.get("radius)"))
+                        .score((int) row.get("score"))
+                        .build();
+
+                flocks.add(flock);
+            }
+
+            return flocks;
+        } catch (EmptyResultDataAccessException e) {
+            logger.warn("Goose: getFavourited returns no rows");
+            return null;
+        }
+    }
 }

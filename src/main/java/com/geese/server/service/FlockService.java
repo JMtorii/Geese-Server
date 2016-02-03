@@ -50,4 +50,10 @@ public interface FlockService {
      * @return              List of nearby flocks
      */
     List<Flock> getNearbyFlocks(float latitude, float longitude);
+
+    /**
+     * Get favourited flocks for a Goose.
+     * @return          A list of favourited flocks
+     */
+    List<Flock> getFavourited();
 }
