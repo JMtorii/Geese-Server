@@ -128,12 +128,6 @@ check {
 task copyConfig(type: Copy) {
     from 'src/main/resources/.ebextensions'
     into 'docker-ready/.ebextensions'
-    // from 'src/main/resources/application-https.properties'
-    // into 'docker-ready'
-    // Use a closure to map the file name
-    // rename { String fileName ->
-    //    fileName.replace('-production', '')
-    //}
 }
 
 /* Currently, this task expects the jar to be in the top-level folder. Jenkins is responsible for putting the jar there
