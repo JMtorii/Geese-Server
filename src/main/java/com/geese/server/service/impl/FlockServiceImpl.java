@@ -71,7 +71,7 @@ public class FlockServiceImpl implements FlockService {
 
     @Override
     public List<Flock> getFavourited() {
-        GooseAuthentication auth = (GooseAuthentication) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        GooseAuthentication auth = (GooseAuthentication) SecurityContextHolder.getContext().getAuthentication();
         int gooseId = auth.getDetails().getId();
         return flockDAO.getFavourited(gooseId);
     }
