@@ -212,7 +212,7 @@ public class FlockDAOImpl implements FlockDAO {
             return flocks;
         } catch (EmptyResultDataAccessException e) {
             logger.warn("Goose: findAll returns no rows");
-            return flocks;
+            return null;
         }
     }
 
@@ -220,7 +220,7 @@ public class FlockDAOImpl implements FlockDAO {
     @Override
     public List<Flock> getFavourited(int gooseId) {
         String sqlString =
-                "select * from Flock inner join (select flockid from FavouritedFlocks where gooseId = ?) as A on Flock.id = A.flockid;";
+                "select * from Flock where id in (select flockid from FavouritedFlocks where gooseId = ?);";
 
         List<Flock> flocks = new ArrayList<>();
 
@@ -235,7 +235,7 @@ public class FlockDAOImpl implements FlockDAO {
                         .description((String) row.get("description"))
                         .latitude((float) row.get("latitude"))
                         .longitude((float) row.get("longitude"))
-                        .radius((double) row.get("radius)"))
+                        .radius((double) row.get("radius"))
                         .score((int) row.get("score"))
                         .build();
 
