@@ -135,6 +135,7 @@ public class FlockControllerTest {
 
     private ResultActions sendGetNearbyFlocksRequest(float latitude, float longitude) throws Exception {
         return mvc.perform(MockMvcRequestBuilders.get("/flock/getNearbyFlocks")
+                    .header("X-AUTH-TOKEN", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QGVtYWlsLmNvbSJ9.qufWHyPzMLAwaF_1QARepchXGRTx5fsuHOJXcfnF6OLTBbcD6PyD575geXdU2zwbwIYL_5ThGRSMlb7Qa_rpxw")
                     .param("latitude", Float.toString(latitude))
                     .param("longitude", Float.toString(longitude)));
     }

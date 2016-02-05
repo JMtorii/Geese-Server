@@ -212,7 +212,7 @@ public class FlockDAOImpl implements FlockDAO {
             return flocks;
         } catch (EmptyResultDataAccessException e) {
             logger.warn("Goose: findAll returns no rows");
-            return null;
+            return flocks;
         }
     }
 
@@ -245,7 +245,7 @@ public class FlockDAOImpl implements FlockDAO {
             return flocks;
         } catch (EmptyResultDataAccessException e) {
             logger.warn("Goose: getFavourited returns no rows");
-            return null;
+            return flocks;
         }
     }
 }

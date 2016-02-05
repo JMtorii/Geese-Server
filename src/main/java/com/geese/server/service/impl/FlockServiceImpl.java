@@ -56,16 +56,18 @@ public class FlockServiceImpl implements FlockService {
         List<Flock> nearbyFlocks = flockDAO.getNearbyFlocks(latitude, longitude);
         List<Flock> favouritedFlocks = getFavourited();
 
-        // I'm so sorry for this. This is horrible
-        for (Flock favourited : favouritedFlocks) {
-            for (Flock nearbyFlock : nearbyFlocks) {
-                if (favourited.getId() == nearbyFlock.getId()) {
-                    nearbyFlock.setFavourited(true);
-                    break;
+        if (nearbyFlocks != null && favouritedFlocks != null) {
+            // I'm so sorry for this. This is horrible
+            for (Flock favourited : favouritedFlocks) {
+                for (Flock nearbyFlock : nearbyFlocks) {
+                    if (favourited.getId() == nearbyFlock.getId()) {
+                        nearbyFlock.setFavourited(true);
+                        break;
+                    }
                 }
             }
         }
-
+        
         return nearbyFlocks;
     }
 
