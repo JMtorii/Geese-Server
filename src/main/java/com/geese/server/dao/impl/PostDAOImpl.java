@@ -99,7 +99,7 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public int update(final Post updatedPost) {
+    public int  update(final Post updatedPost) {
         String query =
                 "UPDATE " + TABLE_NAME + " " +
                         "SET flockid = ?, authorid = ?, title = ?," +
@@ -133,7 +133,7 @@ public class PostDAOImpl implements PostDAO {
     public int create(final Post created) {
         String query = "INSERT INTO " + TABLE_NAME + " " +
                 "(flockid, authorid, title, description, pinned, score, startTime, endTime, createdTime) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         return jdbc.update(query,
                 created.getFlockid(),

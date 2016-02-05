@@ -1,8 +1,7 @@
 package com.geese.server.dao.util;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.*;
 
 /**
  * Created by Ni on 2015-10-30.
@@ -19,8 +18,10 @@ import java.time.ZoneOffset;
  * which means converting them before persisting and after retrieval
  *
  * Java 8 features a decent alternative to Joda Time, and the flow goes as such
- * LocalDateTime(implied current timezone) -> Instant(convert to UTC) -> java.sql.Timestamp(now UTC, can be stored)
- * java.sql.Timestamp(assume to be UTC) -> Instant -> LocalDatetime(conversion to local timezone should be automatic)
+ * LocalDateTime(implied current timezone) -> ZonedTime(convert to UTC) -> LocalDateTime(implied local timezone is UTC) -> java.sql.Timestamp(converts without modifications)
+ * java.sql.Timestamp(assume to be UTC) -> ZonedTime(convert to local) -> LocalDatetime()
+ *
+ * Amazon RDS locks in database timezone and connection timezone as UTC, check with 'SELECT @@global.time_zone, @@session.time_zone;'
  *
  * This convenience class was written to help developers in case they forget
  * the correct way of making the conversion.
@@ -30,13 +31,18 @@ public class TimeHelper {
         if (time == null) {
             return null;
         }
-        return Timestamp.from(time.toInstant(ZoneOffset.UTC));
+        ZonedDateTime systemTime = time.atZone(ZoneId.systemDefault());
+        ZonedDateTime utcTime = systemTime.withZoneSameInstant(ZoneId.of("UTC"));
+        return Timestamp.valueOf(utcTime.toLocalDateTime());
     }
 
     public static LocalDateTime fromDB(Timestamp timestamp) {
         if (timestamp == null) {
             return null;
         }
-        return timestamp.toLocalDateTime();
+        // TODO: Fix this
+        ZonedDateTime utcTime = ZonedDateTime.of(timestamp.toLocalDateTime(), ZoneId.of("UTC"));
+        ZonedDateTime systemTime = utcTime.withZoneSameInstant(ZoneId.systemDefault());
+        return systemTime.toLocalDateTime();
     }
 }

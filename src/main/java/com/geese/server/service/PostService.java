@@ -13,21 +13,21 @@ public interface PostService {
      * @param postId   The id of the Post to delete from the database
      * @return  The number of deleted Topics
      */
-    int delete(String postId);
+    int delete(int postId);
 
     /**
      * Finds all Post entries from the database, that match the passed args
      * @param flockId   The id of the flock to match (if any)
      * @return  The information of all Post entries that are found from the database.
      */
-    List<Post> findAll(String flockId);
+    List<Post> findAll(int flockId);
 
     /**
      * Finds the information of a single Post entry.
      * @param postId    The id of the requested Post entry.
      * @return      The information of the found Post entry.
      */
-    Post findOne(String postId);
+    Post findOne(int postId);
 
     /**
      * Saves a new Post entry to the database.
@@ -38,9 +38,18 @@ public interface PostService {
 
     /**
      * Updates an existing Post entry in the database.
-     * @param postId       The postId of the requested Post entry.
      * @param updatedPost  The information of the updated Post entry.
      * @return              The number of updated Post objects.
      */
-    int update(String postId, Post updatedPost);
+    int update(Post updatedPost);
+
+    /**
+     * Votes on a Post,
+     * updates an existing Post entry in the database.
+     * creates a PostVote entry as well
+     * @param postId       The postId of the requested Post entry.
+     * @param value        Upvote, no vote, or downvote
+     * @return              The number of updated Post objects.
+     */
+    int vote(int postId, int value);
 }

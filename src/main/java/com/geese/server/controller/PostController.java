@@ -29,7 +29,7 @@ public class PostController {
      * @return          If Post is found, return the Post object and HTTP status 302; otherwise, 404
      */
     @RequestMapping(value = "/{postId}", method = RequestMethod.GET)
-    public ResponseEntity<Post> getPost(@PathVariable String postId) {
+    public ResponseEntity<Post> getPost(@PathVariable int postId) {
         Post foundPost = postService.findOne(postId);
 
         if (foundPost != null) {
@@ -44,7 +44,7 @@ public class PostController {
      * @return      If Geese exist, return list of Geese and HTTP status 302; otherwise, 404
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<List<Post>> getAllPosts(@RequestParam String flockId) {
+    public ResponseEntity<List<Post>> getAllPosts(@RequestParam int flockId) {
         List<Post> geese = postService.findAll(flockId);
 
         if (geese != null) {
@@ -73,13 +73,12 @@ public class PostController {
 
     /**
      * Updates an existing Post
-     * @param postId   Identifier for Post
      * @param post     Post to persist in server
      * @return          If the Post exists and is changed, return HTTP status 202; otherwise 404.
      */
     @RequestMapping(value = "/{postId}", method = RequestMethod.PUT)
-    public ResponseEntity<Post> updatePost(@PathVariable String postId, @RequestBody Post post) {
-        int numUpdatedPost = postService.update(postId, post);
+    public ResponseEntity<Post> updatePost(@RequestBody Post post) {
+        int numUpdatedPost = postService.update(post);
 
         if (numUpdatedPost > 0) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
@@ -94,7 +93,7 @@ public class PostController {
      * @return          If the Post exists and is deleted, return HTTP status 202; otherwise 404.
      */
     @RequestMapping(value = "/{postId}", method = RequestMethod.DELETE)
-    public ResponseEntity<Post> deletePost(@PathVariable String postId) {
+    public ResponseEntity<Post> deletePost(@PathVariable int postId) {
         int numDeletedPost = postService.delete(postId);
 
         if (numDeletedPost > 0) {
@@ -103,4 +102,26 @@ public class PostController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    /**
+     * Votes on a Post
+     * @param postId   Identifier for the Post
+     * @param value    How much the vote counts for (-1, 0, or 1)
+     * @return          If the Post exists and the user has not voted, return HTTP status 202; otherwise 404.
+     */
+    @RequestMapping(value = "/{postId}/vote{", method = RequestMethod.POST)
+    public ResponseEntity<Post> votePost(@PathVariable int postId, @RequestBody int value) {
+        if (value > 1 || value < 1) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        int numUpdatedPost = postService.vote(postId, value);
+
+        if (numUpdatedPost > 0) {
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

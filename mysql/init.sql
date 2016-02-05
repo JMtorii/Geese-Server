@@ -87,7 +87,9 @@ CREATE TABLE IF NOT EXISTS Comment
 CREATE TABLE IF NOT EXISTS FlockVote
 (
 	gooseid INT(16) NOT NULL,
-	flockid INT(16) NOT NULL,	
+	flockid INT(16) NOT NULL,
+	value TINYINT NOT NULL,
+	CONSTRAINT FlockVote_pk PRIMARY KEY (gooseid, flockid),	
 	CONSTRAINT FlockVote_Goose_fk FOREIGN KEY (gooseid) REFERENCES Goose (id),
 	CONSTRAINT FlockVote_Flock_fk FOREIGN KEY (flockid) REFERENCES Flock (id)
 )
@@ -98,6 +100,7 @@ CREATE TABLE IF NOT EXISTS PostVote
 	gooseid INT(16) NOT NULL,
 	postid INT(16) NOT NULL,
 	value TINYINT NOT NULL,
+	CONSTRAINT PostVote_pk PRIMARY KEY (gooseid, postid),
 	CONSTRAINT PostVote_Goose_fk FOREIGN KEY (gooseid) REFERENCES Goose (id),
 	CONSTRAINT PostVote_Post_fk FOREIGN KEY (postid) REFERENCES Post (id)
 );
@@ -108,6 +111,7 @@ CREATE TABLE IF NOT EXISTS CommentVote
 	gooseid INT(16) NOT NULL,
 	commentid INT(16) NOT NULL,
 	value TINYINT NOT NULL,
+	CONSTRAINT CommentVote_pk PRIMARY KEY (gooseid, commentid),
 	CONSTRAINT CommentVote_Goose_fk FOREIGN KEY (gooseid) REFERENCES Goose (id),
 	CONSTRAINT CommentVote_Comment_fk FOREIGN KEY (commentid) REFERENCES Comment (id)
 );

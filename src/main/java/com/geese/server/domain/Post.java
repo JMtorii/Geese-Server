@@ -90,6 +90,19 @@ public class Post {
 
         public Builder() {}
 
+        public Builder(Post post) {
+            this.id = post.id;
+            this.flockid = post.flockid;
+            this.authorid = post.authorid;
+            this.title = post.title;
+            this.description = post.description;
+            this.pinned = post.pinned;
+            this.score = post.score;
+            this.createdTime = post.createdTime;
+            this.startTime = post.startTime;
+            this.endTime = post.endTime;
+        }
+
         public Builder id(int id) {
             this.id = id;
             return this;
