@@ -40,7 +40,6 @@ public class TimeHelper {
         if (timestamp == null) {
             return null;
         }
-        // TODO: Fix this
         ZonedDateTime utcTime = ZonedDateTime.of(timestamp.toLocalDateTime(), ZoneId.of("UTC"));
         ZonedDateTime systemTime = utcTime.withZoneSameInstant(ZoneId.systemDefault());
         return systemTime.toLocalDateTime();

@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS EventMembership
 CREATE TABLE IF NOT EXISTS Comment
 (
 	id INT(16) NOT NULL AUTO_INCREMENT,
-	commentid INT(16) NOT NULL,
+	postid INT(16) NOT NULL,
 	authorid INT(16) NOT NULL,
 	text TEXT NOT NULL, -- Content of comment
 	score INT(16) NOT NULL, -- Up/down votes

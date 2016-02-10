@@ -88,7 +88,19 @@ public class Post {
         private LocalDateTime startTime;
         private LocalDateTime endTime;
 
-        public Builder() {}
+        public Builder() {
+
+        }
+
+        public Builder(int flockid, int authorid, String title, String description) {
+            this.flockid = flockid;
+            this.authorid = authorid;
+            this.title = title;
+            this.description = description;
+            this.pinned = false;
+            this.score = 0;
+            this.createdTime = LocalDateTime.now();
+        }
 
         public Builder(Post post) {
             this.id = post.id;

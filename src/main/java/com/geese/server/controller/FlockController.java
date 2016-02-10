@@ -1,12 +1,14 @@
 package com.geese.server.controller;
 
 import com.geese.server.domain.Flock;
+import com.geese.server.domain.Goose;
 import com.geese.server.service.FlockService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -111,7 +113,7 @@ public class FlockController {
      * @return If there isn't an error return HTTP status 200; otherwise 400.
      */
     @RequestMapping(value="/getNearbyFlocks", method = RequestMethod.GET)
-    public ResponseEntity<List<Flock>> getNearbyFlocks(@RequestParam float latitude, @RequestParam float longitude) {
+    public ResponseEntity<List<Flock>> getNearbyFlocks(@RequestParam float latitude, @RequestParam float longitude, @AuthenticationPrincipal Goose goose) {
         if (latitude > 90.0 || latitude < -90.0 || longitude > 180.0 || longitude < -180.0) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

@@ -88,7 +88,6 @@ public class FlockControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
-    @Ignore
     @Test
     public void getNearbyFlocksFindsAllNearbyFlocks() throws Exception {
         float validLatitude = 43.46519f;

@@ -44,10 +44,11 @@ public class PostServiceImpl implements PostService {
     public int create(Post saved) {
         GooseAuthentication auth = (GooseAuthentication) SecurityContextHolder.getContext().getAuthentication();
         int authorId = auth.getDetails().getId();
+        int flockid = saved.getFlockid();
+        String title = saved.getTitle();
+        String description = saved.getDescription();
 
-        Post newPost = new Post.Builder(saved)
-                .authorid(authorId)
-                .createdTime(LocalDateTime.now())
+        Post newPost = new Post.Builder(flockid, authorId, title, description)
                 .build();
         return postDAO.create(newPost);
     }
@@ -59,7 +60,6 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public int vote(int postId, int value) {
-        //SecurityContextHolder.getContext().getAuthentication().getName();
         GooseAuthentication auth = (GooseAuthentication) SecurityContextHolder.getContext().getAuthentication();
         int authorId = auth.getDetails().getId();
 
