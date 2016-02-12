@@ -129,7 +129,7 @@ public class FlockController {
 
     /**
      * Get favourited flocks
-     * @return          If the Goose exists and is deleted, return HTTP status 202; otherwise 404.
+     * @return          If the Goose exists and is deleted, return HTTP status 200; otherwise 400.
      */
     @RequestMapping(value = "/getFavourited", method = RequestMethod.GET)
     public ResponseEntity<List<Flock>> getFavourited() {
@@ -137,6 +137,21 @@ public class FlockController {
 
         if (favourited != null) {
             return new ResponseEntity<>(favourited, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * Join a flock
+     * @return          If successfully joined, return HTTP status 200; otherwise 400.
+     */
+    @RequestMapping(value = "/{flockId}/joinFlock", method = RequestMethod.POST)
+    public ResponseEntity<?> joinFlock(@PathVariable int flockId) {
+        int numModified = flockService.joinFlock(flockId);
+
+        if (numModified > 0) {
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

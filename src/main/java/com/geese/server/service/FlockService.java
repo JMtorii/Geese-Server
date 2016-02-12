@@ -56,4 +56,11 @@ public interface FlockService {
      * @return          A list of favourited flocks
      */
     List<Flock> getFavourited();
+
+    /**
+     * Joins a flock
+     * @param flockId       Unique identifier of flock
+     * @return              Number of modified entries
+     */
+    int joinFlock(int flockId);
 }
