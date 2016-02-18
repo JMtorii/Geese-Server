@@ -5,18 +5,21 @@ import com.geese.server.domain.Goose;
 import com.geese.server.service.TokenService;
 import com.geese.server.service.GooseService;
 import com.geese.server.service.LoginService;
+import com.geese.server.service.util.FacebookGraphResponse;
 import com.geese.server.service.util.HashingAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.xml.bind.DatatypeConverter;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
 /**
  * Created by JMtorii on 2015-10-12.
@@ -26,6 +29,8 @@ import java.security.NoSuchAlgorithmException;
 public class LoginServiceImpl implements LoginService {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginService.class);
+
+    private static final String FACEBOOK_GRAPH_API_ME = "https://graph.facebook.com/me?access_token=";
 
     @Autowired
     @Qualifier("gooseServiceImpl")
@@ -65,6 +70,37 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public String LoginFromFacebook(String token) {
-        return "";
+        try {
+            String url = FACEBOOK_GRAPH_API_ME + token;
+            RestTemplate restTemplate = new RestTemplate();
+            FacebookGraphResponse response = restTemplate.getForObject(url, FacebookGraphResponse.class);
+            String fbName = response.getName();
+            String fbEmail = response.getEmail();
+
+            //TODO: Tighten access token failure cases? could get error:message from response for debug
+            if (fbName == "" || fbName == "") {
+                return "";
+            }
+
+            Goose goose = gooseService.findByEmail(fbEmail);
+            //TODO: Instead of a random password, possibly use a flag for fb login only accounts
+            if (goose == null) {
+                Goose.Builder newFBGoose = new Goose.Builder(0, fbName, fbEmail, true);
+                SecureRandom random = new SecureRandom();
+                byte randomBytes[] = new byte[32];
+                random.nextBytes(randomBytes);
+                String randomPassword = HashingAlgorithm.sha256(randomBytes);
+                newFBGoose.password(randomPassword);
+
+                gooseService.create(newFBGoose.build());
+            }
+
+            logger.info("Authenticated FB token for " + goose.getUsername());
+            GooseAuthentication auth = new GooseAuthentication(goose);
+            return tokenService.getToken(auth);
+
+        } catch (Throwable ex) {
+            throw new RuntimeException("failed login", ex);
+        }
     };
 }
