@@ -31,4 +31,15 @@ public class LoginController {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
+
+    @RequestMapping(value = "/fb/{accessToken}", method = RequestMethod.POST)
+    public ResponseEntity<String> getTokenViaFB(@PathVariable String accessToken) {
+        String token = loginService.LoginFromFacebook(accessToken);
+
+        if (token != "") {
+            return new ResponseEntity<>(token, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
 }

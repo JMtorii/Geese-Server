@@ -30,7 +30,7 @@ public class LoginServiceImpl implements LoginService {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginService.class);
 
-    private static final String FACEBOOK_GRAPH_API_ME = "https://graph.facebook.com/me?access_token=";
+    private static final String FACEBOOK_GRAPH_API_ME = "https://graph.facebook.com/me?fields=name,email&access_token=";
 
     @Autowired
     @Qualifier("gooseServiceImpl")
@@ -73,12 +73,18 @@ public class LoginServiceImpl implements LoginService {
         try {
             String url = FACEBOOK_GRAPH_API_ME + token;
             RestTemplate restTemplate = new RestTemplate();
-            FacebookGraphResponse response = restTemplate.getForObject(url, FacebookGraphResponse.class);
-            String fbName = response.getName();
-            String fbEmail = response.getEmail();
+
+            String fbName, fbEmail;
+            try {
+                FacebookGraphResponse response = restTemplate.getForObject(url, FacebookGraphResponse.class);
+                fbName = response.getName();
+                fbEmail = response.getEmail();
+            } catch (Throwable ex) {
+                throw new RuntimeException("FB request failure");
+            }
 
             //TODO: Tighten access token failure cases? could get error:message from response for debug
-            if (fbName == "" || fbName == "") {
+            if (fbName == "" || fbEmail == "") {
                 return "";
             }
 
@@ -93,6 +99,12 @@ public class LoginServiceImpl implements LoginService {
                 newFBGoose.password(randomPassword);
 
                 gooseService.create(newFBGoose.build());
+                goose = gooseService.findByEmail(fbEmail);
+            }
+
+            //if goose is still null something happened during account creation and didn't throw
+            if (goose == null) {
+                throw new RuntimeException("goose creation from FB failed");
             }
 
             logger.info("Authenticated FB token for " + goose.getUsername());
