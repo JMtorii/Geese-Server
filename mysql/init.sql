@@ -28,6 +28,8 @@ CREATE TABLE IF NOT EXISTS Flock
 	score INT(16) NOT NULL, -- Up/down votes
 	createdTime DATETIME NOT NULL, -- Time of flock creation (NOTE: ALL TIMES ARE IN UTC-0)
 	expireTime DATETIME, -- Time the flock expires, null if never
+	members INT(16) DEFAULT 0 NOT NULL, -- Number of members joining the flock
+	imageURI VARCHAR(2048), -- The URI link to the S3 image
 	CONSTRAINT Flock_pk PRIMARY KEY (id),
 	CONSTRAINT Flock_Author_fk FOREIGN KEY (authorid) REFERENCES Goose (id)
 );
