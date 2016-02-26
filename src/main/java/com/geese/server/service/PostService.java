@@ -1,6 +1,7 @@
 package com.geese.server.service;
 
 import com.geese.server.domain.Post;
+import com.geese.server.domain.PostVote;
 
 import java.util.List;
 
@@ -28,6 +29,14 @@ public interface PostService {
      * @return      The information of the found Post entry.
      */
     Post findOne(int postId);
+
+    /**
+     * Finds the information of a single PostVote entry.
+     * @param gooseId    The id of the user of the requested PostVote entry.
+     * @param postId    The id of the post of the requested Post entry.
+     * @return      The information of the found Post entry.
+     */
+    PostVote findOne(int gooseId, int postId);
 
     /**
      * Saves a new Post entry to the database.

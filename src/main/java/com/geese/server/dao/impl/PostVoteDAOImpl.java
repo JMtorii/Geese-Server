@@ -127,16 +127,18 @@ public class PostVoteDAOImpl implements PostVoteDAO {
         );
     }
 
+    //TODO instead of overwriting old vote score for value = 0, why not just delete the PostVote
     @Override
     public int createOrOverwrite(final PostVote newPost) {
         String query = "INSERT INTO " + TABLE_NAME + " " +
                 "(gooseid, postid, value) " +
                 "VALUES (?, ?, ?) " +
-                "ON DUPLICATE KEY UPDATE value = VALUES(c)";
+                "ON DUPLICATE KEY UPDATE value = VALUES(value)";
 
         return jdbc.update(query,
                 newPost.getGooseId(),
                 newPost.getPostId(),
+                newPost.getValue(),
                 newPost.getValue()
         );
     }

@@ -1,9 +1,11 @@
 package com.geese.server.service.impl;
 
+import com.geese.server.GooseAuthentication;
 import com.geese.server.dao.CommentDAO;
 import com.geese.server.domain.Comment;
 import com.geese.server.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +24,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> findAll() {
-        return commentDAO.findAll();
+    public List<Comment> findAll(final int postId) {
+        return commentDAO.findAll(postId);
     }
 
     @Override
@@ -34,7 +36,15 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public int create(Comment saved) {
-        return commentDAO.create(saved);
+        GooseAuthentication auth = (GooseAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        int authorId = auth.getDetails().getId();
+        int postid = saved.getPostid();
+        String text = saved.getText();
+
+        Comment newComment = new Comment.Builder(postid, authorId, text)
+                .build();
+
+        return commentDAO.create(newComment);
     }
 
     @Override

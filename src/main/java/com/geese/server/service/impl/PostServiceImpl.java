@@ -39,6 +39,10 @@ public class PostServiceImpl implements PostService {
         return postDAO.findOne(postId);
     }
 
+    @Override
+    public PostVote findOne(int gooseId, int postId) {
+        return postVoteDAO.findOne(gooseId, postId);
+    }
 
     @Override
     public int create(Post saved) {
@@ -63,9 +67,13 @@ public class PostServiceImpl implements PostService {
         GooseAuthentication auth = (GooseAuthentication) SecurityContextHolder.getContext().getAuthentication();
         int authorId = auth.getDetails().getId();
 
-
+        int adjustedValue = value;
+        PostVote oldVote = postVoteDAO.findOne(authorId, postId);
+        if (oldVote != null) {
+            adjustedValue -= oldVote.getValue();
+        }
         Post post = postDAO.findOne(postId);
-        post = new Post.Builder(post).score(post.getScore()+value).build();
+        post = new Post.Builder(post).score(post.getScore()+adjustedValue).build();
         postDAO.update(post);
         PostVote postVote = new PostVote.Builder(authorId, postId).value(value).build();
         return postVoteDAO.createOrOverwrite(postVote);

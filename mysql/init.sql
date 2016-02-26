@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS EventMembership
 	CONSTRAINT EventMembership_Event_fk FOREIGN KEY (postid) REFERENCES Post (id)
 );
 
--- Table for comment of a comment
+-- Table for comment of a post
 CREATE TABLE IF NOT EXISTS Comment
 (
 	id INT(16) NOT NULL AUTO_INCREMENT,
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS Comment
 	text TEXT NOT NULL, -- Content of comment
 	score INT(16) NOT NULL, -- Up/down votes
 	createdTime DATETIME NOT NULL, -- Time of comment creation
-	expireTime DATETIME NOT NULL, -- Time of comment expiry
+	expireTime DATETIME, -- Time of comment expiry
 	CONSTRAINT Comment_pk PRIMARY KEY (id),
 	CONSTRAINT Comment_Post_fk FOREIGN KEY (commentid) REFERENCES Post (id),
 	CONSTRAINT Comment_Author_fk FOREIGN KEY (authorid) REFERENCES Goose (id)

@@ -17,9 +17,10 @@ public interface CommentDAO {
 
     /**
      * Finds all Comment entries from the database.
+     * @param postId    The id of posts to filter the comments by
      * @return  The information of all Comment entries that are found from the database.
      */
-    List<Comment> findAll();
+    List<Comment> findAll(final int postId);
 
     /**
      * Finds the information of a single Comment entry.

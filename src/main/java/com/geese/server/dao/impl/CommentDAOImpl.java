@@ -25,14 +25,15 @@ import java.util.Map;
 @Repository
 public class CommentDAOImpl implements CommentDAO {
     private static final Logger logger = LoggerFactory.getLogger(CommentDAOImpl.class);
+    private static final String TABLE_NAME = "Comment";
 
     @Autowired
     protected JdbcTemplate jdbc;
 
     @Override
-    public List<Comment> findAll() {
+    public List<Comment> findAll(final int postId) {
         String query =
-                "SELECT * FROM Comment;";
+                "SELECT * FROM " + TABLE_NAME + " WHERE postId = ?";
 
         List<Comment> comments = new ArrayList<Comment>();
 
@@ -42,7 +43,7 @@ public class CommentDAOImpl implements CommentDAO {
             for (Map row : rows) {
                 Comment comment = new Comment.Builder()
                         .id((int)row.get("id"))
-                        .commentid((int) row.get("commentid"))
+                        .postid((int) row.get("postid"))
                         .authorid((int) row.get("authorid"))
                         .text((String) row.get("text"))
                         .score((int) row.get("score"))
@@ -76,7 +77,7 @@ public class CommentDAOImpl implements CommentDAO {
                     } else {
                         return new Comment.Builder()
                                 .id(rs.getInt("id"))
-                                .commentid(rs.getInt("commentid"))
+                                .postid(rs.getInt("postid"))
                                 .authorid(rs.getInt("authorid"))
                                 .text(rs.getString("text"))
                                 .score(rs.getInt("score"))
@@ -96,12 +97,12 @@ public class CommentDAOImpl implements CommentDAO {
     public int update(final Comment updatedComment) {
         String query =
                 "UPDATE Comment " +
-                        "commentid = ?, authorid = ?, text = ?," +
+                        "postid = ?, authorid = ?, text = ?," +
                         "score = ?, createdTime = ?, expireTime=?" +
                         "WHERE id = ?";
 
         return jdbc.update(query,
-                updatedComment.getCommentid(),
+                updatedComment.getPostid(),
                 updatedComment.getAuthorid(),
                 updatedComment.getText(),
                 updatedComment.getScore(),

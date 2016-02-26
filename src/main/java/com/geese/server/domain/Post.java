@@ -77,6 +77,7 @@ public class Post {
     }
 
     public static class Builder {
+        //required
         private int id;
         private int flockid;
         private int authorid;
@@ -85,6 +86,8 @@ public class Post {
         private boolean pinned;
         private int score;
         private LocalDateTime createdTime;
+
+        //optional
         private LocalDateTime startTime;
         private LocalDateTime endTime;
 
@@ -92,6 +95,7 @@ public class Post {
 
         }
 
+        //create with defaults
         public Builder(int flockid, int authorid, String title, String description) {
             this.flockid = flockid;
             this.authorid = authorid;
