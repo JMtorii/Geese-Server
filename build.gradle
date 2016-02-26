@@ -94,6 +94,7 @@ dependencies {
     compile 'org.springframework.security:spring-security-web:4.0.3.RELEASE'
     compile 'org.springframework.security:spring-security-config:4.0.3.RELEASE'
     compile 'io.jsonwebtoken:jjwt:0.4'
+    compile 'c3p0:c3p0:0.9.1.2'
 
     testCompile("junit:junit:4.12")
     testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
