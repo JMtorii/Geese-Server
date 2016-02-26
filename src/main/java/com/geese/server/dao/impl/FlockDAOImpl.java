@@ -205,39 +205,6 @@ public class FlockDAOImpl implements FlockDAO {
                 ") AS B ON A.id = B.flockid " +
                 "ORDER BY A.id";
 
-//                "SELECT z.id, " +
-//                    "z.authorid, " +
-//                    "z.name, " +
-//                    "z.description, " +
-//                    "z.latitude, " +
-//                    "z.longitude, " +
-//                    "z.radius, " +
-//                    "z.score, " +
-//                    "z.createdTime, " +
-//                    "z.expireTime, " +
-//                    "p.distance_unit " +
-//                        "* DEGREES(ACOS(COS(RADIANS(p.latpoint)) " +
-//                        "* COS(RADIANS(z.latitude)) " +
-//                        "* COS(RADIANS(p.longpoint) - RADIANS(z.longitude)) " +
-//                        "+ SIN(RADIANS(p.latpoint)) " +
-//                        "* SIN(RADIANS(z.latitude)))) AS distance_in_km " +
-//                "FROM Flock AS z " +
-//                "JOIN ( " +
-//                    "SELECT ? AS latpoint, " +
-//                        "? AS longpoint, " +
-//                        "100.0 AS radius, " +
-//                        "111.045 AS distance_unit " +
-//                ") AS p ON 1=1 " +
-//                "WHERE z.latitude " +
-//                    "BETWEEN p.latpoint  - (p.radius / p.distance_unit) " +
-//                        "AND p.latpoint  + (p.radius / p.distance_unit) " +
-//                        "AND z.longitude " +
-//                    "BETWEEN p.longpoint - (p.radius / (p.distance_unit * COS(RADIANS(p.latpoint)))) " +
-//                        "AND p.longpoint + (p.radius / (p.distance_unit * COS(RADIANS(p.latpoint)))) " +
-//                "ORDER BY distance_in_km " +
-//                "LIMIT 15;";
-
-
         List<Flock> flocks = new ArrayList<>();
 
         try {
