@@ -239,7 +239,22 @@ public class FlockDAOImpl implements FlockDAO {
     @Override
     public List<Flock> getFavourited(int gooseId) {
         String sqlString =
-                "select * from Flock where id in (select flockid from FavouritedFlocks where gooseId = ?);";
+                "SELECT A.id AS id, " +
+                        "A.authorid AS authorid, " +
+                        "A.name AS name, " +
+                        "A.description AS description, " +
+                        "A.latitude AS latitude, " +
+                        "A.longitude AS longitude, " +
+                        "A.radius AS radius, " +
+                        "A.score AS score, " +
+                        "A.createdTime AS createdTime, " +
+                        "A.expireTime AS expireTime, " +
+                        "ifnull(B.members, 0) AS members " +
+                "FROM (" +
+                    "SELECT * FROM Flock WHERE id IN (SELECT flockid FROM FavouritedFlocks WHERE gooseId = ?)" +
+                ") AS A " +
+                "LEFT JOIN (SELECT flockid, COUNT(*) AS members FROM FavouritedFlocks GROUP BY flockid) AS B ON A.id = B.flockid " +
+                "ORDER BY A.id;";
 
         List<Flock> flocks = new ArrayList<>();
 
@@ -256,6 +271,7 @@ public class FlockDAOImpl implements FlockDAO {
                         .longitude((float) row.get("longitude"))
                         .radius((double) row.get("radius"))
                         .score((int) row.get("score"))
+                        .members(Integer.valueOf(((Long) row.get("members")).intValue()))
                         .build();
 
                 flocks.add(flock);
