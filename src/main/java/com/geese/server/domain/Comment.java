@@ -81,6 +81,14 @@ public class Comment {
             this.createdTime = LocalDateTime.now();
         }
 
+        public Builder(Comment comment) {
+            this.id = comment.id;
+            this.postid = comment.postid;
+            this.authorid = comment.authorid;
+            this.text = comment.text;
+            this.score = comment.score;
+            this.createdTime = comment.createdTime;
+        }
 
         public Builder id(int id) {
             this.id = id;

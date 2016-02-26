@@ -110,7 +110,7 @@ public class PostController {
      * @return          If the Post exists and the user has not voted, return HTTP status 202; otherwise 404.
      */
     @RequestMapping(value = "/vote/{postId}", method = RequestMethod.POST)
-    public ResponseEntity<Post> votePost(@PathVariable int postId, @RequestBody int value) {
+    public ResponseEntity<Post> votePost(@PathVariable int postId, @RequestParam int value) {
         if (value > 1 || value < -1) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -122,6 +122,19 @@ public class PostController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    /**
+     * Get user's votes on a Post
+     * @param postId   Identifier for the Post
+     * @return          If the Post exists and the user has not voted, return HTTP status 202; otherwise 404.
+     */
+    @RequestMapping(value = "/vote/{postId}", method = RequestMethod.GET)
+    public ResponseEntity<Integer> getVotePost(@PathVariable int postId) {
+
+        int value = postService.getVote(postId);
+
+        return new ResponseEntity<>(value, HttpStatus.ACCEPTED);
     }
 
 }

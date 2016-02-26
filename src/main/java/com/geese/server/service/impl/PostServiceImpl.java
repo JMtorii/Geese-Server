@@ -78,4 +78,17 @@ public class PostServiceImpl implements PostService {
         PostVote postVote = new PostVote.Builder(authorId, postId).value(value).build();
         return postVoteDAO.createOrOverwrite(postVote);
     }
+
+    @Override
+    public int getVote(int postId) {
+        GooseAuthentication auth = (GooseAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        int authorId = auth.getDetails().getId();
+
+        PostVote vote= postVoteDAO.findOne(authorId, postId);
+        if (vote != null) {
+            return 0;
+        }
+
+        return vote.getValue();
+    }
 }

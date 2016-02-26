@@ -61,4 +61,11 @@ public interface PostService {
      * @return              The number of updated Post objects.
      */
     int vote(int postId, int value);
+
+    /**
+     * gets the authenticated user's vote value on a Post
+     * @param postId       The postId of the requested Post entry.
+     * @return              The value of the user's vote, 0 if none.
+     */
+    int getVote(int postId);
 }

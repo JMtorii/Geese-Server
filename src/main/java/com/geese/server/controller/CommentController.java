@@ -115,4 +115,38 @@ public class CommentController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    /**
+     * Votes on a Comment
+     * @param commentId   Identifier for the Comment
+     * @param value    How much the vote counts for (-1, 0, or 1)
+     * @return          If the Comment exists and the user has not voted, return HTTP status 202; otherwise 404.
+     */
+    @RequestMapping(value = "/vote/{commentId}", method = RequestMethod.POST)
+    public ResponseEntity<Comment> voteComment(@PathVariable int commentId, @RequestParam int value) {
+        if (value > 1 || value < -1) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        int numUpdatedComment = commentService.vote(commentId, value);
+
+        if (numUpdatedComment > 0) {
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
+     * Get user's votes on a Post
+     * @param commentId   Identifier for the Comment
+     * @return          If the Comment exists and the user has not voted, return HTTP status 202; otherwise 404.
+     */
+    @RequestMapping(value = "/vote/{commentId}", method = RequestMethod.GET)
+    public ResponseEntity<Integer> getVoteComment(@PathVariable int commentId) {
+
+        int value = commentService.getVote(commentId);
+
+        return new ResponseEntity<>(value, HttpStatus.ACCEPTED);
+    }
 }

@@ -43,4 +43,21 @@ public interface CommentService {
      * @return              The number of updated Comment objects.
      */
     int update(String commentId, Comment updatedComment);
+
+    /**
+     * Votes on a Comment,
+     * updates an existing Comment entry in the database.
+     * creates a CommentVote entry as well
+     * @param commentId       The commentId of the requested Comment entry.
+     * @param value        Upvote, no vote, or downvote
+     * @return              The number of updated Comment objects.
+     */
+    int vote(int commentId, int value);
+
+    /**
+     * gets the authenticated user's vote value on a Comment
+     * @param commentId       The commentId of the requested Comment entry.
+     * @return              The value of the user's vote, 0 if none.
+     */
+    int getVote(int commentId);
 }

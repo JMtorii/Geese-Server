@@ -2,7 +2,9 @@ package com.geese.server.service.impl;
 
 import com.geese.server.GooseAuthentication;
 import com.geese.server.dao.CommentDAO;
+import com.geese.server.dao.CommentVoteDAO;
 import com.geese.server.domain.Comment;
+import com.geese.server.domain.CommentVote;
 import com.geese.server.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +19,9 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentDAO commentDAO;
+
+    @Autowired
+    private CommentVoteDAO commentVoteDAO;
 
     @Override
     public int delete(String commentId) {
@@ -51,5 +56,35 @@ public class CommentServiceImpl implements CommentService {
     // TODO: Why are we sending the commentId
     public int update(String commentId, Comment updatedComment) {
         return commentDAO.update(updatedComment);
+    }
+
+    @Override
+    public int vote(int commentId, int value) {
+        GooseAuthentication auth = (GooseAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        int authorId = auth.getDetails().getId();
+
+        int adjustedValue = value;
+        CommentVote oldVote = commentVoteDAO.findOne(authorId, commentId);
+        if (oldVote != null) {
+            adjustedValue -= oldVote.getValue();
+        }
+        Comment comment = commentDAO.findOne(commentId);
+        comment = new Comment.Builder(comment).score(comment.getScore()+adjustedValue).build();
+        commentDAO.update(comment);
+        CommentVote commentVote = new CommentVote.Builder(authorId, commentId).value(value).build();
+        return commentVoteDAO.createOrOverwrite(commentVote);
+    }
+
+    @Override
+    public int getVote(int commentId) {
+        GooseAuthentication auth = (GooseAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        int authorId = auth.getDetails().getId();
+
+        CommentVote vote= commentVoteDAO.findOne(authorId, commentId);
+        if (vote != null) {
+            return 0;
+        }
+
+        return vote.getValue();
     }
 }
