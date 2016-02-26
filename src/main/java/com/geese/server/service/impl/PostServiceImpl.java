@@ -85,7 +85,7 @@ public class PostServiceImpl implements PostService {
         int authorId = auth.getDetails().getId();
 
         PostVote vote= postVoteDAO.findOne(authorId, postId);
-        if (vote != null) {
+        if (vote == null) {
             return 0;
         }
 

@@ -81,7 +81,7 @@ public class CommentServiceImpl implements CommentService {
         int authorId = auth.getDetails().getId();
 
         CommentVote vote= commentVoteDAO.findOne(authorId, commentId);
-        if (vote != null) {
+        if (vote == null) {
             return 0;
         }
 
