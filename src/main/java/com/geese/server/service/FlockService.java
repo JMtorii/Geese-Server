@@ -63,4 +63,11 @@ public interface FlockService {
      * @return              Number of modified entries
      */
     int joinFlock(int flockId);
+
+    /**
+     * Unjoin a flock
+     * @param flockId       Unique identifier of flock
+     * @return              Number of modified entries
+     */
+    int unjoinFlock(int flockId);
 }

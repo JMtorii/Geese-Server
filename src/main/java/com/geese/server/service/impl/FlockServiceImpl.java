@@ -84,4 +84,11 @@ public class FlockServiceImpl implements FlockService {
         int gooseId = auth.getDetails().getId();
         return flockDAO.joinFlock(gooseId, flockId);
     }
+
+    @Override
+    public int unjoinFlock(int flockId) {
+        GooseAuthentication auth = (GooseAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        int gooseId = auth.getDetails().getId();
+        return flockDAO.unjoinFlock(gooseId, flockId);
+    }
 }

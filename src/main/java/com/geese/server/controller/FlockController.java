@@ -156,4 +156,19 @@ public class FlockController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    /**
+     * Unjoin a flock
+     * @return          If successfully unjoined, return HTTP status 200; otherwise 400.
+     */
+    @RequestMapping(value = "/{flockId}/unjoinFlock", method = RequestMethod.POST)
+    public ResponseEntity<?> unjoinFlock(@PathVariable int flockId) {
+        int numModified = flockService.unjoinFlock(flockId);
+
+        if (numModified > 0) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

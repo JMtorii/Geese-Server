@@ -64,4 +64,12 @@ public interface FlockDAO {
      * @return          The number of modified Flocks
      */
     int joinFlock(int gooseId, int flockId);
+
+    /**
+     * Unjoin a flock
+     * @param gooseId   Unique identifier of Goose
+     * @param flockId   Unique identifier of Flock
+     * @return          The number of modified Flocks
+     */
+    int unjoinFlock(int gooseId, int flockId);
 }
