@@ -248,4 +248,27 @@ public class FlockDAOImpl implements FlockDAO {
             return flocks;
         }
     }
+
+    @Override
+    public int joinFlock(int gooseId, int flockId) {
+        String query = "INSERT INTO FavouritedFlocks " +
+                "(gooseId, flockId)" +
+                "VALUES (?, ?)";
+
+        return jdbc.update(query,
+                gooseId,
+                flockId
+        );
+    }
+
+    @Override
+    public int unjoinFlock(int gooseId, int flockId) {
+        String query = "DELETE FROM FavouritedFlocks " +
+                "WHERE gooseId = ? AND flockId = ?";
+
+        return jdbc.update(query,
+                gooseId,
+                flockId
+        );
+    }
 }

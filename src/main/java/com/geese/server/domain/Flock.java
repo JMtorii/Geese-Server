@@ -20,9 +20,7 @@ public class Flock {
     private int score;
     private LocalDateTime createdTime;
     private LocalDateTime expireTime;
-
-    @JsonIgnore
-    private boolean favourited = true;
+    private boolean favourited = false;
 
     public Flock() {}
 

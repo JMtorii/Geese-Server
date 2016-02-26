@@ -56,4 +56,20 @@ public interface FlockDAO {
      * @return          A list of favourited flocks
      */
     List<Flock> getFavourited(int gooseId);
+
+    /**
+     * Join a flock
+     * @param gooseId   Unique identifier of Goose
+     * @param flockId   Unique identifier of Flock
+     * @return          The number of modified Flocks
+     */
+    int joinFlock(int gooseId, int flockId);
+
+    /**
+     * Unjoin a flock
+     * @param gooseId   Unique identifier of Goose
+     * @param flockId   Unique identifier of Flock
+     * @return          The number of modified Flocks
+     */
+    int unjoinFlock(int gooseId, int flockId);
 }
