@@ -121,10 +121,15 @@ public class CommentDAOImpl implements CommentDAO {
     @Override
     public int create(final Comment created) {
         String query = "INSERT INTO Comment " +
-                "(authorid, name, description, latitude, longitude, radius, score, createdTime, expireTime)" +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    "(postid, authorid, text, score, createdTime)" +
+                "VALUES (?, ?, ?, ?, ?)";
 
         return jdbc.update(query,
-                created.getAuthorid());
+                created.getPostid(),
+                created.getAuthorid(),
+                created.getText(),
+                created.getScore(),
+                created.getCreatedTime()
+        );
     }
 }
