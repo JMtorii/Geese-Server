@@ -1,6 +1,5 @@
 package com.geese.server.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.time.LocalDateTime;
@@ -21,6 +20,7 @@ public class Flock {
     private LocalDateTime createdTime;
     private LocalDateTime expireTime;
     private boolean favourited = false;
+    private int members = 0;
 
     public Flock() {}
 
@@ -35,6 +35,7 @@ public class Flock {
         this.score = builder.score;
         this.createdTime = builder.createdTime;
         this.expireTime = builder.expireTime;
+        this.members = builder.members;
     }
 
     public int getId() {
@@ -125,6 +126,14 @@ public class Flock {
         this.favourited = favourited;
     }
 
+    public int getMembers() {
+        return members;
+    }
+
+    public void setMembers(int members) {
+        this.members = members;
+    }
+
     public static class Builder {
         private int id;
         private int authorid;
@@ -136,6 +145,7 @@ public class Flock {
         private int score;
         private LocalDateTime createdTime;
         private LocalDateTime expireTime;
+        private int members;
 
         public Builder() {}
 
@@ -186,6 +196,11 @@ public class Flock {
 
         public Builder expireTime(LocalDateTime expireTime) {
             this.expireTime = expireTime;
+            return this;
+        }
+
+        public Builder members(int members) {
+            this.members = members;
             return this;
         }
 

@@ -154,37 +154,88 @@ public class FlockDAOImpl implements FlockDAO {
 
         // 111.045 for km
         String sqlString =
-                "SELECT z.id, " +
-                    "z.authorid, " +
-                    "z.name, " +
-                    "z.description, " +
-                    "z.latitude, " +
-                    "z.longitude, " +
-                    "z.radius, " +
-                    "z.score, " +
-                    "z.createdTime, " +
-                    "z.expireTime, " +
-                    "p.distance_unit " +
-                        "* DEGREES(ACOS(COS(RADIANS(p.latpoint)) " +
-                        "* COS(RADIANS(z.latitude)) " +
-                        "* COS(RADIANS(p.longpoint) - RADIANS(z.longitude)) " +
-                        "+ SIN(RADIANS(p.latpoint)) " +
-                        "* SIN(RADIANS(z.latitude)))) AS distance_in_km " +
-                "FROM Flock AS z " +
-                "JOIN ( " +
-                    "SELECT ? AS latpoint, " +
-                        "? AS longpoint, " +
-                        "100.0 AS radius, " +
-                        "111.045 AS distance_unit " +
-                ") AS p ON 1=1 " +
-                "WHERE z.latitude " +
-                    "BETWEEN p.latpoint  - (p.radius / p.distance_unit) " +
-                        "AND p.latpoint  + (p.radius / p.distance_unit) " +
-                        "AND z.longitude " +
-                    "BETWEEN p.longpoint - (p.radius / (p.distance_unit * COS(RADIANS(p.latpoint)))) " +
-                        "AND p.longpoint + (p.radius / (p.distance_unit * COS(RADIANS(p.latpoint)))) " +
-                "ORDER BY distance_in_km " +
-                "LIMIT 15;";
+                "SELECT A.id AS id, " +
+                        "A.authorid AS authorid, " +
+                        "A.name AS name, " +
+                        "A.description AS description, " +
+                        "A.latitude AS latitude, " +
+                        "A.longitude AS longitude, " +
+                        "A.radius AS radius, " +
+                        "A.score AS score, " +
+                        "A.createdTime AS createdTime, " +
+                        "A.expireTime AS expireTime, " +
+                        "ifnull(B.members, 0) AS members " +
+                "FROM (" +
+                        "SELECT z.id, " +
+                            "z.authorid, " +
+                            "z.name, " +
+                            "z.description, " +
+                            "z.latitude, " +
+                            "z.longitude, " +
+                            "z.radius, " +
+                            "z.score, " +
+                            "z.createdTime, " +
+                            "z.expireTime, " +
+                            "p.distance_unit " +
+                                "* DEGREES(ACOS(COS(RADIANS(p.latpoint)) " +
+                                "* COS(RADIANS(z.latitude)) " +
+                                "* COS(RADIANS(p.longpoint) - RADIANS(z.longitude)) " +
+                                "+ SIN(RADIANS(p.latpoint)) " +
+                                "* SIN(RADIANS(z.latitude)))) AS distance_in_km " +
+                        "FROM Flock AS z " +
+                        "JOIN ( " +
+                            "SELECT ? AS latpoint, " +
+                                "? AS longpoint, " +
+                                "100.0 AS radius, " +
+                                "111.045 AS distance_unit " +
+                            ") AS p ON 1=1 " +
+                        "WHERE z.latitude " +
+                            "BETWEEN p.latpoint  - (p.radius / p.distance_unit) " +
+                                "AND p.latpoint  + (p.radius / p.distance_unit) " +
+                                "AND z.longitude " +
+                            "BETWEEN p.longpoint - (p.radius / (p.distance_unit * COS(RADIANS(p.latpoint)))) " +
+                                "AND p.longpoint + (p.radius / (p.distance_unit * COS(RADIANS(p.latpoint)))) " +
+                        "ORDER BY distance_in_km " +
+                        "LIMIT 15" +
+                ") AS A " +
+                "LEFT JOIN (" +
+                    "SELECT flockid, count(*) as members " +
+                    "FROM FavouritedFlocks " +
+                    "GROUP BY flockid" +
+                ") AS B ON A.id = B.flockid " +
+                "ORDER BY A.id";
+
+//                "SELECT z.id, " +
+//                    "z.authorid, " +
+//                    "z.name, " +
+//                    "z.description, " +
+//                    "z.latitude, " +
+//                    "z.longitude, " +
+//                    "z.radius, " +
+//                    "z.score, " +
+//                    "z.createdTime, " +
+//                    "z.expireTime, " +
+//                    "p.distance_unit " +
+//                        "* DEGREES(ACOS(COS(RADIANS(p.latpoint)) " +
+//                        "* COS(RADIANS(z.latitude)) " +
+//                        "* COS(RADIANS(p.longpoint) - RADIANS(z.longitude)) " +
+//                        "+ SIN(RADIANS(p.latpoint)) " +
+//                        "* SIN(RADIANS(z.latitude)))) AS distance_in_km " +
+//                "FROM Flock AS z " +
+//                "JOIN ( " +
+//                    "SELECT ? AS latpoint, " +
+//                        "? AS longpoint, " +
+//                        "100.0 AS radius, " +
+//                        "111.045 AS distance_unit " +
+//                ") AS p ON 1=1 " +
+//                "WHERE z.latitude " +
+//                    "BETWEEN p.latpoint  - (p.radius / p.distance_unit) " +
+//                        "AND p.latpoint  + (p.radius / p.distance_unit) " +
+//                        "AND z.longitude " +
+//                    "BETWEEN p.longpoint - (p.radius / (p.distance_unit * COS(RADIANS(p.latpoint)))) " +
+//                        "AND p.longpoint + (p.radius / (p.distance_unit * COS(RADIANS(p.latpoint)))) " +
+//                "ORDER BY distance_in_km " +
+//                "LIMIT 15;";
 
 
         List<Flock> flocks = new ArrayList<>();
@@ -204,6 +255,7 @@ public class FlockDAOImpl implements FlockDAO {
                         .score((int) row.get("score"))
                         .createdTime(TimeHelper.fromDB((Timestamp) row.get("createdTime")))
                         .expireTime(TimeHelper.fromDB((Timestamp) row.get("expiredTime")))
+                        .members(Integer.valueOf(((Long) row.get("members")).intValue()))
                         .build();
 
                 flocks.add(flock);
