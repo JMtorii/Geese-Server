@@ -33,12 +33,12 @@ public class CommentDAOImpl implements CommentDAO {
     @Override
     public List<Comment> findAll(final int postId) {
         String query =
-                "SELECT * FROM " + TABLE_NAME + " WHERE postId = ?";
+                "SELECT * FROM " + TABLE_NAME + " WHERE postid = ?";
 
         List<Comment> comments = new ArrayList<Comment>();
 
         try {
-            List<Map<String, Object>> rows = jdbc.queryForList(query);
+            List<Map<String, Object>> rows = jdbc.queryForList(query, new Object[]{postId});
 
             for (Map row : rows) {
                 Comment comment = new Comment.Builder()
@@ -121,7 +121,7 @@ public class CommentDAOImpl implements CommentDAO {
     @Override
     public int create(final Comment created) {
         String query = "INSERT INTO Comment " +
-                    "(postid, authorid, text, score, createdTime)" +
+                    "(postid, authorid, text, score, createdTime, expireTime)" +
                 "VALUES (?, ?, ?, ?, ?)";
 
         return jdbc.update(query,
