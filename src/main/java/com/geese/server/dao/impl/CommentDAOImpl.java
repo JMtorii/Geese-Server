@@ -38,7 +38,7 @@ public class CommentDAOImpl implements CommentDAO {
         List<Comment> comments = new ArrayList<Comment>();
 
         try {
-            List<Map<String, Object>> rows = jdbc.queryForList(query, new Object[]{postId});
+            List<Map<String, Object>> rows = jdbc.queryForList(query, postId);
 
             for (Map row : rows) {
                 Comment comment = new Comment.Builder()
