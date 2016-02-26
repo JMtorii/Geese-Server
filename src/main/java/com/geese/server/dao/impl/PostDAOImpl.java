@@ -80,6 +80,7 @@ public class PostDAOImpl implements PostDAO {
                     } else {
                         return new Post.Builder()
                                 .id(rs.getInt("id"))
+                                .flockid(rs.getInt("flockid"))
                                 .authorid(rs.getInt("authorid"))
                                 .title(rs.getString("title"))
                                 .description(rs.getString("description"))
@@ -113,9 +114,9 @@ public class PostDAOImpl implements PostDAO {
                 updatedPost.getDescription(),
                 updatedPost.getPinned(),
                 updatedPost.getScore(),
+                TimeHelper.toDB(updatedPost.getCreatedTime()),
                 TimeHelper.toDB(updatedPost.getStartTime()),
                 TimeHelper.toDB(updatedPost.getEndTime()),
-                TimeHelper.toDB(updatedPost.getCreatedTime()),
                 updatedPost.getId()
         );
     }

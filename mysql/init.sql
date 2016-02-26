@@ -28,6 +28,8 @@ CREATE TABLE IF NOT EXISTS Flock
 	score INT(16) NOT NULL, -- Up/down votes
 	createdTime DATETIME NOT NULL, -- Time of flock creation (NOTE: ALL TIMES ARE IN UTC-0)
 	expireTime DATETIME, -- Time the flock expires, null if never
+	members INT(16) DEFAULT 0 NOT NULL, -- Number of members joining the flock
+	imageURI VARCHAR(2048), -- The URI link to the S3 image
 	CONSTRAINT Flock_pk PRIMARY KEY (id),
 	CONSTRAINT Flock_Author_fk FOREIGN KEY (authorid) REFERENCES Goose (id)
 );
@@ -68,7 +70,7 @@ CREATE TABLE IF NOT EXISTS EventMembership
 	CONSTRAINT EventMembership_Event_fk FOREIGN KEY (postid) REFERENCES Post (id)
 );
 
--- Table for comment of a comment
+-- Table for comment of a post
 CREATE TABLE IF NOT EXISTS Comment
 (
 	id INT(16) NOT NULL AUTO_INCREMENT,
@@ -77,9 +79,9 @@ CREATE TABLE IF NOT EXISTS Comment
 	text TEXT NOT NULL, -- Content of comment
 	score INT(16) NOT NULL, -- Up/down votes
 	createdTime DATETIME NOT NULL, -- Time of comment creation
-	expireTime DATETIME NOT NULL, -- Time of comment expiry
+	expireTime DATETIME, -- Time of comment expiry
 	CONSTRAINT Comment_pk PRIMARY KEY (id),
-	CONSTRAINT Comment_Post_fk FOREIGN KEY (commentid) REFERENCES Post (id),
+	CONSTRAINT Comment_Post_fk FOREIGN KEY (postid) REFERENCES Post (id),
 	CONSTRAINT Comment_Author_fk FOREIGN KEY (authorid) REFERENCES Goose (id)
 );
 
@@ -92,7 +94,7 @@ CREATE TABLE IF NOT EXISTS FlockVote
 	CONSTRAINT FlockVote_pk PRIMARY KEY (gooseid, flockid),	
 	CONSTRAINT FlockVote_Goose_fk FOREIGN KEY (gooseid) REFERENCES Goose (id),
 	CONSTRAINT FlockVote_Flock_fk FOREIGN KEY (flockid) REFERENCES Flock (id)
-)
+);
 
 -- Table for Post votes
 CREATE TABLE IF NOT EXISTS PostVote

@@ -109,9 +109,9 @@ public class PostController {
      * @param value    How much the vote counts for (-1, 0, or 1)
      * @return          If the Post exists and the user has not voted, return HTTP status 202; otherwise 404.
      */
-    @RequestMapping(value = "/{postId}/vote{", method = RequestMethod.POST)
+    @RequestMapping(value = "/vote/{postId}", method = RequestMethod.POST)
     public ResponseEntity<Post> votePost(@PathVariable int postId, @RequestBody int value) {
-        if (value > 1 || value < 1) {
+        if (value > 1 || value < -1) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 

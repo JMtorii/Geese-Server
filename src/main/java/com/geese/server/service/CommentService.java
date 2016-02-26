@@ -17,9 +17,10 @@ public interface CommentService {
 
     /**
      * Finds all Comment entries from the database.
+     * @param postId    The id of the post to find all comments under
      * @return  The information of all Comment entries that are found from the database.
      */
-    List<Comment> findAll();
+    List<Comment> findAll(int postId);
 
     /**
      * Finds the information of a single Comment entry.

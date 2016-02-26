@@ -56,8 +56,8 @@ public class CommentController {
      * @return      If comments exist, return list of Geese and HTTP status 302; otherwise, 404
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<List<Comment>> getAllComments() {
-        List<Comment> geese = commentService.findAll();
+    public ResponseEntity<List<Comment>> getAllComments(@RequestParam int postId) {
+        List<Comment> geese = commentService.findAll(postId);
 
         if (geese != null) {
             return new ResponseEntity<>(geese, HttpStatus.OK);

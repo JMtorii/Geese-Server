@@ -44,8 +44,8 @@ public class GooseDAOImpl implements GooseDAO {
                         (String) row.get("email"),
                         (boolean) row.get("verified")
                 )
-                        .password((String) row.get("password"))
-                        .salt((String) row.get("salt"))
+                        //.password((String) row.get("password"))
+                        //.salt((String) row.get("salt"))
                         .build();
 
                 geese.add(goose);
@@ -78,8 +78,8 @@ public class GooseDAOImpl implements GooseDAO {
                                 rs.getString("email"),
                                 rs.getBoolean("verified")
                         )
-                                .password(rs.getString("password"))
-                                .salt(rs.getString("salt"))
+                                //.password(rs.getString("password"))
+                                //.salt(rs.getString("salt"))
                                 .build();
                     }
                 }
