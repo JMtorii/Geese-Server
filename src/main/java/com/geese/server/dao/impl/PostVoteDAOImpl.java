@@ -138,7 +138,6 @@ public class PostVoteDAOImpl implements PostVoteDAO {
         return jdbc.update(query,
                 newPost.getGooseId(),
                 newPost.getPostId(),
-                newPost.getValue(),
                 newPost.getValue()
         );
     }

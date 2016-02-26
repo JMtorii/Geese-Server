@@ -111,7 +111,7 @@ public class PostController {
      */
     @RequestMapping(value = "/vote/{postId}", method = RequestMethod.POST)
     public ResponseEntity<Post> votePost(@PathVariable int postId, @RequestBody int value) {
-        if (value > 1 || value < 1) {
+        if (value > 1 || value < -1) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
