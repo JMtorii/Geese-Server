@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS Comment
 	createdTime DATETIME NOT NULL, -- Time of comment creation
 	expireTime DATETIME, -- Time of comment expiry
 	CONSTRAINT Comment_pk PRIMARY KEY (id),
-	CONSTRAINT Comment_Post_fk FOREIGN KEY (commentid) REFERENCES Post (id),
+	CONSTRAINT Comment_Post_fk FOREIGN KEY (postid) REFERENCES Post (id),
 	CONSTRAINT Comment_Author_fk FOREIGN KEY (authorid) REFERENCES Goose (id)
 );
 
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS FlockVote
 	CONSTRAINT FlockVote_pk PRIMARY KEY (gooseid, flockid),	
 	CONSTRAINT FlockVote_Goose_fk FOREIGN KEY (gooseid) REFERENCES Goose (id),
 	CONSTRAINT FlockVote_Flock_fk FOREIGN KEY (flockid) REFERENCES Flock (id)
-)
+);
 
 -- Table for Post votes
 CREATE TABLE IF NOT EXISTS PostVote
