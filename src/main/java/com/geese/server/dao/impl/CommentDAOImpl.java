@@ -98,7 +98,7 @@ public class CommentDAOImpl implements CommentDAO {
         String query =
                 "UPDATE Comment " +
                         "postid = ?, authorid = ?, text = ?," +
-                        "score = ?, createdTime = ?, expireTime=?" +
+                        "score = ?, createdTime = ? " +
                         "WHERE id = ?";
 
         return jdbc.update(query,
