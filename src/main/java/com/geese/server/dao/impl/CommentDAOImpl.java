@@ -97,8 +97,8 @@ public class CommentDAOImpl implements CommentDAO {
     public int update(final Comment updatedComment) {
         String query =
                 "UPDATE Comment " +
-                        "postid = ?, authorid = ?, text = ?," +
-                        "score = ?, createdTime = ? " +
+                        "SET postid = ?, authorid = ?, `text` = ?," +
+                        "score = ?, createdTime = ?, expireTime = ? " +
                         "WHERE id = ?";
 
         return jdbc.update(query,
@@ -106,7 +106,10 @@ public class CommentDAOImpl implements CommentDAO {
                 updatedComment.getAuthorid(),
                 updatedComment.getText(),
                 updatedComment.getScore(),
-                TimeHelper.toDB(updatedComment.getCreatedTime()));
+                TimeHelper.toDB(updatedComment.getCreatedTime()),
+                TimeHelper.toDB(updatedComment.getExpireTime()),
+                updatedComment.getId()
+        );
     }
 
     @Override
@@ -129,7 +132,8 @@ public class CommentDAOImpl implements CommentDAO {
                 created.getAuthorid(),
                 created.getText(),
                 created.getScore(),
-                created.getCreatedTime()
+                created.getCreatedTime(),
+                created.getExpireTime()
         );
     }
 }
