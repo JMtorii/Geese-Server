@@ -3,6 +3,7 @@ package com.geese.server.dao.impl;
 import com.geese.server.dao.PostDAO;
 import com.geese.server.dao.util.TimeHelper;
 import com.geese.server.domain.Post;
+import com.geese.server.domain.PostVote;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,30 +32,57 @@ public class PostDAOImpl implements PostDAO {
     protected JdbcTemplate jdbc;
 
     @Override
-    public List<Post> findAll(final int flockid) {
+    public List<Post> findAll(final int gooseid, final int flockid) {
         String query =
-                "SELECT * FROM " + TABLE_NAME + " WHERE flockid = ?";
+                "SELECT * FROM " +
+                "(SELECT * FROM " + TABLE_NAME + " AS a LEFT JOIN (SELECT * FROM " + TABLE_NAME+"Vote WHERE gooseid = ?) AS b " +
+                        "ON a.id = b.postid " +
+                        "WHERE flockid = ?) AS p LEFT JOIN " +
+                "(SELECT postid, Count(id) AS commentCount FROM Comment GROUP BY postid) AS c " +
+                "ON c.postid = p.id";
 
         List<Post> posts = new ArrayList<Post>();
 
         try {
-            List<Map<String, Object>> rows = jdbc.queryForList(query, flockid);
+            List<Map<String, Object>> rows = jdbc.queryForList(query, gooseid, flockid);
 
             for (Map row : rows) {
-                Post post = new Post.Builder()
-                        .id((int)row.get("id"))
+                Post.Builder postBuilder = new Post.Builder()
+                        .id((int) row.get("id"))
                         .flockid((int) row.get("flockid"))
                         .authorid((int) row.get("authorid"))
                         .title((String) row.get("title"))
                         .description((String) row.get("description"))
                         .pinned((boolean) row.get("pinned"))
                         .score((int) row.get("score"))
-                        .createdTime(TimeHelper.fromDB((Timestamp)row.get("createdTime")))
-                        .startTime(TimeHelper.fromDB((Timestamp)row.get("startTime")))
-                        .endTime(TimeHelper.fromDB((Timestamp)row.get("endTime")))
-                        .build();
+                        .createdTime(TimeHelper.fromDB((Timestamp) row.get("createdTime")))
+                        .startTime(TimeHelper.fromDB((Timestamp) row.get("startTime")))
+                        .endTime(TimeHelper.fromDB((Timestamp) row.get("endTime")));
 
-                posts.add(post);
+                if (row.get("commentCount") != null) {
+                    postBuilder.commentCount((long) row.get("commentCount"));
+                } else {
+                    postBuilder.commentCount(0);
+                }
+
+                if (row.get("gooseid") != null && row.get("postid") != null && row.get("value") != null) {
+                    postBuilder.userVote(new PostVote.Builder()
+                        .gooseid((int) row.get("gooseid"))
+                        .postid((int) row.get("postid"))
+                        .value((int) row.get("value"))
+                        .build()
+                    );
+                } else {
+                    postBuilder.userVote(new PostVote.Builder()
+                        .gooseid(gooseid)
+                        .postid((int)row.get("id"))
+                        .value(0)
+                        .build()
+                );
+            }
+
+
+                posts.add(postBuilder.build());
             }
 
             return posts;

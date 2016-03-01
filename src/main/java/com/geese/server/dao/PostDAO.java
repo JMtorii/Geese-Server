@@ -17,10 +17,11 @@ public interface PostDAO {
 
     /**
      * Finds all Post entries from the database.
+     * @param gooseId   The id of the goose to retrieve votes for
      * @param flockId   The id of the flock to match (if any)
      * @return  The information of all Post entries that are found from the database.
      */
-    List<Post> findAll(final int flockId);
+    List<Post> findAll(final int gooseId, final int flockId);
 
     /**
      * Finds the information of a single Post entry.

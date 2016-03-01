@@ -30,7 +30,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> findAll(final int postId) {
-        return commentDAO.findAll(postId);
+        GooseAuthentication auth = (GooseAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        int gooseId = auth.getDetails().getId();
+        return commentDAO.findAll(gooseId, postId);
     }
 
     @Override

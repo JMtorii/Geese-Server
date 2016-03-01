@@ -17,10 +17,11 @@ public interface CommentDAO {
 
     /**
      * Finds all Comment entries from the database.
+     * @param gooseId    The id of goose to return a vote for if any
      * @param postId    The id of posts to filter the comments by
      * @return  The information of all Comment entries that are found from the database.
      */
-    List<Comment> findAll(final int postId);
+    List<Comment> findAll(final int gooseId, final int postId);
 
     /**
      * Finds the information of a single Comment entry.

@@ -14,6 +14,9 @@ public class Comment {
     private LocalDateTime createdTime;
     private LocalDateTime expireTime;
 
+    // Response Params
+    CommentVote userVote;
+
     public Comment() {}
 
     private Comment(Builder builder) {
@@ -24,6 +27,7 @@ public class Comment {
         this.score = builder.score;
         this.createdTime = builder.createdTime;
         this.expireTime = builder.expireTime;
+        this.userVote = builder.userVote;
     }
 
     static Builder getBuilder() {
@@ -58,6 +62,10 @@ public class Comment {
         return expireTime;
     }
 
+    public CommentVote getUserVote() {
+        return userVote;
+    }
+
     public static class Builder {
         //required
         private int id;
@@ -69,6 +77,9 @@ public class Comment {
 
         //optional
         private LocalDateTime expireTime;
+
+        //response
+        private CommentVote userVote;
 
         public Builder() {}
 
@@ -88,6 +99,7 @@ public class Comment {
             this.text = comment.text;
             this.score = comment.score;
             this.createdTime = comment.createdTime;
+            this.userVote = comment.userVote;
         }
 
         public Builder id(int id) {
@@ -122,6 +134,11 @@ public class Comment {
 
         public Builder expireTime(LocalDateTime expireTime) {
             this.expireTime = expireTime;
+            return this;
+        }
+
+        public Builder userVote(CommentVote userVote) {
+            this.userVote = userVote;
             return this;
         }
 

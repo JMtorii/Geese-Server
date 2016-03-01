@@ -16,6 +16,8 @@ public class Post {
     private LocalDateTime createdTime;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private PostVote userVote;
+    private long commentCount;
 
     public Post() {}
 
@@ -30,6 +32,8 @@ public class Post {
         this.createdTime = builder.createdTime;
         this.startTime = builder.startTime;
         this.endTime = builder.endTime;
+        this.userVote = builder.userVote;
+        this.commentCount = builder.commentCount;
     }
 
     static Builder getBuilder() {
@@ -76,6 +80,14 @@ public class Post {
         return startTime;
     }
 
+    public PostVote getUserVote() {
+        return userVote;
+    }
+
+    public long getCommentCount() {
+        return commentCount;
+    }
+
     public static class Builder {
         //required
         private int id;
@@ -90,6 +102,10 @@ public class Post {
         //optional
         private LocalDateTime startTime;
         private LocalDateTime endTime;
+
+        //response params
+        private PostVote userVote;
+        private long commentCount;
 
         public Builder() {
 
@@ -117,6 +133,8 @@ public class Post {
             this.createdTime = post.createdTime;
             this.startTime = post.startTime;
             this.endTime = post.endTime;
+            this.userVote = post.userVote;
+            this.commentCount = post.commentCount;
         }
 
         public Builder id(int id) {
@@ -166,6 +184,16 @@ public class Post {
 
         public Builder endTime(LocalDateTime endTime) {
             this.endTime = endTime;
+            return this;
+        }
+
+        public Builder userVote(PostVote userVote) {
+            this.userVote = userVote;
+            return this;
+        }
+
+        public Builder commentCount(long commentCount) {
+            this.commentCount = commentCount;
             return this;
         }
 

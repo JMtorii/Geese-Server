@@ -3,6 +3,7 @@ package com.geese.server.dao.impl;
 import com.geese.server.dao.CommentDAO;
 import com.geese.server.dao.util.TimeHelper;
 import com.geese.server.domain.Comment;
+import com.geese.server.domain.CommentVote;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,27 +32,44 @@ public class CommentDAOImpl implements CommentDAO {
     protected JdbcTemplate jdbc;
 
     @Override
-    public List<Comment> findAll(final int postId) {
+    public List<Comment> findAll(final int gooseid, final int postId) {
         String query =
-                "SELECT * FROM " + TABLE_NAME + " WHERE postid = ?";
+                "SELECT * FROM " + TABLE_NAME + " AS a LEFT JOIN (SELECT * FROM " + TABLE_NAME + "Vote WHERE gooseid = ?) AS b " +
+                "ON a.id = b.commentid " +
+                "WHERE postid = ?";
 
         List<Comment> comments = new ArrayList<Comment>();
 
         try {
-            List<Map<String, Object>> rows = jdbc.queryForList(query, postId);
+            List<Map<String, Object>> rows = jdbc.queryForList(query, gooseid, postId);
 
             for (Map row : rows) {
-                Comment comment = new Comment.Builder()
+                Comment.Builder commentBuilder = new Comment.Builder()
                         .id((int)row.get("id"))
                         .postid((int) row.get("postid"))
                         .authorid((int) row.get("authorid"))
                         .text((String) row.get("text"))
                         .score((int) row.get("score"))
                         .createdTime(TimeHelper.fromDB((Timestamp)row.get("createdTime")))
-                        .createdTime(TimeHelper.fromDB((Timestamp)row.get("expireTime")))
-                        .build();
+                        .createdTime(TimeHelper.fromDB((Timestamp)row.get("expireTime")));
 
-                comments.add(comment);
+                if (row.get("gooseid") != null && row.get("commentid") != null && row.get("value") != null) {
+                    commentBuilder.userVote(new CommentVote.Builder()
+                        .gooseid((int) row.get("gooseid"))
+                        .commentid((int) row.get("commentid"))
+                        .value((int) row.get("value"))
+                        .build()
+                    );
+                } else {
+                    commentBuilder.userVote(new CommentVote.Builder()
+                        .gooseid(gooseid)
+                        .commentid((int)row.get("id"))
+                        .value(0)
+                        .build()
+                    );
+                }
+
+                comments.add(commentBuilder.build());
             }
 
             return comments;
@@ -124,16 +142,16 @@ public class CommentDAOImpl implements CommentDAO {
     @Override
     public int create(final Comment created) {
         String query = "INSERT INTO Comment " +
-                    "(postid, authorid, text, score, createdTime, expireTime)" +
-                "VALUES (?, ?, ?, ?, ?)";
+                    "(postid, authorid, `text`, score, createdTime, expireTime)" +
+                "VALUES (?, ?, ?, ?, ?, ?)";
 
         return jdbc.update(query,
                 created.getPostid(),
                 created.getAuthorid(),
                 created.getText(),
                 created.getScore(),
-                created.getCreatedTime(),
-                created.getExpireTime()
+                TimeHelper.toDB(created.getCreatedTime()),
+                TimeHelper.toDB(created.getExpireTime())
         );
     }
 }

@@ -31,7 +31,10 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> findAll(int flockId) {
-        return postDAO.findAll(flockId);
+        GooseAuthentication auth = (GooseAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        int gooseId = auth.getDetails().getId();
+
+        return postDAO.findAll(gooseId, flockId);
     }
 
     @Override
