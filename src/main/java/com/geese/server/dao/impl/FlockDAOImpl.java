@@ -53,6 +53,7 @@ public class FlockDAOImpl implements FlockDAO {
                         .score((int) row.get("score"))
                         .createdTime(TimeHelper.fromDB((Timestamp) row.get("createdTime")))
                         .expireTime(TimeHelper.fromDB((Timestamp) row.get("expireTire")))
+                        .imageUri((String) row.get("imageURI"))
                         .build();
 
                 flocks.add(flock);
@@ -90,6 +91,7 @@ public class FlockDAOImpl implements FlockDAO {
                                 .score(rs.getInt("score"))
                                 .createdTime(TimeHelper.fromDB(rs.getTimestamp("createdTime")))
                                 .expireTime(TimeHelper.fromDB(rs.getTimestamp("expireTime")))
+                                .imageUri(rs.getString("imageURI"))
                                 .build();
                     }
                 }
@@ -105,7 +107,7 @@ public class FlockDAOImpl implements FlockDAO {
         String query =
                 "UPDATE Flock " +
                         "SET authorid = ?, name = ?, description = ?, latitude = ?," +
-                        "longitude = ?, radius = ?, score = ?, createdTime = ?, expireTime = ?" +
+                        "longitude = ?, radius = ?, score = ?, createdTime = ?, expireTime = ?, imageURI = ?" +
                         "WHERE id = ?";
 
         return jdbc.update(query,
@@ -118,6 +120,7 @@ public class FlockDAOImpl implements FlockDAO {
                 updatedFlock.getScore(),
                 TimeHelper.toDB(updatedFlock.getCreatedTime()), // don't allow change to createdTime, add lastModifiedTime?
                 TimeHelper.toDB(updatedFlock.getExpireTime()),
+                updatedFlock.getImageUri(),
                 updatedFlock.getId());
     }
 
@@ -133,7 +136,7 @@ public class FlockDAOImpl implements FlockDAO {
     @Override
     public int create(final Flock created) {
         String query = "INSERT INTO Flock " +
-                "(authorid, name, description, latitude, longitude, radius, score, createdTime, expireTime)" +
+                "(authorid, name, description, latitude, longitude, radius, score, createdTime, expireTime, imageUri)" +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         return jdbc.update(query,
@@ -145,7 +148,8 @@ public class FlockDAOImpl implements FlockDAO {
                 created.getRadius(),
                 created.getScore(),
                 TimeHelper.toDB(LocalDateTime.now()),
-                TimeHelper.toDB(created.getExpireTime())
+                TimeHelper.toDB(created.getExpireTime()),
+                created.getImageUri()
         );
     }
 
@@ -164,6 +168,7 @@ public class FlockDAOImpl implements FlockDAO {
                         "A.score AS score, " +
                         "A.createdTime AS createdTime, " +
                         "A.expireTime AS expireTime, " +
+                        "A.imageURI AS imageURI, " +
                         "ifnull(B.members, 0) AS members " +
                 "FROM (" +
                         "SELECT z.id, " +
@@ -176,6 +181,7 @@ public class FlockDAOImpl implements FlockDAO {
                             "z.score, " +
                             "z.createdTime, " +
                             "z.expireTime, " +
+                            "z.imageURI, " +
                             "p.distance_unit " +
                                 "* DEGREES(ACOS(COS(RADIANS(p.latpoint)) " +
                                 "* COS(RADIANS(z.latitude)) " +
@@ -222,6 +228,7 @@ public class FlockDAOImpl implements FlockDAO {
                         .score((int) row.get("score"))
                         .createdTime(TimeHelper.fromDB((Timestamp) row.get("createdTime")))
                         .expireTime(TimeHelper.fromDB((Timestamp) row.get("expiredTime")))
+                        .imageUri((String) row.get("imageURI"))
                         .members(Integer.valueOf(((Long) row.get("members")).intValue()))
                         .build();
 
@@ -249,6 +256,7 @@ public class FlockDAOImpl implements FlockDAO {
                         "A.score AS score, " +
                         "A.createdTime AS createdTime, " +
                         "A.expireTime AS expireTime, " +
+                        "A.imageURI AS imageURI, " +
                         "ifnull(B.members, 0) AS members " +
                 "FROM (" +
                     "SELECT * FROM Flock WHERE id IN (SELECT flockid FROM FavouritedFlocks WHERE gooseId = ?)" +
@@ -271,6 +279,7 @@ public class FlockDAOImpl implements FlockDAO {
                         .longitude((float) row.get("longitude"))
                         .radius((double) row.get("radius"))
                         .score((int) row.get("score"))
+                        .imageUri((String) row.get("imageURI"))
                         .members(Integer.valueOf(((Long) row.get("members")).intValue()))
                         .build();
 

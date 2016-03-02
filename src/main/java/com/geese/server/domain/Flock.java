@@ -17,6 +17,7 @@ public class Flock {
     private float longitude;
     private double radius;
     private int score;
+    private String imageUri;
     private LocalDateTime createdTime;
     private LocalDateTime expireTime;
     private boolean favourited = false;
@@ -35,6 +36,7 @@ public class Flock {
         this.score = builder.score;
         this.createdTime = builder.createdTime;
         this.expireTime = builder.expireTime;
+        this.imageUri = builder.imageUri;
         this.members = builder.members;
     }
 
@@ -134,6 +136,10 @@ public class Flock {
         this.members = members;
     }
 
+    public String getImageUri() {
+        return imageUri;
+    }
+
     public static class Builder {
         private int id;
         private int authorid;
@@ -142,6 +148,7 @@ public class Flock {
         private float latitude;
         private float longitude;
         private double radius;
+        private String imageUri;
         private int score;
         private LocalDateTime createdTime;
         private LocalDateTime expireTime;
@@ -186,6 +193,11 @@ public class Flock {
 
         public Builder score(int score) {
             this.score = score;
+            return this;
+        }
+
+        public Builder imageUri(String imageUri) {
+            this.imageUri = imageUri;
             return this;
         }
 
