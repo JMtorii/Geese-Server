@@ -137,7 +137,7 @@ public class FlockDAOImpl implements FlockDAO {
     public int create(final Flock created) {
         String query = "INSERT INTO Flock " +
                 "(authorid, name, description, latitude, longitude, radius, score, createdTime, expireTime, imageUri)" +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         return jdbc.update(query,
                 created.getAuthorid(),
