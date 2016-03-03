@@ -41,6 +41,9 @@ public class FlockServiceImpl implements FlockService {
 
     @Override
     public int create(Flock saved) {
+        GooseAuthentication auth = (GooseAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        int gooseId = auth.getDetails().getId();
+        saved.setAuthorid(gooseId);
         return flockDAO.create(saved);
     }
 
