@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS Post
 	createdTime DATETIME NOT NULL, -- Time of post creation
 	startTime DATETIME, -- Start of event (if relevant)
 	endTime DATETIME, -- End of event (if relevant)
+	imageURI VARCHAR(2048), -- The URI link to the S3 image
 	CONSTRAINT Post_pk PRIMARY KEY (id),
 	CONSTRAINT Post_Flock_fk FOREIGN KEY (flockid) REFERENCES Flock (id),
 	CONSTRAINT Post_Author_fk FOREIGN KEY (authorid) REFERENCES Goose (id)

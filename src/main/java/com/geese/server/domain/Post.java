@@ -16,6 +16,7 @@ public class Post {
     private LocalDateTime createdTime;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private String imageUri;
     private PostVote userVote;
     private long commentCount;
 
@@ -32,6 +33,7 @@ public class Post {
         this.createdTime = builder.createdTime;
         this.startTime = builder.startTime;
         this.endTime = builder.endTime;
+        this.imageUri = builder.imageUri;
         this.userVote = builder.userVote;
         this.commentCount = builder.commentCount;
     }
@@ -88,6 +90,10 @@ public class Post {
         return commentCount;
     }
 
+    public String getImageUri() {
+        return imageUri;
+    }
+
     public static class Builder {
         //required
         private int id;
@@ -102,6 +108,8 @@ public class Post {
         //optional
         private LocalDateTime startTime;
         private LocalDateTime endTime;
+
+        private String imageUri;
 
         //response params
         private PostVote userVote;
@@ -118,6 +126,7 @@ public class Post {
             this.title = title;
             this.description = description;
             this.pinned = false;
+            this.imageUri = null;
             this.score = 0;
             this.createdTime = LocalDateTime.now();
         }
@@ -132,6 +141,7 @@ public class Post {
             this.score = post.score;
             this.createdTime = post.createdTime;
             this.startTime = post.startTime;
+            this.imageUri = post.imageUri;
             this.endTime = post.endTime;
             this.userVote = post.userVote;
             this.commentCount = post.commentCount;
@@ -184,6 +194,11 @@ public class Post {
 
         public Builder endTime(LocalDateTime endTime) {
             this.endTime = endTime;
+            return this;
+        }
+
+        public Builder imageUri(String imageUri) {
+            this.imageUri = imageUri;
             return this;
         }
 

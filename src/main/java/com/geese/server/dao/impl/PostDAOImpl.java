@@ -57,7 +57,9 @@ public class PostDAOImpl implements PostDAO {
                         .score((int) row.get("score"))
                         .createdTime(TimeHelper.fromDB((Timestamp) row.get("createdTime")))
                         .startTime(TimeHelper.fromDB((Timestamp) row.get("startTime")))
-                        .endTime(TimeHelper.fromDB((Timestamp) row.get("endTime")));
+                        .endTime(TimeHelper.fromDB((Timestamp) row.get("endTime")))
+                        .imageUri((String) row.get("imageUri"));
+
 
                 if (row.get("commentCount") != null) {
                     postBuilder.commentCount((long) row.get("commentCount"));
@@ -117,6 +119,7 @@ public class PostDAOImpl implements PostDAO {
                                 .startTime(TimeHelper.fromDB(rs.getTimestamp("startTime")))
                                 .endTime(TimeHelper.fromDB(rs.getTimestamp("endTime")))
                                 .createdTime(TimeHelper.fromDB(rs.getTimestamp("createdTime")))
+                                .imageUri(rs.getString("imageUri"))
                                 .build();
                     }
                 }
@@ -132,7 +135,7 @@ public class PostDAOImpl implements PostDAO {
         String query =
                 "UPDATE " + TABLE_NAME + " " +
                         "SET flockid = ?, authorid = ?, title = ?," +
-                        "description = ?, pinned = ?, score = ?, createdTime = ?, startTime = ?, endTime = ? " +
+                        "description = ?, pinned = ?, score = ?, createdTime = ?, startTime = ?, endTime = ?, imageUri = ? " +
                         "WHERE id = ?";
 
         return jdbc.update(query,
@@ -145,6 +148,7 @@ public class PostDAOImpl implements PostDAO {
                 TimeHelper.toDB(updatedPost.getCreatedTime()),
                 TimeHelper.toDB(updatedPost.getStartTime()),
                 TimeHelper.toDB(updatedPost.getEndTime()),
+                updatedPost.getImageUri(),
                 updatedPost.getId()
         );
     }
@@ -161,8 +165,8 @@ public class PostDAOImpl implements PostDAO {
     @Override
     public int create(final Post created) {
         String query = "INSERT INTO " + TABLE_NAME + " " +
-                "(flockid, authorid, title, description, pinned, score, startTime, endTime, createdTime) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "(flockid, authorid, title, description, pinned, score, startTime, endTime, createdTime, imageUri) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         return jdbc.update(query,
                 created.getFlockid(),
@@ -173,7 +177,8 @@ public class PostDAOImpl implements PostDAO {
                 created.getScore(),
                 TimeHelper.toDB(created.getStartTime()),
                 TimeHelper.toDB(created.getEndTime()),
-                TimeHelper.toDB(created.getCreatedTime())
+                TimeHelper.toDB(created.getCreatedTime()),
+                created.getImageUri()
         );
     }
 
