@@ -22,7 +22,7 @@ public interface GooseService extends UserDetailsService {
      * @param gooseId   The gooseId of the requested Goose entry.
      * @return          The found Goose.
      */
-    Goose findOne(String gooseId);
+    Goose findOne(int gooseId);
 
     /**
      * Favourite a flock for a Goose.
@@ -69,4 +69,10 @@ public interface GooseService extends UserDetailsService {
      * @return          The number of deleted Goose objects.
      */
     int delete(String gooseId);
+
+    /**
+     * Gets the currently authenticated Goose.
+     * @return      The goose of the currently authenticated user from auth token
+     */
+    Goose whoAmI();
 }

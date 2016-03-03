@@ -27,7 +27,7 @@ public class GooseController {
      * @return          If Goose is found, return the Goose object and HTTP status 200; otherwise, 404
      */
     @RequestMapping(value = "/{gooseId}", method = RequestMethod.GET)
-    public ResponseEntity<Goose> getGoose(@PathVariable String gooseId) {
+    public ResponseEntity<Goose> getGoose(@PathVariable int gooseId) {
         Goose foundGoose = gooseService.findOne(gooseId);
 
         if (foundGoose != null) {
@@ -115,6 +115,21 @@ public class GooseController {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * Gets the Goose associated with the auth token
+     * @return          If the Goose exists and is deleted, return HTTP status 202; otherwise 404.
+     */
+    @RequestMapping(value = "/me", method = RequestMethod.GET)
+    public ResponseEntity<Goose> getGooseFromToken() {
+        Goose whoAmI = gooseService.whoAmI();
+
+        if (whoAmI != null) {
+            return new ResponseEntity<>(whoAmI, HttpStatus.ACCEPTED);
+        } else {
+            return new ResponseEntity<Goose>(HttpStatus.FORBIDDEN);
         }
     }
 }

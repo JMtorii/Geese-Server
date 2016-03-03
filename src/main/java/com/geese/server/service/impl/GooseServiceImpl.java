@@ -1,5 +1,6 @@
 package com.geese.server.service.impl;
 
+import com.geese.server.GooseAuthentication;
 import com.geese.server.dao.GooseDAO;
 import com.geese.server.domain.Goose;
 import com.geese.server.service.GooseService;
@@ -7,6 +8,7 @@ import com.geese.server.service.util.HashingAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +35,8 @@ public class GooseServiceImpl implements GooseService {
     }
 
     @Override
-    public Goose findOne(String gooseId) {
-        return gooseDAO.findOne(Integer.valueOf(gooseId));
+    public Goose findOne(int gooseId) {
+        return gooseDAO.findOne(gooseId);
     }
 
     @Override
@@ -83,5 +85,13 @@ public class GooseServiceImpl implements GooseService {
     @Override
     public int delete(String gooseId) {
         return gooseDAO.delete(Integer.valueOf(gooseId));
+    }
+
+    @Override
+    public Goose whoAmI() {
+        GooseAuthentication auth = (GooseAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        int gooseId = auth.getDetails().getId();
+
+        return gooseDAO.findOne(gooseId);
     }
 }
