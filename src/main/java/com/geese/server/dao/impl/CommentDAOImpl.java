@@ -34,9 +34,14 @@ public class CommentDAOImpl implements CommentDAO {
     @Override
     public List<Comment> findAll(final int gooseid, final int postId) {
         String query =
-                "SELECT * FROM " + TABLE_NAME + " AS a LEFT JOIN (SELECT * FROM " + TABLE_NAME + "Vote WHERE gooseid = ?) AS b " +
-                "ON a.id = b.commentid " +
+                "SELECT * FROM " + TABLE_NAME + " AS a " +
+                "LEFT JOIN (SELECT * FROM " + TABLE_NAME + "Vote WHERE gooseid = ?) AS b " +
+                "ON (a.id = b.commentid) " +
+                "LEFT JOIN (SELECT id AS authorid, name AS authorName FROM Goose) AS g " +
+                "ON (a.authorid = g.authorid) " +
                 "WHERE postid = ?";
+
+        // Hopefully SQL optimizer takes the WHERE filter before joining Goose
 
         List<Comment> comments = new ArrayList<Comment>();
 
@@ -67,6 +72,10 @@ public class CommentDAOImpl implements CommentDAO {
                         .value(0)
                         .build()
                     );
+                }
+
+                if (row.get("authorName") != null) {
+                    commentBuilder.authorName((String) row.get("authorName"));
                 }
 
                 comments.add(commentBuilder.build());

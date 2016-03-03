@@ -16,6 +16,7 @@ public class Comment {
 
     // Response Params
     CommentVote userVote;
+    String authorName;
 
     public Comment() {}
 
@@ -28,6 +29,7 @@ public class Comment {
         this.createdTime = builder.createdTime;
         this.expireTime = builder.expireTime;
         this.userVote = builder.userVote;
+        this.authorName = builder.authorName;
     }
 
     static Builder getBuilder() {
@@ -66,6 +68,10 @@ public class Comment {
         return userVote;
     }
 
+    public String getAuthorName() {
+        return authorName;
+    }
+
     public static class Builder {
         //required
         private int id;
@@ -80,6 +86,7 @@ public class Comment {
 
         //response
         private CommentVote userVote;
+        private String authorName;
 
         public Builder() {}
 
@@ -100,6 +107,7 @@ public class Comment {
             this.score = comment.score;
             this.createdTime = comment.createdTime;
             this.userVote = comment.userVote;
+            this.authorName = comment.authorName;
         }
 
         public Builder id(int id) {
@@ -139,6 +147,11 @@ public class Comment {
 
         public Builder userVote(CommentVote userVote) {
             this.userVote = userVote;
+            return this;
+        }
+
+        public Builder authorName(String authorName) {
+            this.authorName = authorName;
             return this;
         }
 
