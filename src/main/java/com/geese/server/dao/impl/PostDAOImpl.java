@@ -41,8 +41,8 @@ public class PostDAOImpl implements PostDAO {
                     "WHERE flockid = ?) AS p " +
                 "LEFT JOIN (SELECT postid, Count(id) AS commentCount FROM Comment GROUP BY postid) AS c " +
                 "ON (c.postid = p.id) " +
-                "LEFT JOIN (SELECT id, name AS authorName FROM Goose) AS g " +
-                "ON (p.authorid = g.id)";
+                "LEFT JOIN (SELECT id AS authorid, name AS authorName FROM Goose) AS g " +
+                "ON (p.authorid = g.authorid)";
 
         List<Post> posts = new ArrayList<Post>();
 
