@@ -35,11 +35,14 @@ public class PostDAOImpl implements PostDAO {
     public List<Post> findAll(final int gooseid, final int flockid) {
         String query =
                 "SELECT * FROM " +
-                "(SELECT * FROM " + TABLE_NAME + " AS a LEFT JOIN (SELECT * FROM " + TABLE_NAME+"Vote WHERE gooseid = ?) AS b " +
-                        "ON a.id = b.postid " +
-                        "WHERE flockid = ?) AS p LEFT JOIN " +
-                "(SELECT postid, Count(id) AS commentCount FROM Comment GROUP BY postid) AS c " +
-                "ON c.postid = p.id";
+                "(SELECT * FROM " + TABLE_NAME + " AS a "+
+                    "LEFT JOIN (SELECT * FROM " + TABLE_NAME+"Vote WHERE gooseid = ?) AS b " +
+                    "ON (a.id = b.postid) " +
+                    "WHERE flockid = ?) AS p " +
+                "LEFT JOIN (SELECT postid, Count(id) AS commentCount FROM Comment GROUP BY postid) AS c " +
+                "ON (c.postid = p.id) " +
+                "LEFT JOIN (SELECT id, name AS authorName FROM Goose) AS g " +
+                "ON (p.authorid = g.id)";
 
         List<Post> posts = new ArrayList<Post>();
 
@@ -79,8 +82,11 @@ public class PostDAOImpl implements PostDAO {
                         .value(0)
                         .build()
                 );
-            }
 
+                if (row.get("authorName") != null) {
+                    postBuilder.authorName((String) row.get("authorName"));
+                }
+            }
 
                 posts.add(postBuilder.build());
             }

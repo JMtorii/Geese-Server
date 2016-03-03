@@ -18,6 +18,7 @@ public class Post {
     private LocalDateTime endTime;
     private PostVote userVote;
     private long commentCount;
+    private String authorName;
 
     public Post() {}
 
@@ -34,6 +35,7 @@ public class Post {
         this.endTime = builder.endTime;
         this.userVote = builder.userVote;
         this.commentCount = builder.commentCount;
+        this.authorName = builder.authorName;
     }
 
     static Builder getBuilder() {
@@ -88,6 +90,10 @@ public class Post {
         return commentCount;
     }
 
+    public String getAuthorName() {
+        return authorName;
+    }
+
     public static class Builder {
         //required
         private int id;
@@ -106,6 +112,7 @@ public class Post {
         //response params
         private PostVote userVote;
         private long commentCount;
+        private String authorName;
 
         public Builder() {
 
@@ -135,6 +142,7 @@ public class Post {
             this.endTime = post.endTime;
             this.userVote = post.userVote;
             this.commentCount = post.commentCount;
+            this.authorName = post.authorName;
         }
 
         public Builder id(int id) {
@@ -194,6 +202,11 @@ public class Post {
 
         public Builder commentCount(long commentCount) {
             this.commentCount = commentCount;
+            return this;
+        }
+
+        public Builder authorName(String authorName) {
+            this.authorName = authorName;
             return this;
         }
 
