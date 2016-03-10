@@ -41,14 +41,14 @@ public class PostController {
 
     /**
      * Gets all Posts in database
-     * @return      If Geese exist, return list of Geese and HTTP status 302; otherwise, 404
+     * @return      If Geese exist, return list of Geese and HTTP status 200; otherwise, 302
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<Post>> getAllPosts(@RequestParam int flockId) {
-        List<Post> geese = postService.findAll(flockId);
+        List<Post> posts = postService.findAll(flockId);
 
-        if (geese != null) {
-            return new ResponseEntity<>(geese, HttpStatus.OK);
+        if (posts != null) {
+            return new ResponseEntity<>(posts, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
