@@ -317,4 +317,14 @@ public class FlockDAOImpl implements FlockDAO {
                 flockId
         );
     }
+
+    @Override
+    public int getFlockMembers(int flockid) {
+        String query =
+                "SELECT count(gooseid) " +
+                "FROM FavouritedFlocks " +
+                "WHERE flockid = ? ";
+
+        return jdbc.queryForObject(query, new Object[]{flockid}, Integer.class);
+    }
 }

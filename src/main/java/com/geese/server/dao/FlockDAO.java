@@ -72,4 +72,11 @@ public interface FlockDAO {
      * @return          The number of modified Flocks
      */
     int unjoinFlock(int gooseId, int flockId);
+
+    /**
+     * get number of members in a flock
+     * @param flockid   Id of the flock to look in
+     * @return          The number of members in a flock
+     */
+    int getFlockMembers(int flockid);
 }
