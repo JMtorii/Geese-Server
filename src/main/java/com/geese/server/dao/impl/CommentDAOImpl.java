@@ -39,7 +39,8 @@ public class CommentDAOImpl implements CommentDAO {
                 "ON (a.id = b.commentid) " +
                 "LEFT JOIN (SELECT id AS authorid, name AS authorName FROM Goose) AS g " +
                 "ON (a.authorid = g.authorid) " +
-                "WHERE postid = ?";
+                "WHERE postid = ? " +
+                "ORDER BY createdTime DESC";
 
         // Hopefully SQL optimizer takes the WHERE filter before joining Goose
 
@@ -142,6 +143,12 @@ public class CommentDAOImpl implements CommentDAO {
     @Override
     public int delete(final int commentId) {
         String query =
+                "DELETE FROM CommentVote " +
+                        "WHERE commentid = ?";
+
+        jdbc.update(query, commentId);
+
+        query =
                 "DELETE FROM Comment " +
                         "WHERE id = ?";
 

@@ -163,6 +163,11 @@ public class PostDAOImpl implements PostDAO {
     @Override
     public int delete(final int postId) {
         String query =
+                "DELETE FROM " + "PostVote " +
+                        "WHERE postid = ?";
+        jdbc.update(query, postId);
+
+        query =
                 "DELETE FROM " + TABLE_NAME + " " +
                         "WHERE id = ?";
 

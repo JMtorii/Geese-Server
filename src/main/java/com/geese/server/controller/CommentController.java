@@ -103,14 +103,14 @@ public class CommentController {
     /**
      * Deletes an existing Comment
      * @param commentId   Identifier for the Comment
-     * @return          If the Comment exists and is deleted, return HTTP status 202; otherwise 404.
+     * @return          If the Comment exists and is deleted, return HTTP status 200; otherwise 404.
      */
     @RequestMapping(value = "/{commentId}", method = RequestMethod.DELETE)
     public ResponseEntity<Comment> deleteComment(@PathVariable String commentId) {
         int numDeletedComment = commentService.delete(commentId);
 
         if (numDeletedComment > 0) {
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

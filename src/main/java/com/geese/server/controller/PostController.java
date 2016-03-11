@@ -90,14 +90,14 @@ public class PostController {
     /**
      * Deletes an existing Post
      * @param postId   Identifier for the Post
-     * @return          If the Post exists and is deleted, return HTTP status 202; otherwise 404.
+     * @return          If the Post exists and is deleted, return HTTP status 200; otherwise 404.
      */
     @RequestMapping(value = "/{postId}", method = RequestMethod.DELETE)
     public ResponseEntity<Post> deletePost(@PathVariable int postId) {
         int numDeletedPost = postService.delete(postId);
 
         if (numDeletedPost > 0) {
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
