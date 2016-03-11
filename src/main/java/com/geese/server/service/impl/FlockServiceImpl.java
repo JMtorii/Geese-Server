@@ -34,16 +34,17 @@ public class FlockServiceImpl implements FlockService {
     }
 
     @Override
-    public Flock findOne(String flockId) {
-        return flockDAO.findOne(Integer.valueOf(flockId));
+    public Flock findOne(int flockId) {
+        return flockDAO.findOne(flockId);
     }
-
 
     @Override
     public int create(Flock saved) {
         GooseAuthentication auth = (GooseAuthentication) SecurityContextHolder.getContext().getAuthentication();
         int gooseId = auth.getDetails().getId();
         saved.setAuthorid(gooseId);
+        saved.setMembers(0);
+        saved.setScore(0);
         return flockDAO.create(saved);
     }
 

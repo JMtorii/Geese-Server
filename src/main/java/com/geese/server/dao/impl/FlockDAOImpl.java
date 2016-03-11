@@ -139,7 +139,7 @@ public class FlockDAOImpl implements FlockDAO {
                 "(authorid, name, description, latitude, longitude, radius, score, createdTime, expireTime, imageUri)" +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        return jdbc.update(query,
+        jdbc.update(query,
                 created.getAuthorid(),
                 created.getName(),
                 created.getDescription(),
@@ -151,6 +151,8 @@ public class FlockDAOImpl implements FlockDAO {
                 TimeHelper.toDB(created.getExpireTime()),
                 created.getImageUri()
         );
+
+        return jdbc.queryForObject("select last_insert_id()", Integer.class);
     }
 
     @Override

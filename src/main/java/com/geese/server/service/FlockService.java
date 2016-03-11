@@ -26,7 +26,7 @@ public interface FlockService {
      * @param flockId    The id of the requested Flock entry.
      * @return      The information of the found Flock entry.
      */
-    Flock findOne(String flockId);
+    Flock findOne(int flockId);
 
     /**
      * Saves a new Flock entry to the database.

@@ -31,7 +31,7 @@ public class FlockController {
      * @return          If Flock is found, return the Flock object and HTTP status 302; otherwise, 400
      */
     @RequestMapping(value = "/{flockId}", method = RequestMethod.GET)
-    public ResponseEntity<Flock> getFlock(@PathVariable String flockId) {
+    public ResponseEntity<Flock> getFlock(@PathVariable int flockId) {
         Flock foundFlock = flockService.findOne(flockId);
 
         if (foundFlock != null) {
@@ -63,10 +63,10 @@ public class FlockController {
      */
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<Flock> createFlock(@RequestBody Flock flock) {
-        int numCreatedFlock = flockService.create(flock);
-
-        if (numCreatedFlock > 0) {
-            return new ResponseEntity<>(HttpStatus.CREATED);
+        int createdFlockId = flockService.create(flock);
+        flockService.joinFlock(createdFlockId);
+        if (createdFlockId > 0) {
+            return new ResponseEntity<>(flockService.findOne(createdFlockId), HttpStatus.CREATED);
         } else {
             // TODO: choose better HTTP status
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
